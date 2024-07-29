@@ -1,0 +1,158 @@
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 1px 5px;
+    cursor: pointer;
+}
+
+.player-container {
+    box-shadow: 0px 0px 8px 1px #000000bd;
+    padding: 1rem;
+    border-radius: 5px;
+    width: 280px;
+}
+
+.player-control-btn {
+    background-color: gray;
+    border-radius: 4px;
+    border: black;
+    outline: none;
+    cursor: pointer;
+    min-width: 36px;
+    min-height: 28px;
+    font-size: 14px;
+}
+
+.player-control-btn:active {
+    border-style: inset;
+    box-shadow: inset 1px 1px 5px black;
+}
+
+.player-control-btn.pressed {
+    border-style: inset;
+    box-shadow: inset 1px 1px 5px black;
+}
+
+.player-control-btn.pressed svg {
+    transform: scale(0.9);
+}
+
+.player-control-btn:active svg {
+    transform: scale(0.9);
+}
+
+.player-header {
+    background-color: #252424;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.player-control-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.2rem;
+    border: 1px inset #4b4b4bc2;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.player-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.2rem;
+    border: 1px inset #4b4b4bc2;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.player-menu button {
+    border: none;
+    background: none;
+    color: #484747;
+    box-shadow: 1px 1px 5px black;
+    padding: 0.2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.player-menu button:active {
+    box-shadow: inset 1px 1px 5px black;
+    transform: scale(0.98);
+    transform: scale(0.98);
+    color: white;
+}
+
+.player-menu button.active {
+    box-shadow: inset 1px 1px 5px black;
+    transform: scale(0.98);
+    transform: scale(0.98);
+    color: white;
+}
+
+.vr {
+    border: 1px inset #4b4b4bc2;
+    height: 20px;
+    margin: 0 5px;
+    width: 0px;
+}
+
+.player-playlist {
+    color: #a5a5a5;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-radius: 5px;
+    background-color: #252424;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+
+.player-playlist p {
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+
+.player-playlist li.selected.scroll-anim p{
+    overflow-x: unset;
+    text-overflow: unset;
+}
+
+
+.player-playlist li.selected.scroll-anim {
+    animation: floatText 10s infinite linear;
+    /*padding-left: 100%; !*Initial offset*!*/
+}
+
+@keyframes floatText {
+    to {
+        transform: translateX(-150%);
+    }
+}
+
+.player-container li.selected {
+    color: #195ac4;
+}
+
+@media only screen and (max-width: 800px){
+    .player-container {
+        width: 85vw;
+        margin: auto;
+    }
+    .player-header{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

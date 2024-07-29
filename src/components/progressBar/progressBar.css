@@ -1,11 +1,11 @@
 .slider-wrapper {
     padding: 0.5rem;
-    border: 1px inset black;
+    width: 100%;
 }
 
 .slider-track {
     position: relative;
-    width: 100px;
+    width: 100%;
     height: 0.5rem;
     border: 1px inset black;
     background-color: #0000008a;
@@ -16,5 +16,5 @@
     top: -50%;
     width: 1rem;
     height: 1rem;
-    background-image: linear-gradient(to right, #181818, #5e5d5d, #181818);
+    background-image: linear-gradient(to right, #181818, #195ac4, #181818);
 }

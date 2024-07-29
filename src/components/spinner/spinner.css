@@ -1,0 +1,17 @@
+
+.spinner-container {
+    border: 1px solid white;
+    border-radius: 100%;
+    clip-path: polygon(0% 0%, 100% 0%, 0% 100%, 100% 100%);
+    animation: animated-rotation 1s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+
+
+@keyframes animated-rotation{
+    0% {
+        transform: rotate(0deg)
+    }
+    100% {
+        transform: rotate(360deg)
+    }
+}

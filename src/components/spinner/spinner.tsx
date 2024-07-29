@@ -1,10 +1,12 @@
+import "./spinner.css";
+interface PropsType {
+    radius?: number
+    stroke?: number
+}
+const Spinner = ({radius=5, stroke=3}: PropsType) => {
 
-
-const Spinner = (radius: "5px") => {
-  return(
-    <div style={{width: radius, height: radius}}>
-      <div></div>
-    </div>
+    return(
+        <div className="spinner-container" style={{width: radius, height: radius, borderWidth: stroke}}></div>
   )
 }
 

@@ -1,0 +1,19 @@
+.knob {
+    width: 30px;
+    height: 30px;
+    border: 1px outset #393737;
+    border-radius: 100%;
+    background-color: #141414;
+    position: relative;
+}
+
+.knob:after{
+    content: "";
+    width: 1px;
+    position: absolute;
+    top: 50%;
+    bottom: 0;
+    left: calc(50% - 2.5px);
+    border: 2px solid red;
+    background-color: black;
+}
