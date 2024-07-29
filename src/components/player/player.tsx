@@ -13,8 +13,8 @@ interface AudioFile {
 }
 
 const Player = () => {
-    const [audioFiles, setAudioFiles] = useState<AudioFile[] | undefined>([{urlObject: "", fileName: "akshjgdasdggagdgkasdjasdhjkahsdjkashdkasjhdjkasdjkashdjkashdjkashjdjkashdjkasdjkaskhjdjkashdasjkhdhjkash111"}]);
-    const [selectedTrack, setSelectedTrack] = useState<AudioFile | { urlObject: string } | undefined>({urlObject: "", fileName: "akshjgdasdggagdgkasdjasdhjkahsdjkashdkasjhdjkasdjkashdjkashdjkashjdjkashdjkasdjkaskhjdjkashdasjkhdhjkash111"});
+    const [audioFiles, setAudioFiles] = useState<AudioFile[] | undefined>();
+    const [selectedTrack, setSelectedTrack] = useState<AudioFile | { urlObject: string } | undefined>();
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const [radioActive, setRadioActive] = useState<boolean>(true);
     const [playStatus, setPlayStatus] = useState<boolean>(false);
