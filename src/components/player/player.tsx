@@ -18,6 +18,7 @@ const Player = () => {
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const [radioActive, setRadioActive] = useState<boolean>(true);
     const [playStatus, setPlayStatus] = useState<boolean>(false);
+    const [playProgress, setPlayProgress] = useState<number>(0);
     const [loading, setLoading] = useState(false);
 
     const playerRef = useRef<HTMLAudioElement>(null);
@@ -34,25 +35,33 @@ const Player = () => {
     }
 
     useEffect(() => {
-        //@ts-ignore
-        playerRef.current.onplaying = () => {
-            setPlayStatus(true);
-            console.log("playing")
+        let tick: number = 0;
+        if(playerRef?.current){
+            playerRef.current.onplaying = () => {
+                setPlayStatus(true);
+                tick = window.setInterval(() => {
+                    if(!playerRef?.current?.paused) {
+                        setPlayProgress(playerRef?.current?.currentTime || 0);
+                    }
+                }, 100)
+            }
+
+            playerRef.current.onended = () => {
+                handleStop()
+            }
+
+            playerRef.current.onseeking = (e) => {
+                setPlayProgress(playerRef?.current?.currentTime || 0)
+            }
         }
-        //@ts-ignore
-        // playerRef.current.onprogress = (e) => {
-        //     console.log(e)
-        // }
+
         return () => {
+            clearInterval(tick);
             if (audioFiles && audioFiles.length > 0) {
                 audioFiles.forEach(fileObject => URL.revokeObjectURL(fileObject.urlObject));
             }
         }
     }, [])
-
-    useEffect(() => {
-
-    }, [selectedTrack])
 
     const handleSelectTrack = (index: number) => {
         if (audioFiles) {
@@ -114,6 +123,14 @@ const Player = () => {
         }
     }
 
+    const handleSeek = (e: any) => {
+        setPlayProgress(e.target.value);
+        // @ts-ignore
+        playerRef.current.currentTime = e.target.value
+    }
+
+    console.log(playStatus)
+
     return (
         <div className="player-container">
             <audio src={selectedTrack?.urlObject}
@@ -123,8 +140,8 @@ const Player = () => {
                    onLoadedData={() => setLoading(false)}
             />
             <div className="player-header">
-                {!radioActive && <div className="player-menu">
-                    <ProgressBar/>
+                {!radioActive && <div className="player-menu progress-bar" style={{position: "relative"}}>
+                    <input type="range" min={0} max={playerRef?.current?.duration} value={playProgress} onChange={handleSeek}/>
                 </div>}
                 <div className="player-menu">
                     <label htmlFor="file-upload" className="custom-file-upload">

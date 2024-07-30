@@ -1,4 +1,4 @@
-input[type="range"] {
+.range-wrapper input[type="range"] {
     -webkit-appearance: none;
     appearance: none;
     background: transparent;
@@ -8,14 +8,14 @@ input[type="range"] {
 
 /***** Track Styles *****/
 /***** Chrome, Safari, Opera, and Edge Chromium *****/
-input[type="range"]::-webkit-slider-runnable-track {
+.range-wrapper input[type="range"]::-webkit-slider-runnable-track {
     height: 1.2rem;
     border: 1px inset black;
     background-color: #0000008a;
 }
 
 /******** Firefox ********/
-input[type="range"]::-moz-range-track {
+.range-wrapper input[type="range"]::-moz-range-track {
     height: 1.2rem;
     border: 1px inset black;
     border-radius: 5px;
@@ -24,7 +24,7 @@ input[type="range"]::-moz-range-track {
 
 /***** Thumb Styles *****/
 /***** Chrome, Safari, Opera, and Edge Chromium *****/
-input[type="range"]::-webkit-slider-thumb {
+.range-wrapper input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none; /* Override default look */
     appearance: none;
     margin-top: 0px; /* Centers thumb on the track */
@@ -35,7 +35,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 /***** Thumb Styles *****/
 /***** Firefox *****/
-input[type="range"]::-moz-range-thumb {
+.range-wrapper input[type="range"]::-moz-range-thumb {
     -webkit-appearance: none; /* Override default look */
     appearance: none;
     margin-top: -1px; /* Centers thumb on the track */

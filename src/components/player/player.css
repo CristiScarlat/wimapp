@@ -70,7 +70,7 @@ input[type="file"] {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.2rem;
+    padding: 0.3rem;
     border: 1px inset #4b4b4bc2;
     border-radius: 4px;
     width: 100%;
@@ -144,6 +144,52 @@ input[type="file"] {
 
 .player-container li.selected {
     color: #195ac4;
+}
+
+.progress-bar input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+    width: 15rem;
+}
+
+/***** Track Styles *****/
+/***** Chrome, Safari, Opera, and Edge Chromium *****/
+.progress-bar input[type="range"]::-webkit-slider-runnable-track {
+    height: 1.2rem;
+    border: 1px inset black;
+    background-color: #0000008a;
+}
+
+/******** Firefox ********/
+.progress-bar input[type="range"]::-moz-range-track {
+    height: 1.2rem;
+    border: 1px inset black;
+    border-radius: 5px;
+    background-color: #0000008a;
+}
+
+/***** Thumb Styles *****/
+/***** Chrome, Safari, Opera, and Edge Chromium *****/
+.progress-bar input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    margin-top: -0.5rem; /* Centers thumb on the track */
+    background: linear-gradient(to right, #181818, #4343fa, #181818);
+    height: 2rem;
+    width: 1rem;
+}
+
+/***** Thumb Styles *****/
+/***** Firefox *****/
+.progress-bar input[type="range"]::-moz-range-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    margin-top: -0.5rem; /* Centers thumb on the track */
+    background: linear-gradient(to right, #181818, #5e5d5d, #181818);
+    height: 2rem;
+    width: 1rem;
 }
 
 @media only screen and (max-width: 800px){
