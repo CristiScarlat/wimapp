@@ -125,16 +125,16 @@ input[type="file"] {
     text-overflow: ellipsis;
 }
 
-.player-playlist li.selected.scroll-anim p{
-    overflow-x: unset;
-    text-overflow: unset;
-}
+/*.player-playlist li.selected.scroll-anim p{*/
+/*    overflow-x: unset;*/
+/*    text-overflow: unset;*/
+/*}*/
 
 
-.player-playlist li.selected.scroll-anim {
-    animation: floatText 10s infinite linear;
-    /*padding-left: 100%; !*Initial offset*!*/
-}
+/*.player-playlist li.selected.scroll-anim {*/
+/*    animation: floatText 10s infinite linear;*/
+/*    !*padding-left: 100%; !*Initial offset*!*!*/
+/*}*/
 
 @keyframes floatText {
     to {
