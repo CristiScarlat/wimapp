@@ -91,7 +91,6 @@ const Player = () => {
     const handleNextTrack = () => {
         // @ts-ignore
         if((radioActive && currentIndex < radioStations.length-1) || (!radioActive && currentIndex < audioFiles.length-1)){
-            console.log(currentIndex, radioStations.length)
             setCurrentIndex((state: number) => {
                 const next = state + 1;
                 radioActive ? handleSelectStation(next) : handleSelectTrack(next)
@@ -129,15 +128,16 @@ const Player = () => {
         playerRef.current.currentTime = e.target.value
     }
 
-    console.log(playStatus)
-
     return (
         <div className="player-container">
             <audio src={selectedTrack?.urlObject}
                    ref={playerRef}
                    autoPlay
                    onLoadStart={() => setLoading(true)}
-                   onLoadedData={() => setLoading(false)}
+                   onPlaying={() => {
+                       if(loading)setLoading(false);
+                       console.log("playing")
+                   }}
             />
             <div className="player-header">
                 {!radioActive && <div className="player-menu progress-bar" style={{position: "relative"}}>
@@ -189,7 +189,7 @@ const Player = () => {
                         </li>
                     )) : "select audio files from your device"
                     : radioStations.map((radioData: any, index: number) => (
-                        <li key={radioData.id}
+                        !radioData?.disabled && <li key={radioData.id}
                             className={`${selectedTrack?.urlObject === radioData.url && "selected scroll-anim"}`}
                             style={{cursor: "pointer"}}
                             onClick={() => handleSelectStation(index)}>

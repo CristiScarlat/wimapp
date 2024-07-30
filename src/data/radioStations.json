@@ -6,10 +6,11 @@
     "state": "florida",
     "city": "palm coast",
     "style": ["dance", "oldies", "80s"],
-    "url": "http://s1.nexuscast.com:8135/;;audio.mp3",
+    "url": "http://s1.nexuscast.com:8135",
     "logo": "back_to_80",
     "logo_square": "back_to_80_square",
-    "flag": "us"
+    "flag": "us",
+    "disabled": true
   },
   {
     "id": 1,
@@ -58,5 +59,67 @@
     "logo": "101_smooth_jazz",
     "logo_square": "101_smooth_jazz_square",
     "flag": "us"
+  },
+  {
+    "id": 5,
+    "name": "Radio Swiss Jazz",
+    "country": "Swiss",
+    "state": "",
+    "city": "",
+    "style": ["jazz"],
+    "url": "http://stream.srg-ssr.ch/m/rsj/aacp_96",
+    "logo": "",
+    "logo_square": "",
+    "flag": "swiss"
+  },
+  {
+    "id": 6,
+    "name": "Radio Swiss Pop",
+    "country": "Swiss",
+    "state": "",
+    "city": "",
+    "style": ["pop"],
+    "url": "http://stream.srg-ssr.ch/m/rsp/aacp_96",
+    "logo": "",
+    "logo_square": "",
+    "flag": "swiss"
+  },
+  {
+    "id": 7,
+    "name": "Radio Swiss Classic",
+    "country": "Swiss",
+    "state": "",
+    "city": "",
+    "style": ["classic"],
+    "url": "http://stream.srg-ssr.ch/m/rsc_de/aacp_96",
+    "logo": "",
+    "logo_square": "",
+    "flag": "swiss"
+  },
+  {
+    "id": 8,
+    "name": "Radio 88.6 Hard Rock",
+    "country": "Austria",
+    "state": "",
+    "city": "",
+    "style": ["rock"],
+    "url": "http://edge09.streamonkey.net/radio886-hardrock/stream/mp3",
+    "logo": "",
+    "logo_square": "",
+    "flag": "au"
+  },
+  {
+    "id": 9,
+    "name": "Radio 88.6 Classik Rock",
+    "country": "Austria",
+    "state": "",
+    "city": "",
+    "style": ["rock"],
+    "url": "http://edge09.streamonkey.net/radio886-classicrock/stream/mp3",
+    "logo": "",
+    "logo_square": "",
+    "flag": "au"
   }
 ]
+
+
