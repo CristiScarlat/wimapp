@@ -117,6 +117,7 @@ input[type="file"] {
     background-color: #252424;
     overflow-x: hidden;
     text-overflow: ellipsis;
+    max-height: 60vh;
 }
 
 .player-playlist p {

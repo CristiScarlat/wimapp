@@ -1,7 +1,7 @@
 import {useEffect, useState, useRef} from "react";
 import {FaRegFolderOpen} from "react-icons/fa";
 import {IoPlaySkipBack, IoPlay, IoPause, IoStop, IoPlaySkipForward} from "react-icons/io5";
-import radioStations from "../../data/radioStations.json"
+import radioStations from "../../data/stations.json"
 import ProgressBar from "../progressBar/progressBar";
 import Range from "../range/range";
 import "./player.css";
@@ -127,6 +127,8 @@ const Player = () => {
         // @ts-ignore
         playerRef.current.currentTime = e.target.value
     }
+
+    console.log(radioStations)
 
     return (
         <div className="player-container">
