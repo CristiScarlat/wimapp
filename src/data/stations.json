@@ -1,35 +1,5 @@
 [
   {
-    "name": "BBC - Radio 1",
-    "url": " http://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_one/bbc_radio_one.isml/bbc_radio_one-audio%3d96000.norewind.m3u8",
-    "id": 27
-  },
-  {
-    "name": "BBC - Radio 3",
-    "url": " http://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_three/bbc_radio_three.isml/bbc_radio_three-audio%3d96000.norewind.m3u8",
-    "id": 29
-  },
-  {
-    "name": "BBC - Radio 5 live",
-    "url": " http://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_five_live/bbc_radio_five_live.isml/bbc_radio_five_live-audio%3d96000.norewind.m3u8",
-    "id": 31
-  },
-  {
-    "name": "BBC - Radio 1Xtra",
-    "url": " http://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_1xtra/bbc_1xtra.isml/bbc_1xtra-audio%3d96000.norewind.m3u8",
-    "id": 33
-  },
-  {
-    "name": "BBC - Radio 5 Live sports extra (UK only)",
-    "url": " http://as-hls-uk-live.akamaized.net/pool_904/live/uk/bbc_radio_five_live_sports_extra/bbc_radio_five_live_sports_extra.isml/bbc_radio_five_live_sports_extra-audio%3d96000.norewind.m3u8",
-    "id": 35
-  },
-  {
-    "name": "BBC - Radio Asian Network",
-    "url": " http://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_asian_network/bbc_asian_network.isml/bbc_asian_network-audio%3d96000.norewind.m3u8",
-    "id": 37
-  },
-  {
     "name": "Caroline Pirate",
     "url": " http://sc3.radiocaroline.net:8030/listen.m3u8",
     "id": 47

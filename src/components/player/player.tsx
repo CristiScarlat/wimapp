@@ -2,10 +2,10 @@ import {useEffect, useState, useRef} from "react";
 import {FaRegFolderOpen} from "react-icons/fa";
 import {IoPlaySkipBack, IoPlay, IoPause, IoStop, IoPlaySkipForward} from "react-icons/io5";
 import radioStations from "../../data/stations.json"
-import ProgressBar from "../progressBar/progressBar";
 import Range from "../range/range";
 import "./player.css";
 import Spinner from "../spinner/spinner";
+import Oscilloscope from "../osciloscope/oscilloscope";
 
 interface AudioFile {
     urlObject: string
@@ -20,8 +20,10 @@ const Player = () => {
     const [playStatus, setPlayStatus] = useState<boolean>(false);
     const [playProgress, setPlayProgress] = useState<number>(0);
     const [loading, setLoading] = useState(false);
+    //const [radioStations, setRadioStations] = useState([]);
 
-    const playerRef = useRef<HTMLAudioElement>(null);
+    const playerRef = useRef(new Audio());
+
     const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             const urlObjects: { urlObject: string, fileName: string }[] = []
@@ -36,12 +38,14 @@ const Player = () => {
 
     useEffect(() => {
         let tick: number = 0;
-        if(playerRef?.current){
+        if (playerRef) {
+            playerRef.current.crossOrigin = "anonymous";
+            playerRef.current.autoplay = true;
             playerRef.current.onplaying = () => {
                 setPlayStatus(true);
                 tick = window.setInterval(() => {
-                    if(!playerRef?.current?.paused) {
-                        setPlayProgress(playerRef?.current?.currentTime || 0);
+                    if (!playerRef.current.paused) {
+                        setPlayProgress(playerRef.current.currentTime || 0);
                     }
                 }, 100)
             }
@@ -51,8 +55,11 @@ const Player = () => {
             }
 
             playerRef.current.onseeking = (e) => {
-                setPlayProgress(playerRef?.current?.currentTime || 0)
+                setPlayProgress(playerRef.current.currentTime || 0)
             }
+
+            playerRef.current.onloadstart = () => setLoading(true);
+            playerRef.current.onplaying = () => setLoading(false);
         }
 
         return () => {
@@ -62,6 +69,10 @@ const Player = () => {
             }
         }
     }, [])
+
+    useEffect(() => {
+        if (selectedTrack?.urlObject) playerRef.current.src = selectedTrack.urlObject;
+    }, [selectedTrack])
 
     const handleSelectTrack = (index: number) => {
         if (audioFiles) {
@@ -79,7 +90,7 @@ const Player = () => {
 
     const handlePrevTrack = () => {
         // @ts-ignore
-        if(currentIndex > 0){
+        if (currentIndex > 0) {
             setCurrentIndex((state: number) => {
                 const prev = state - 1;
                 radioActive ? handleSelectStation(prev) : handleSelectTrack(prev)
@@ -90,7 +101,7 @@ const Player = () => {
 
     const handleNextTrack = () => {
         // @ts-ignore
-        if((radioActive && currentIndex < radioStations.length-1) || (!radioActive && currentIndex < audioFiles.length-1)){
+        if ((radioActive && currentIndex < radioStations.length - 1) || (!radioActive && currentIndex < audioFiles.length - 1)) {
             setCurrentIndex((state: number) => {
                 const next = state + 1;
                 radioActive ? handleSelectStation(next) : handleSelectTrack(next)
@@ -100,16 +111,16 @@ const Player = () => {
     }
 
     const handlePlay = () => {
-        playerRef?.current?.play();
+        playerRef.current.play();
     }
 
     const handlePause = () => {
-        playerRef?.current?.pause();
+        playerRef.current.pause();
         setPlayStatus(false);
     }
 
     const handleStop = () => {
-        if (playerRef?.current) {
+        if (playerRef) {
             playerRef.current.pause();
             playerRef.current.currentTime = 0;
             setPlayStatus(false);
@@ -117,7 +128,7 @@ const Player = () => {
     }
 
     const handleVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (playerRef?.current) {
+        if (playerRef) {
             playerRef.current.volume = Number(e.target.value);
         }
     }
@@ -125,25 +136,15 @@ const Player = () => {
     const handleSeek = (e: any) => {
         setPlayProgress(e.target.value);
         // @ts-ignore
-        playerRef.current.currentTime = e.target.value
+        playerRef.currentTime = e.target.value
     }
-
-    console.log(radioStations)
 
     return (
         <div className="player-container">
-            <audio src={selectedTrack?.urlObject}
-                   ref={playerRef}
-                   autoPlay
-                   onLoadStart={() => setLoading(true)}
-                   onPlaying={() => {
-                       if(loading)setLoading(false);
-                       console.log("playing")
-                   }}
-            />
+            <Oscilloscope audioSource={playerRef}/>
             <div className="player-header">
                 {!radioActive && <div className="player-menu progress-bar" style={{position: "relative"}}>
-                    <input type="range" min={0} max={playerRef?.current?.duration} value={playProgress} onChange={handleSeek}/>
+                  <input type="range" min={0} max={playerRef.current.duration} value={playProgress} onChange={handleSeek}/>
                 </div>}
                 <div className="player-menu">
                     <label htmlFor="file-upload" className="custom-file-upload">
@@ -192,14 +193,14 @@ const Player = () => {
                     )) : "select audio files from your device"
                     : radioStations.map((radioData: any, index: number) => (
                         !radioData?.disabled && <li key={radioData.id}
-                            className={`${selectedTrack?.urlObject === radioData.url && "selected scroll-anim"}`}
-                            style={{cursor: "pointer"}}
-                            onClick={() => handleSelectStation(index)}>
-                            <p style={{display: "inline-flex", gap: "0.5rem"}}>
-                                {(loading && selectedTrack?.urlObject === radioData.url) &&
-                                  <Spinner radius={10} stroke={3}/>}
-                                <span>{radioData.name}</span></p>
-                        </li>))
+                                                    className={`${selectedTrack?.urlObject === radioData.url && "selected scroll-anim"}`}
+                                                    style={{cursor: "pointer"}}
+                                                    onClick={() => handleSelectStation(index)}>
+                      <div style={{display: "inline-flex", gap: "0.5rem", marginBottom: "0.5rem"}}>
+                          {(loading && selectedTrack?.urlObject === radioData.url) &&
+                            <span><Spinner radius={10} stroke={3}/></span>}
+                        <span>{radioData.name}</span></div>
+                    </li>))
                 }
             </ol>
         </div>

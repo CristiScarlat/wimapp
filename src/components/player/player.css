@@ -79,7 +79,7 @@ input[type="file"] {
 .player-menu button {
     border: none;
     background: none;
-    color: #484747;
+    color: #6f6e6e;
     box-shadow: 1px 1px 5px black;
     padding: 0.2rem;
     border-radius: 4px;
@@ -118,6 +118,7 @@ input[type="file"] {
     overflow-x: hidden;
     text-overflow: ellipsis;
     max-height: 60vh;
+    margin: 0.3rem 0;
 }
 
 .player-playlist p {

@@ -20,6 +20,11 @@ main {
   align-items: center;
 }
 
+canvas {
+  width: 100%;
+  border-radius: 5px;
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
@@ -28,11 +33,13 @@ main {
 /* Track */
 ::-webkit-scrollbar-track {
   background: #000000;
+  border-radius: 0 5px 5px 0;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #404142;
+  border-radius: 5px;
 }
 
 /* Handle on hover */
