@@ -62,7 +62,7 @@ const Oscilloscope = ({audioSource}: PropsTypes) => {
         //@ts-ignore
         const audioCtx = new(window.AudioContext || window.webkitAudioContext)();
         // @ts-ignore
-        audioSource.current.onplay = () => {
+        audioSource.current.oncanplay = () => {
             if(audioCtx.state === "suspended") handleResumeAudioCtx(audioCtx);
         }
     }, [])

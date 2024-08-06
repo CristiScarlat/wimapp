@@ -41,7 +41,7 @@ const Player = () => {
         if (playerRef) {
             playerRef.current.crossOrigin = "anonymous";
             playerRef.current.autoplay = true;
-            playerRef.current.onplaying = () => {
+            playerRef.current.onplay = () => {
                 setPlayStatus(true);
                 tick = window.setInterval(() => {
                     if (!playerRef.current.paused) {
@@ -51,7 +51,9 @@ const Player = () => {
             }
 
             playerRef.current.onended = () => {
-                handleStop()
+                if(!radioActive && audioFiles?.length){
+                    handleNextTrack()
+                }
             }
 
             playerRef.current.onseeking = (e) => {
@@ -136,7 +138,7 @@ const Player = () => {
     const handleSeek = (e: any) => {
         setPlayProgress(e.target.value);
         // @ts-ignore
-        playerRef.currentTime = e.target.value
+        playerRef.current.currentTime = e.target.value;
     }
 
     return (
