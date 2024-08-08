@@ -118,6 +118,7 @@ input[type="file"] {
     overflow-x: hidden;
     text-overflow: ellipsis;
     max-height: 60vh;
+    min-height: 50vh;
     margin: 0.3rem 0;
 }
 
