@@ -6,7 +6,7 @@ interface PropsTypes {
 const Oscilloscope = ({audioSource}: PropsTypes) => {
 
     const canvasRef = useRef<HTMLCanvasElement>(null);
-
+    const isCtxResumed = useRef<boolean>(false);
     const draw = (analyser: any) => {
         if(canvasRef.current){
             analyser.fftSize = 2048;
@@ -54,16 +54,27 @@ const Oscilloscope = ({audioSource}: PropsTypes) => {
             draw(analyser);
         }
         audioCtx.resume()
-            .then(res => console.log("audio context resumed"))
+            .then(res => {
+                console.log("audio context resumed");
+                isCtxResumed.current = true;
+            })
             .catch(error => console.log(error))
     }
 
     useEffect(() => {
         //@ts-ignore
         const audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+        console.log(">>>", audioCtx)
         // @ts-ignore
         audioSource.current.oncanplay = () => {
-            if(audioCtx.state === "suspended") handleResumeAudioCtx(audioCtx);
+            try{
+                if(!isCtxResumed.current){
+                    handleResumeAudioCtx(audioCtx);
+                }
+            }
+            catch(e: any){
+                console.log(e)
+            }
         }
     }, [])
 
