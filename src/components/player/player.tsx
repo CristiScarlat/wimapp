@@ -5,7 +5,7 @@ import radioStations from "../../data/stations.json"
 import Range from "../range/range";
 import "./player.css";
 import Spinner from "../spinner/spinner";
-import Oscilloscope from "../osciloscope/oscilloscope";
+import EqualizerWithAnalyser from "../equalizerWithAnalyser/equalizerWithAnalyser";
 
 interface AudioFile {
     urlObject: string
@@ -143,7 +143,7 @@ const Player = () => {
 
     return (
         <div className="player-container">
-            <Oscilloscope audioSource={playerRef}/>
+            <EqualizerWithAnalyser audioSource={playerRef}/>
             <div className="player-header">
                 {!radioActive && <div className="player-menu progress-bar" style={{position: "relative"}}>
                   <input type="range" min={0} max={playerRef.current.duration} value={playProgress} onChange={handleSeek}/>
