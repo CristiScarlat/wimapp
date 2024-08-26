@@ -1,0 +1,91 @@
+.eq-wrapper {
+    padding: 0.5rem;
+    background-color: #252424;
+    border-radius: 5px;
+}
+
+.eq-header {
+    display: flex;
+    padding: 0.5rem 0.1rem;
+    border-bottom: 1px inset black;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.eq-header span {
+    padding: 0.2rem;
+    border: 1px inset black;
+    border-radius: 5px;
+    color: white;
+    text-shadow: -1px -1px 1px #000000;
+}
+
+.eq-slides-container {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 0.5rem;
+    overflow: hidden;
+    transition: height 0.5s ease-out;
+}
+
+.eq-slides-container>div{
+    min-width: 1.5rem;
+    text-align: center;
+}
+
+.eq-slides-container>div>label{
+    white-space: nowrap;
+}
+
+.eq-slide {
+    writing-mode: vertical-lr;
+    direction: rtl;
+    width: 16px;
+    vertical-align: bottom;
+    min-height: 165px;
+}
+
+.eq-slides-container input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+    width: 1rem;
+}
+
+/***** Track Styles *****/
+/***** Chrome, Safari, Opera, and Edge Chromium *****/
+.eq-slides-container input[type="range"]::-webkit-slider-runnable-track {
+    /*width: 0.5rem;*/
+    border: 1px inset black;
+    background-color: #0000008a;
+}
+
+/******** Firefox ********/
+.eq-slides-container input[type="range"]::-moz-range-track {
+    border: 1px inset black;
+    border-radius: 5px;
+    background-color: #0000008a;
+}
+
+/***** Thumb Styles *****/
+/***** Chrome, Safari, Opera, and Edge Chromium *****/
+.eq-slides-container input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    margin-top: 0px; /* Centers thumb on the track */
+    background: linear-gradient(to right, #181818, #5e5d5d, #181818);
+    height: 0.5rem;
+    width: 1rem;
+}
+
+/***** Thumb Styles *****/
+/***** Firefox *****/
+.eq-slides-container input[type="range"]::-moz-range-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    margin-top: -1px; /* Centers thumb on the track */
+    background: linear-gradient(to right, #181818, #5e5d5d, #181818);
+    height: 0.5rem;
+    width: 1rem;
+}
