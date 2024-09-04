@@ -6,6 +6,7 @@ import Range from "../range/range";
 import "./player.css";
 import Spinner from "../spinner/spinner";
 import EqualizerWithAnalyser from "../equalizerWithAnalyser/equalizerWithAnalyser";
+import {formatTime} from "../../utils/utils";
 
 interface AudioFile {
     urlObject: string
@@ -13,7 +14,7 @@ interface AudioFile {
 }
 
 const Player = () => {
-    const [audioFiles, setAudioFiles] = useState<AudioFile[] | undefined>();
+    const [audioFiles, setAudioFiles] = useState<AudioFile[]>([]);
     const [selectedTrack, setSelectedTrack] = useState<AudioFile | { urlObject: string } | undefined>();
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const [radioActive, setRadioActive] = useState<boolean>(true);
@@ -31,10 +32,18 @@ const Player = () => {
                 const urlObject: string = URL.createObjectURL(e.target.files[i]);
                 urlObjects.push({urlObject, fileName: e.target.files[i].name});
             }
-            setAudioFiles(urlObjects);
+            setAudioFiles([...audioFiles, ...urlObjects]);
             setSelectedTrack(urlObjects[0]);
         }
     }
+
+    useEffect(() => {
+        playerRef.current.onended = () => {
+            if (!radioActive && audioFiles?.length) {
+                handleNextTrack()
+            }
+        }
+    }, [audioFiles])
 
     useEffect(() => {
         let tick: number = 0;
@@ -50,14 +59,10 @@ const Player = () => {
                 }, 100)
             }
 
-            playerRef.current.onended = () => {
-                if(!radioActive && audioFiles?.length){
-                    handleNextTrack()
-                }
-            }
+
 
             playerRef.current.onseeking = (e) => {
-                setPlayProgress(playerRef.current.currentTime || 0)
+                setPlayProgress(playerRef.current.currentTime || 0);
             }
 
             playerRef.current.onloadstart = () => setLoading(true);
@@ -66,8 +71,8 @@ const Player = () => {
 
         navigator?.storage?.estimate()
             .then(estimate => {
-                if(estimate && estimate?.quota) {
-                    setAvailableSpace(Math.round(estimate.quota/(1024*1024*1024)))
+                if (estimate && estimate?.quota) {
+                    setAvailableSpace(Math.round(estimate.quota / (1024 * 1024 * 1024)))
                 }
             })
             .catch(error => {
@@ -77,6 +82,7 @@ const Player = () => {
         return () => {
             clearInterval(tick);
             if (audioFiles && audioFiles.length > 0) {
+                console.log("deci se executa si asta")
                 audioFiles.forEach(fileObject => URL.revokeObjectURL(fileObject.urlObject));
             }
         }
@@ -156,69 +162,80 @@ const Player = () => {
             <div className="player">
                 <EqualizerWithAnalyser audioSource={playerRef}/>
                 <div className="player-header">
-                        {/*{!radioActive && <div className="player-menu progress-bar" style={{position: "relative"}}>*/}
-                        {/*    {availableSpace}Gb*/}
-                        {/*</div>}*/}
-                        {!radioActive && <div className="player-menu progress-bar" style={{position: "relative"}}>
-                          <input type="range" min={0} max={playerRef.current.duration} value={playProgress} onChange={handleSeek}/>
-                        </div>}
-                        <div className="player-menu">
-                            <label htmlFor="file-upload" className="custom-file-upload">
-                                <FaRegFolderOpen size="1.2rem" color={radioActive ? "#484747" : "white"}/>
-                            </label>
-                            <input id="file-upload" type="file" multiple={true} onChange={handleFileInput}
-                                   style={{color: "transparent"}} disabled={radioActive}/>
-                            <div className="vr"/>
-                            <button onClick={() => setRadioActive(true)} className={`${radioActive ? "active" : ""}`}
-                                    style={{marginRight: "0.5rem"}}>Radio
-                            </button>
-                            <button onClick={() => setRadioActive(false)} className={`${!radioActive ? "active" : ""}`}>MP3
-                            </button>
-                            <div className="vr"/>
-                            <Range min={0} max={1} step={0.01} width="5rem" onChange={handleVolume}/>
-                        </div>
-                        <div className="player-control-container">
-                            <button className="player-control-btn" onClick={handlePrevTrack}><IoPlaySkipBack size="1.2rem"
-                                                                                                             color="white"/>
-                            </button>
-                            <div className="vr"/>
-                            <button className={`player-control-btn ${playStatus ? "pressed" : ""}`} onClick={handlePlay}><IoPlay
-                                size="1.2rem" color="white"/></button>
-                            <div className="vr"/>
-                            <button className="player-control-btn" onClick={handlePause}><IoPause size="1.2rem" color="white"/>
-                            </button>
-                            <div className="vr"/>
-                            <button className="player-control-btn" onClick={handleStop}><IoStop size="1.2rem" color="white"/>
-                            </button>
-                            <div className="vr"/>
-                            <button className="player-control-btn" onClick={handleNextTrack}><IoPlaySkipForward size="1.2rem"
-                                                                                                                color="white"/>
-                            </button>
-                        </div>
+                    {/*{!radioActive && <div className="player-menu progress-bar" style={{position: "relative"}}>*/}
+                    {/*    {availableSpace}Gb*/}
+                    {/*</div>}*/}
+                    {!radioActive && <div className="player-menu progress-bar" style={{position: "relative"}}>
+                      <input type="range" min={0} max={playerRef.current.duration || 0} value={playProgress}
+                             onChange={handleSeek}/>
+                      <div>
+                        <span>{formatTime(playerRef.current.currentTime)}</span>
+                        <span>{formatTime(playerRef.current.duration || 0)}</span>
+                      </div>
+                    </div>}
+                    <div className="player-menu">
+                        <label htmlFor="file-upload" className="custom-file-upload">
+                            <FaRegFolderOpen size="1.2rem" color={radioActive ? "#484747" : "white"}/>
+                        </label>
+                        <input id="file-upload" type="file" multiple={true} onChange={handleFileInput}
+                               style={{color: "transparent"}} disabled={radioActive}/>
+                        <div className="vr"/>
+                        <button onClick={() => setRadioActive(true)} className={`${radioActive ? "active" : ""}`}
+                                style={{marginRight: "0.5rem"}}>
+                            Radio
+                        </button>
+                        <button onClick={() => setRadioActive(false)} className={`${!radioActive ? "active" : ""}`}>
+                            MP3
+                        </button>
+                        <div className="vr"/>
+                        <Range min={0} max={1} step={0.01} width="5rem" onChange={handleVolume}/>
                     </div>
+                    <div className="player-control-container">
+                        <button className="player-control-btn" onClick={handlePrevTrack}><IoPlaySkipBack size="1.2rem"
+                                                                                                         color="white"/>
+                        </button>
+                        <div className="vr"/>
+                        <button className={`player-control-btn ${playStatus ? "pressed" : ""}`} onClick={handlePlay}>
+                            <IoPlay
+                                size="1.2rem" color="white"/></button>
+                        <div className="vr"/>
+                        <button className="player-control-btn" onClick={handlePause}><IoPause size="1.2rem"
+                                                                                              color="white"/>
+                        </button>
+                        <div className="vr"/>
+                        <button className="player-control-btn" onClick={handleStop}><IoStop size="1.2rem"
+                                                                                            color="white"/>
+                        </button>
+                        <div className="vr"/>
+                        <button className="player-control-btn" onClick={handleNextTrack}><IoPlaySkipForward
+                            size="1.2rem"
+                            color="white"/>
+                        </button>
+                    </div>
+                </div>
             </div>
             <ol className="player-playlist">
-                    {!radioActive ? (audioFiles && audioFiles.length > 0) ? audioFiles.map((fileObj: AudioFile, index: number) => (
-                            <li
-                                key={fileObj.fileName + index}
-                                style={{cursor: "pointer"}}
-                                className={`${selectedTrack?.urlObject === fileObj.urlObject && "selected scroll-anim"}`}
-                                onClick={() => handleSelectTrack(index)}>
-                                <p>{fileObj.fileName}</p>
-                            </li>
-                        )) : "select audio files from your device"
-                        : radioStations.map((radioData: any, index: number) => (
-                            !radioData?.disabled && <li key={radioData.id}
-                                                        className={`${selectedTrack?.urlObject === radioData.url && "selected scroll-anim"}`}
-                                                        style={{cursor: "pointer"}}
-                                                        onClick={() => handleSelectStation(index)}>
-                          <div style={{display: "inline-flex", gap: "0.5rem", marginBottom: "0.5rem"}}>
-                              {(loading && selectedTrack?.urlObject === radioData.url) &&
-                                <span><Spinner radius={10} stroke={3}/></span>}
-                            <span>{radioData.name}</span></div>
-                        </li>))
-                    }
-                </ol>
+                {!radioActive ? (audioFiles && audioFiles.length > 0) ? audioFiles.map((fileObj: AudioFile, index: number) => (
+                        <li
+                            key={fileObj.fileName + index}
+                            style={{cursor: "pointer"}}
+                            className={`${selectedTrack?.urlObject === fileObj.urlObject && "selected scroll-anim"}`}
+                            onClick={() => handleSelectTrack(index)}>
+                            <p>{fileObj.fileName}</p>
+                        </li>
+                    )) : "select audio files from your device"
+                    : radioStations.map((radioData: any, index: number) => (
+                        !radioData?.disabled && <li key={radioData.id}
+                                                    className={`${selectedTrack?.urlObject === radioData.url && "selected scroll-anim"}`}
+                                                    style={{cursor: "pointer"}}
+                                                    onClick={() => handleSelectStation(index)}>
+                      <div style={{display: "inline-flex", gap: "0.5rem", marginBottom: "0.5rem"}}>
+                          {(loading && selectedTrack?.urlObject === radioData.url) &&
+                            <span><Spinner radius={10} stroke={3}/></span>}
+                        <span>{radioData.name}</span></div>
+                    </li>))
+                }
+            </ol>
         </div>
     );
 }
