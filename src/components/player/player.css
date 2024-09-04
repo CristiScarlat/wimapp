@@ -11,6 +11,8 @@ input[type="file"] {
 
 .player {
     max-width: 330px;
+    display: flex;
+    flex-direction: column;
 }
 
 .player-container {
@@ -135,6 +137,20 @@ input[type="file"] {
     white-space: nowrap;
     overflow-x: hidden;
     text-overflow: ellipsis;
+}
+
+.player-info {
+    background-color: #252424;
+    display: flex;
+    justify-content: flex-start;
+    /* flex-direction: column; */
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 0.2rem;
+    color: white;
+    flex: 1;
 }
 
 /*.player-playlist li.selected.scroll-anim p{*/

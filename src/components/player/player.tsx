@@ -160,6 +160,9 @@ const Player = () => {
     return (
         <div className="player-container">
             <div className="player">
+                <div className="player-info">
+                    {!radioActive && `${availableSpace} Gb`}
+                </div>
                 <EqualizerWithAnalyser audioSource={playerRef}/>
                 <div className="player-header">
                     {/*{!radioActive && <div className="player-menu progress-bar" style={{position: "relative"}}>*/}
