@@ -22,28 +22,6 @@
 #
 # Then run create_playlists.py in the /home/pi/radio directory to create PLS files
 
-# Name of playlist file
-(Radio)
-# United Kingdom (Full list available at https://gist.github.com/bpsib/67089b959e4fa898af69fea59ad74bc3)
-[BBC - Radio 1] http://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_one/bbc_radio_one.isml/bbc_radio_one-audio%3d96000.norewind.m3u8
-[BBC - Radio 2] http://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_two/bbc_radio_two.isml/bbc_radio_two-audio%3d96000.norewind.m3u8
-[BBC - Radio 3] http://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_three/bbc_radio_three.isml/bbc_radio_three-audio%3d96000.norewind.m3u8
-[BBC - Radio 4] http://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_fourfm/bbc_radio_fourfm.isml/bbc_radio_fourfm-audio%3d96000.norewind.m3u8
-[BBC - Radio 5 live] http://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_five_live/bbc_radio_five_live.isml/bbc_radio_five_live-audio%3d96000.norewind.m3u8
-[BBC - Radio 6 Music] http://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d96000.norewind.m3u8
-[BBC - Radio 1Xtra] http://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_1xtra/bbc_1xtra.isml/bbc_1xtra-audio%3d96000.norewind.m3u8
-[BBC - Radio 4 Extra] http://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_four_extra/bbc_radio_four_extra.isml/bbc_radio_four_extra-audio%3d96000.norewind.m3u8
-[BBC - Radio 5 Live sports extra (UK only)] http://as-hls-uk-live.akamaized.net/pool_904/live/uk/bbc_radio_five_live_sports_extra/bbc_radio_five_live_sports_extra.isml/bbc_radio_five_live_sports_extra-audio%3d96000.norewind.m3u8
-[BBC - Radio 6 music] http://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d96000.norewind.m3u8
-[BBC - Radio Asian Network] http://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_asian_network/bbc_asian_network.isml/bbc_asian_network-audio%3d96000.norewind.m3u8
-[BBC - BBC World Service] http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/sbr_low/ak/bbc_world_service.m3u8
-
-# The above streams are worldwide so sports commentary, etc may not be available. For UK restricted content,
-# replace -ww- and /ww/ with -uk- and /uk/.
-# Different bitrates are available by replacing 96000 :
-# 48000 = 48k, 96000 = 96k
-# UK only: 128000 = 128k, 320000 = 320k
-
 # UK stations
 [Caroline Pirate] http://sc3.radiocaroline.net:8030/listen.m3u8
 [Thornbury Radio] https://s42.myradiostream.com/29400/listen.mp3
@@ -137,6 +115,7 @@
 
 # France
 [Radio France] http://direct.franceinter.fr/live/franceinter-midfi.mp3
+[Crooner Radio] https://croonerradio.ice.infomaniak.ch/croonerradio-midfi.mp3
 
 # Slovenian stations
 [80's Radio] http://streams.80s80s.de/web/mp3-192/streams.80s80s.de

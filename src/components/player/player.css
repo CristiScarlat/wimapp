@@ -143,9 +143,9 @@ input[type="file"] {
     background-color: #252424;
     display: flex;
     justify-content: flex-start;
-    /* flex-direction: column; */
-    align-items: center;
-    gap: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
     padding: 1rem;
     border-radius: 5px;
     margin-bottom: 0.2rem;
@@ -153,6 +153,54 @@ input[type="file"] {
     flex: 1;
 }
 
+.player-info p {
+    white-space: nowrap;
+    overflow-x: hidden;
+    margin: 0.2rem 0;
+}
+
+.scroll-container {
+    overflow: hidden;
+    width: 100%;
+}
+
+.scroll-text {
+    /* animation properties */
+    -moz-transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+    white-space: nowrap;
+
+    -moz-animation: my-animation 15s linear infinite;
+    -webkit-animation: my-animation 15s linear infinite;
+    animation: my-animation 15s linear infinite;
+}
+
+/* for Firefox */
+@-moz-keyframes my-animation {
+    from { -moz-transform: translateX(100%); }
+    to { -moz-transform: translateX(-400%); }
+}
+
+/* for Chrome */
+@-webkit-keyframes my-animation {
+    from { -webkit-transform: translateX(100%); }
+    to { -webkit-transform: translateX(-400%); }
+}
+
+@keyframes my-animation {
+    from {
+        -moz-transform: translateX(100%);
+        -webkit-transform: translateX(100%);
+        transform: translateX(100%);
+    }
+    to {
+        -moz-transform: translateX(-100%);
+        -webkit-transform: translateX(-100%);
+        transform: translateX(-400%);
+    }
+
+}
 /*.player-playlist li.selected.scroll-anim p{*/
 /*    overflow-x: unset;*/
 /*    text-overflow: unset;*/

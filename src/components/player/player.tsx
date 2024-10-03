@@ -1,7 +1,7 @@
-import {useEffect, useState, useRef} from "react";
+import {useEffect, useState, useRef, useCallback} from "react";
 import {FaRegFolderOpen} from "react-icons/fa";
 import {IoPlaySkipBack, IoPlay, IoPause, IoStop, IoPlaySkipForward} from "react-icons/io5";
-import radioStations from "../../data/stations.json"
+import radioStations from "../../data/stations-new.json"
 import Range from "../range/range";
 import "./player.css";
 import Spinner from "../spinner/spinner";
@@ -151,17 +151,25 @@ const Player = () => {
         }
     }
 
-    const handleSeek = (e: any) => {
+    const handleSeek = useCallback((e: any) => {
         setPlayProgress(e.target.value);
         // @ts-ignore
         playerRef.current.currentTime = e.target.value;
-    }
+    }, [playProgress])
+
+    //console.log(radioStations.length)
 
     return (
         <div className="player-container">
             <div className="player">
                 <div className="player-info">
-                    {!radioActive && `${availableSpace} Gb`}
+                    <p>{!radioActive && `${availableSpace} Gb`}</p>
+                    <div className="scroll-container">
+                        <div className="scroll-text">
+                            Wimapp is a player full of features still in development,
+                            so please forward any suggestions or bug findings to cristiscarlat1978@gmail.com, enjoy !
+                        </div>
+                    </div>
                 </div>
                 <EqualizerWithAnalyser audioSource={playerRef}/>
                 <div className="player-header">
@@ -227,7 +235,7 @@ const Player = () => {
                             <p>{fileObj.fileName}</p>
                         </li>
                     )) : "select audio files from your device"
-                    : radioStations.map((radioData: any, index: number) => (
+                    : radioStations.sort((a, b) => a.name.localeCompare(b.name)).map((radioData: any, index: number) => (
                         !radioData?.disabled && <li key={radioData.id}
                                                     className={`${selectedTrack?.urlObject === radioData.url && "selected scroll-anim"}`}
                                                     style={{cursor: "pointer"}}
