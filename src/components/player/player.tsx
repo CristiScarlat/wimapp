@@ -103,7 +103,7 @@ const Player = () => {
 
     const handleSelectStation = (index: number) => {
         setCurrentIndex(index)
-        const formatUrl = radioStations[index].url.replace("https", "http");
+        const formatUrl = radioStations[index].url;
         setSelectedTrack({urlObject: formatUrl})
     }
 
