@@ -119,7 +119,7 @@ const Player = () => {
                 return prev
             })
         }
-    }, [radioActive])
+    }, [radioActive, currentIndex])
 
     const handleNextTrack = useCallback(() => {
         // @ts-ignore
