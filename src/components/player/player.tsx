@@ -25,7 +25,7 @@ const Player = () => {
 
     const playerRef = useRef(new Audio());
 
-    const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             const urlObjects: { urlObject: string, fileName: string }[] = []
             for (let i: number = 0; i < e.target.files.length; i++) {
@@ -35,7 +35,7 @@ const Player = () => {
             setAudioFiles([...audioFiles, ...urlObjects]);
             setSelectedTrack(urlObjects[0]);
         }
-    }
+    }, [])
 
     useEffect(() => {
         playerRef.current.onended = () => {
@@ -67,6 +67,9 @@ const Player = () => {
 
             playerRef.current.onloadstart = () => setLoading(true);
             playerRef.current.onplaying = () => setLoading(false);
+            playerRef.current.onerror = () => {
+                if(radioActive)alert("Station offline, please pick another radios station.")
+            }
         }
 
         navigator?.storage?.estimate()
@@ -92,22 +95,22 @@ const Player = () => {
         if (selectedTrack?.urlObject) playerRef.current.src = selectedTrack.urlObject;
     }, [selectedTrack])
 
-    const handleSelectTrack = (index: number) => {
+    const handleSelectTrack = useCallback((index: number) => {
         if (audioFiles) {
             setCurrentIndex(index)
             // @ts-ignore
             const fileObj = audioFiles[index];
             setSelectedTrack(fileObj)
         }
-    }
+    }, [])
 
-    const handleSelectStation = (index: number) => {
+    const handleSelectStation = useCallback((index: number) => {
         setCurrentIndex(index)
         const formatUrl = radioStations[index].url;
         setSelectedTrack({urlObject: formatUrl})
-    }
+    }, [])
 
-    const handlePrevTrack = () => {
+    const handlePrevTrack = useCallback(() => {
         // @ts-ignore
         if (currentIndex > 0) {
             setCurrentIndex((state: number) => {
@@ -116,9 +119,9 @@ const Player = () => {
                 return prev
             })
         }
-    }
+    }, [radioActive])
 
-    const handleNextTrack = () => {
+    const handleNextTrack = useCallback(() => {
         // @ts-ignore
         if ((radioActive && currentIndex < radioStations.length - 1) || (!radioActive && currentIndex < audioFiles.length - 1)) {
             setCurrentIndex((state: number) => {
@@ -127,30 +130,30 @@ const Player = () => {
                 return next
             })
         }
-    }
+    }, [radioActive])
 
-    const handlePlay = () => {
+    const handlePlay = useCallback(() => {
         playerRef.current.play();
-    }
+    }, [])
 
-    const handlePause = () => {
+    const handlePause = useCallback(() => {
         playerRef.current.pause();
         setPlayStatus(false);
-    }
+    }, [])
 
-    const handleStop = () => {
+    const handleStop = useCallback(() => {
         if (playerRef) {
             playerRef.current.pause();
             playerRef.current.currentTime = 0;
             setPlayStatus(false);
         }
-    }
+    }, [])
 
-    const handleVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleVolume = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         if (playerRef) {
             playerRef.current.volume = Number(e.target.value);
         }
-    }
+    }, [])
 
     const handleSeek = useCallback((e: any) => {
         setPlayProgress(e.target.value);
@@ -211,10 +214,12 @@ const Player = () => {
                             <IoPlay
                                 size="1.2rem" color="white"/></button>
                         <div className="vr"/>
-                        <button className="player-control-btn" onClick={handlePause}><IoPause size="1.2rem"
+                        {!radioActive && <>
+                            <button className="player-control-btn" onClick={handlePause}><IoPause size="1.2rem"
                                                                                               color="white"/>
                         </button>
                         <div className="vr"/>
+                        </>}
                         <button className="player-control-btn" onClick={handleStop}><IoStop size="1.2rem"
                                                                                             color="white"/>
                         </button>
