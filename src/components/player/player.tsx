@@ -21,7 +21,6 @@ const Player = () => {
     const [playStatus, setPlayStatus] = useState<boolean>(false);
     const [playProgress, setPlayProgress] = useState<number>(0);
     const [loading, setLoading] = useState(false);
-    const [availableSpace, setAvailableSpace] = useState(0);
 
     const playerRef = useRef(new Audio());
 
@@ -72,16 +71,6 @@ const Player = () => {
             }
         }
 
-        navigator?.storage?.estimate()
-            .then(estimate => {
-                if (estimate && estimate?.quota) {
-                    setAvailableSpace(Math.round(estimate.quota / (1024 * 1024 * 1024)))
-                }
-            })
-            .catch(error => {
-                console.log(error)
-            })
-
         return () => {
             clearInterval(tick);
             if (audioFiles && audioFiles.length > 0) {
@@ -96,13 +85,14 @@ const Player = () => {
     }, [selectedTrack])
 
     const handleSelectTrack = useCallback((index: number) => {
+        console.log(index);
         if (audioFiles) {
             setCurrentIndex(index)
             // @ts-ignore
             const fileObj = audioFiles[index];
             setSelectedTrack(fileObj)
         }
-    }, [])
+    }, [audioFiles])
 
     const handleSelectStation = useCallback((index: number) => {
         setCurrentIndex(index)
@@ -167,7 +157,6 @@ const Player = () => {
         <div className="player-container">
             <div className="player">
                 <div className="player-info">
-                    <p>{!radioActive && `${availableSpace} Gb`}</p>
                     <div className="scroll-container">
                         <div className="scroll-text">
                             Wimapp is a player full of features still in development,
@@ -177,9 +166,6 @@ const Player = () => {
                 </div>
                 <EqualizerWithAnalyser audioSource={playerRef}/>
                 <div className="player-header">
-                    {/*{!radioActive && <div className="player-menu progress-bar" style={{position: "relative"}}>*/}
-                    {/*    {availableSpace}Gb*/}
-                    {/*</div>}*/}
                     {!radioActive && <div className="player-menu progress-bar" style={{position: "relative"}}>
                       <input type="range" min={0} max={playerRef.current.duration || 0} value={playProgress}
                              onChange={handleSeek}/>
