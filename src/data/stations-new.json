@@ -238,5 +238,11 @@
     "name": "Megaton Cafe Radio",
     "url": "https://us2.internet-radio.com/proxy/megatoncafe?mp=/stream;",
     "genre": "jazz"
+  },
+  {
+    "id": 112,
+    "name": "Urban Radio",
+    "url": "https://us1.internet-radio.com/proxy/urbanradio?mp=/stream;",
+    "genre": "jazz"
   }
 ]
