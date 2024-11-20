@@ -282,12 +282,6 @@
     "genre": "Sveriges Radio"
   },
   {
-    "id": 82,
-    "name": "1.FM - Disco Ball 70's-80's Radio",
-    "url": " http://sc-disco.1.fm:8100",
-    "genre": "Disco"
-  },
-  {
     "id": 84,
     "name": "181.FM Chilled Out",
     "url": " http://listen.181fm.com:8700",
