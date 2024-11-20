@@ -232,5 +232,11 @@
     "name": "Радио Рекорд",
     "url": " http://radiorecord.hostingradio.ru/mdl96.aacp",
     "genre": "various"
+  },
+  {
+    "id": 110,
+    "name": "Majestic Jukebox Radio",
+    "url":"https://uk3.internet-radio.com/proxy/majesticjukebox?mp=/live",
+    "genre": "jazz"
   }
 ]
