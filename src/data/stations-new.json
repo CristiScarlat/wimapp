@@ -1,11 +1,5 @@
 [
   {
-    "id": 0,
-    "name": "Caroline Pirate",
-    "url": "http://sc3.radiocaroline.net:8030/listen.m3u8",
-    "genre": "Classic Rock, Oldies"
-  },
-  {
     "id": 1,
     "name": "Thornbury Radio",
     "url": " https://s42.myradiostream.com/29400/listen.mp3",
@@ -100,12 +94,6 @@
     "name": "Radio 88.6New Rock",
     "url": " http://edge61.streamonkey.net/radio886-newrock/stream/mp3",
     "genre": "Rock"
-  },
-  {
-    "id": 27,
-    "name": "Kronehit 105,8",
-    "url": " http://onair.krone.at/kronehit.mp3",
-    "genre": "various"
   },
   {
     "id": 29,
@@ -210,34 +198,10 @@
     "genre": "Pop"
   },
   {
-    "id": 57,
-    "name": "181.FM Classical Jazz",
-    "url": " http://icyrelay.181.fm/181-classicaljazz_128k.mp3",
-    "genre": "Classical"
-  },
-  {
     "id": 58,
     "name": "Jazz Lounge",
     "url": " http://51.255.235.165:5068/stream",
     "genre": "AutoDJ"
-  },
-  {
-    "id": 59,
-    "name": "181.FM Acid Jazz",
-    "url": " http://icyrelay.181.fm/181-acidjazz_128k.mp3",
-    "genre": "Jazz"
-  },
-  {
-    "id": 60,
-    "name": "181.fm - BeBop Jazz",
-    "url": " http://icyrelay.181.fm/181-bebop_128k.mp3",
-    "genre": "Jazz"
-  },
-  {
-    "id": 61,
-    "name": "181.fm - Fusion Jazz",
-    "url": " http://icyrelay.181.fm/181-fusionjazz_128k.mp3",
-    "genre": "Jazz"
   },
   {
     "id": 63,
@@ -246,28 +210,10 @@
     "genre": "Jazz"
   },
   {
-    "id": 66,
-    "name": "Joint Radio Blues",
-    "url": " http://radio.jointil.net:9992",
-    "genre": "Blues Rock"
-  },
-  {
     "id": 67,
     "name": "wumb919st",
     "url": " http://wumb.streamguys1.com/wumb919st",
     "genre": "Other"
-  },
-  {
-    "id": 68,
-    "name": "181.FM - The Beatles Channel",
-    "url": " http://uplink.duplexfx.com:8062",
-    "genre": "Oldies"
-  },
-  {
-    "id": 69,
-    "name": "181.FM Rock 181",
-    "url": " http://relay.181.fm:8008",
-    "genre": "Rock"
   },
   {
     "id": 77,
@@ -282,87 +228,15 @@
     "genre": "Sveriges Radio"
   },
   {
-    "id": 84,
-    "name": "181.FM Chilled Out",
-    "url": " http://listen.181fm.com:8700",
-    "genre": "Easy Listening"
-  },
-  {
-    "id": 85,
-    "name": "181.FM Salsa",
-    "url": " http://relay.181.fm:8098",
-    "genre": "Christmas"
-  },
-  {
-    "id": 86,
-    "name": "ZM Todays Hit Music",
-    "url": " http://ais-nzme.streamguys1.com/nz_008_aac",
-    "genre": "various"
-  },
-  {
-    "id": 87,
-    "name": "The Hits Chch",
-    "url": " http://ais-nzme.streamguys1.com/nz_006_aac",
-    "genre": "various"
-  },
-  {
-    "id": 88,
-    "name": "Radio Hauraki",
-    "url": " http://ais-nzme.streamguys1.com/nz_009_aac",
-    "genre": "various"
-  },
-  {
-    "id": 89,
-    "name": "181.fm The Mix",
-    "url": " http://listen.livestreamingservice.com:8032",
-    "genre": "Adult"
-  },
-  {
-    "id": 90,
-    "name": "181.fm Awesome 80's",
-    "url": " http://listen.livestreamingservice.com:8000",
-    "genre": "80s"
-  },
-  {
     "id": 91,
     "name": "181.fm 90's Dance",
     "url": " http://listen.livestreamingservice.com:8140",
     "genre": "Electronic"
   },
   {
-    "id": 95,
-    "name": "181.FM Reggae Roots",
-    "url": " http://listen.181fm.com:8096",
-    "genre": "Christmas"
-  },
-  {
-    "id": 96,
-    "name": "Jah Music Mansion",
-    "url": " http://192.99.41.102:5304/stream",
-    "genre": "Reggae Dub Rocksteady Ska World Other"
-  },
-  {
-    "id": 97,
-    "name": "Ambiesphere",
-    "url": " http://uk5.internet-radio.com:8347/stream",
-    "genre": "Ambient Chillout Relaxation"
-  },
-  {
-    "id": 100,
-    "name": "Russian nashe",
-    "url": " http://nashe.streamr.ru:80/nashe-128.mp3",
-    "genre": "various"
-  },
-  {
     "id": 101,
     "name": "Радио Рекорд",
     "url": " http://radiorecord.hostingradio.ru/mdl96.aacp",
     "genre": "various"
-  },
-  {
-    "id": 103,
-    "name": "Радио России",
-    "url": " http://icecast.vgtrk.cdnvideo.ru:80/rrzonam_mp3_192kbps?36a9",
-    "genre": "Various"
   }
 ]
