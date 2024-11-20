@@ -1,6 +1,6 @@
 .eq-wrapper {
     padding: 0.5rem;
-    background-color: #252424;
+    background-color: var(--bg-color);
     border-radius: 5px;
 }
 

@@ -119,7 +119,7 @@ input[type="file"] {
 }
 
 .player-playlist {
-    color: #a5a5a5;
+    color: var(--default-text-color);
     padding-top: 1rem;
     padding-bottom: 1rem;
     border-radius: 5px;

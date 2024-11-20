@@ -1,3 +1,11 @@
+
+:root {
+  --bg-color: #252424;
+  --bg-color-translucid: #25242485;
+  --default-text-color: #a5a5a5;
+}
+
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -26,7 +34,7 @@ canvas {
   height: 80px;
   border-radius: 5px;
   /*border: 1px inset black;*/
-  background-color: #252424;
+  background-color: var(--bg-color);
 }
 
 /* width */

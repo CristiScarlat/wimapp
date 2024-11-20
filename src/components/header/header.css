@@ -1,0 +1,43 @@
+
+.header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    padding: 1rem;
+    background-color: var(--bg-color-translucid);
+    margin: auto;
+    border-radius: 10px;
+}
+
+.header-wrapper .header-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: bold;
+}
+
+.header-wrapper .header-sidebar-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#header-sidebar {
+    z-index: 9999;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 20rem;
+    border-radius: 5px 0 0 5px;
+    background: linear-gradient(90deg, #0e0c27 0%, rgb(4 41 80) 50%, #0e0c27 100%);
+    transition: width ease-in-out 0.5s;
+}
+
+.header-sidebar-head {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid var(--default-text-color);
+}
