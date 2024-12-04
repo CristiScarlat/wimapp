@@ -2,11 +2,16 @@ import "./spinner.css";
 interface PropsType {
     radius?: number
     stroke?: number
+    fixed?: boolean
 }
-const Spinner = ({radius=5, stroke=3}: PropsType) => {
+const Spinner = ({radius=5, stroke=3, fixed=false}: PropsType) => {
 
     return(
-        <div className="spinner-container" style={{width: radius, height: radius, borderWidth: stroke}}></div>
+        fixed ? <div className="spinner-fixed-container">
+                <div className="spinner-container" style={{width: radius, height: radius, borderWidth: stroke}}></div>
+            </div>
+            :
+            <div className="spinner-container" style={{width: radius, height: radius, borderWidth: stroke}}></div>
   )
 }
 

@@ -1,11 +1,13 @@
-import { useEffect, useRef } from "react";
-import EqualizerUI from "../equalizerUI/equalizerUI"
+import {useEffect, useRef, RefObject, memo, useCallback} from "react";
+import EqualizerUI from "../equalizerUI/equalizerUI";
+import { eqFrequencyList, EqPreset } from "../../data/playerPreset";
 
-const eqFrequencyList = [60, 170, 310, 600, 1000, 3000, 6000, 12000, 14000, 16000];
 interface PropsTypes {
-    audioSource: React.RefObject<HTMLMediaElement>
+    audioSource: RefObject<HTMLMediaElement>
+    presets: EqPreset[]
+    handleAddEqPreset: (x: {[freq: number]: number}) => void
 }
-const EqualizerWithAnalyser = ({audioSource}: PropsTypes) => {
+const EqualizerWithAnalyser = ({audioSource, presets, handleAddEqPreset}: PropsTypes) => {
 
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const isCtxResumed = useRef<boolean>(false);
@@ -82,27 +84,33 @@ const EqualizerWithAnalyser = ({audioSource}: PropsTypes) => {
         }
     }, [])
 
-    const handleEqValueChange = (obj: any) => {
+    const handleEqValueChange = useCallback((potData: {[key: number]: number}) => {
         eqAudioFilters.current.forEach((filterNode: BiquadFilterNode, index: number) => {
-            if(isFinite(obj[index][filterNode.frequency.value])){
-                filterNode.gain.value = obj[index][filterNode.frequency.value];
-            }
+                filterNode.gain.value = potData[filterNode.frequency.value];
+            })
+    }, [])
 
-        })
-    }
-
-    const handleResetEq = () => {
+    const handleSelectPreset = useCallback((selectedPreset: EqPreset) => {
         eqAudioFilters.current.forEach((filterNode: BiquadFilterNode, index: number) => {
-            filterNode.gain.value = 0;
+            filterNode.gain.value = selectedPreset.eq[filterNode.frequency.value];
         })
-    }
+    }, [])
+
+    console.log("render EqualizerWithAnalyser")
 
     return(
         <div>
             <canvas ref={canvasRef}/>
-            <EqualizerUI freqList={eqFrequencyList} className="eq-style" onPotChange={handleEqValueChange} onResetClick={handleResetEq}/>
+            <EqualizerUI
+                className="eq-style"
+                freqList={eqFrequencyList}
+                onPotChange={handleEqValueChange}
+                onSelectPreset={handleSelectPreset}
+                presets={presets}
+                handleAddEqPreset={handleAddEqPreset}
+            />
         </div>
     )
 }
 
-export default EqualizerWithAnalyser;
+export default memo(EqualizerWithAnalyser);

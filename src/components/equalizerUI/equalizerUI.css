@@ -53,6 +53,33 @@
     width: 1rem;
 }
 
+.eq-preset-dropdown {
+    border: 1px inset black;
+    background: #252424;
+    color: white;
+    font-weight: bold;
+    padding: 0.3rem;
+    border-radius: 5px;
+}
+
+.preset-modal-form {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.preset-modal-form>input{
+    background-color: var(--bg-color);
+    border: 1px inset black;
+    color: white;
+    outline: none;
+}
+
+.preset-modal-form>button[type=submit] {
+    border-radius: 0 5px 5px 0;
+    color: white;
+    font-weight: bold;
+}
+
 /***** Track Styles *****/
 /***** Chrome, Safari, Opera, and Edge Chromium *****/
 .eq-slides-container input[type="range"]::-webkit-slider-runnable-track {

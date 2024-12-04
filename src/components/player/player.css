@@ -26,6 +26,10 @@ input[type="file"] {
 }
 
 .player-control-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
     background-color: gray;
     border-radius: 4px;
     border: black;
@@ -34,6 +38,11 @@ input[type="file"] {
     min-width: 36px;
     min-height: 28px;
     font-size: 14px;
+}
+
+.player-control-btn span {
+    font-weight: bold;
+    color: white;
 }
 
 .player-control-btn:active {
@@ -134,6 +143,10 @@ input[type="file"] {
     min-width: 290px;
 }
 
+.player-playlist li{
+    margin: 0.5rem;
+}
+
 .player-playlist p {
     white-space: nowrap;
     overflow-x: hidden;
@@ -158,6 +171,34 @@ input[type="file"] {
     white-space: nowrap;
     overflow-x: hidden;
     margin: 0.2rem 0;
+}
+
+.player-playlist-wrapper {
+    border-radius: 5px;
+    background-color: #252424;
+    flex: 1 1;
+    max-width: 40rem;
+}
+
+.player-playlist-header {
+    padding: 0.5rem 1rem;
+    border-bottom: 1px inset black;
+}
+
+.player-playlist-radio {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    width: 97%;
+    padding: 0.5rem 0;
+    background-color: var(--bg-color-translucid);
+    /*border-bottom: 1px solid #8080803b;*/
+}
+
+.player-playlist-radio:hover {
+    background-color: #8080803b;
 }
 
 .scroll-container {
@@ -220,7 +261,11 @@ input[type="file"] {
 }
 
 .player-container li.selected {
-    color: #195ac4;
+    color: #195ac4!important;
+}
+
+.player-container li.selected .link-btn {
+    color: #195ac4!important;
 }
 
 .progress-bar {

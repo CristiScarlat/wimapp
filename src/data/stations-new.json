@@ -244,5 +244,35 @@
     "name": "Urban Radio",
     "url": "https://us1.internet-radio.com/proxy/urbanradio?mp=/stream;",
     "genre": "jazz"
+  },
+  {
+    "id": 113,
+    "name": "JB Radio",
+    "url": "https://maggie.torontocast.com:8076/flac",
+    "genre": "Dance"
+  },
+  {
+    "id": 114,
+    "name": "Europa FM",
+    "url": "https://astreaming.edi.ro:8443/EuropaFM_aac",
+    "genre": "Dance"
+  },
+  {
+    "id": 115,
+    "name": "Kiss FM",
+    "url": "https://live.kissfm.ro/kissfm.aacp",
+    "genre": "Dance"
+  },
+  {
+    "id": 116,
+    "name": "Magic FM",
+    "url": "https://live.magicfm.ro/magicfm.aacp",
+    "genre": "Dance"
+  },
+  {
+    "id": 117,
+    "name": "Romania Actualitati",
+    "url": "https://stream4.srr.ro:8443/romania-actualitati",
+    "genre": "Eclectic,Rock,Blues"
   }
 ]

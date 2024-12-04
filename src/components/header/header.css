@@ -41,3 +41,52 @@
     align-items: center;
     border-bottom: 2px solid var(--default-text-color);
 }
+
+.header-sidebar-body>div {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+.header-sidebar-body>div>span {
+    text-wrap: nowrap;
+    max-width: 70%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.header-sidebar-body form {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+    border: 2px solid var(--default-text-color);
+    margin: 1rem;
+    border-radius: 5px;
+}
+
+.header-sidebar-body form>input {
+    padding: 0.5rem;
+    border-radius: 5px;
+}
+
+.header-sidebar-body form>button {
+    padding: 0.5rem;
+    color: white;
+    font-weight: bold;
+}
+
+.header-sidebar-logout-btn {
+    color: white;
+    font-weight: bold;
+}
+
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    border-bottom: 1px solid gray;
+    font-weight: bold;
+}
