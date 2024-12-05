@@ -1,7 +1,7 @@
 
 :root {
   --bg-color: #252424;
-  --bg-color-translucid: #25242485;
+  --bg-color-translucid: #25242447;
   --default-text-color: #a5a5a5;
   min-height: 100vh;
 }
@@ -27,8 +27,14 @@ input:focus, input:active, input:focus-visible {
   background-color: var(--bg-color)!important;
 }
 
-main {
+#root {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
 }
 
 canvas {

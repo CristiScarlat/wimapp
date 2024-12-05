@@ -79,7 +79,7 @@ const Header = () => {
     }
 
     return (
-        <div className="header-wrapper">
+        <header className="header-wrapper">
             <div className="header-logo"><img src="/logo192_white.png" alt="logo" width={25}/>WIMAPP</div>
             <div style={{display: "flex", alignItems: "center", gap: "1rem"}}>
                 {user && <button className="btn" onClick={handleSignout}>
@@ -117,7 +117,7 @@ const Header = () => {
                     </form>}
                 </div>
             </div>
-        </div>
+        </header>
     )
 }
 

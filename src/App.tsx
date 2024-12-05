@@ -1,13 +1,16 @@
 import Player from "./components/player/player";
 import Header from "./components/header/header";
-import Modal from "./components/modal/modal";
+import Footer from "./components/footer/footer";
 
 function App() {
     return(
-        <main>
+        <>
             <Header/>
-            <Player />
-        </main>
+            <main>
+                <Player />
+            </main>
+            <Footer/>
+        </>
     )
 }
 export default App;

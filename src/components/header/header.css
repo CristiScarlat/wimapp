@@ -3,10 +3,9 @@
     display: flex;
     justify-content: space-between;
     color: white;
-    padding: 1rem;
+    padding: 1rem 0;
     background-color: var(--bg-color-translucid);
-    margin: auto;
-    border-radius: 10px;
+    width: 100%;
 }
 
 .header-wrapper .header-logo {
@@ -15,12 +14,14 @@
     align-items: center;
     gap: 0.5rem;
     font-weight: bold;
+    margin-left: 1rem;
 }
 
 .header-wrapper .header-sidebar-btn {
     background: transparent;
     border: none;
     cursor: pointer;
+    margin-right: 1rem;
 }
 
 #header-sidebar {
