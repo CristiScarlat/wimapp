@@ -40,6 +40,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
+          CI: ""
           REACT_APP_apiKey: ${{secrets.REACT_APP_APIKEY}}
           REACT_APP_authDomain: ${{secrets.REACT_APP_AUTHDOMAIN}}
           REACT_APP_projectId: ${{secrets.REACT_APP_PROJECTID}}
