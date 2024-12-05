@@ -51,15 +51,17 @@ const EqualizerUI = ({freqList, className, onPotChange, onSelectPreset, presets,
     }
 
     const handleSetPreset = (selectedPreset: SyntheticEvent<HTMLSelectElement, Event>) => {
-        // const selectedPresetName: string = selectedPreset.currentTarget.value;
-        // const found = presets.find((preset: EqPreset) => preset.name === selectedPresetName);
-        // if(found){
-        //     const newList = freqList.map((freq: number) => {
-        //         return {[freq]: found.eq[freq]}
-        //     })
-        //     onSelectPreset(found)
-        //     setEqValues(newList)
-        // }
+        const selectedPresetName: string = selectedPreset.currentTarget.value;
+        const found = presets.find((preset: EqPreset) => preset.name === selectedPresetName);
+        console.log(presets, found)
+        const newValues = {...eqValues}
+        if(found){
+            for(const freq in newValues){
+                newValues[freq] = found.eq[freq];
+            }
+            setEqValues(newValues)
+            onSelectPreset(found)
+        }
     }
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
