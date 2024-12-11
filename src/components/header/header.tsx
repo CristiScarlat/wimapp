@@ -45,7 +45,6 @@ const Header = () => {
         }
         const email: string = data.email;
         const psw: string = data.password;
-        console.log({ email, psw });
         if(formType){
             login(email, psw, false)
                 .then(() => {
@@ -59,7 +58,6 @@ const Header = () => {
             const fullName: string = data.fullName;
             registerUser(email, psw)
                 .then((data: UserCredential) => {
-                    console.log({fullName, data})
                     setLoading(false)
                 })
                 .catch((err) => {

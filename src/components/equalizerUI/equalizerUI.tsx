@@ -39,8 +39,6 @@ const EqualizerUI = ({freqList, className, onPotChange, onSelectPreset}: PropsTy
     //@ts-ignore
     const {state: {user}} = useContext(Ctx);
 
-    console.log(user)
-
     useEffect(() => {
         const values: {[freq: number]: number} = {};
         freqList.forEach((freq: number) => {
@@ -49,7 +47,6 @@ const EqualizerUI = ({freqList, className, onPotChange, onSelectPreset}: PropsTy
         setEqValues(values)
         getEqPreset(user?.uid)
             .then((data: any) => {
-                console.log(data)
                 setPresetsList(data)
             })
             .catch(err => console.log(err))
@@ -133,7 +130,7 @@ const EqualizerUI = ({freqList, className, onPotChange, onSelectPreset}: PropsTy
         return presets.filter(preset => !defaultPresets.includes(preset.name));
     }
 
-    console.log("render EqualiserUI", {presetsList})
+    console.log("render EqualiserUI")
 
     return(
         <div className={`${className} eq-wrapper`}>

@@ -74,7 +74,6 @@ const Player = () => {
         if (user) {
             getFavoriteStationsToDB(user.uid)
                 .then(data => {
-                    console.log(data)
                     setFavoriteStations(data)
                 })
                 .catch(err => console.log(err))
@@ -127,7 +126,6 @@ const Player = () => {
         return () => {
             clearInterval(tick);
             if (audioFiles && audioFiles.length > 0) {
-                console.log("deci se executa si asta")
                 audioFiles.forEach(fileObject => URL.revokeObjectURL(fileObject.urlObject));
             }
         }
