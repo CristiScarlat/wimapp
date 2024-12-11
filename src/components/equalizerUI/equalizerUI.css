@@ -63,21 +63,62 @@
 }
 
 .preset-modal-form {
+    width: 100%;
+}
+
+.preset-modal-form div:first-child{
     display: flex;
     flex-wrap: nowrap;
 }
 
-.preset-modal-form>input{
-    background-color: var(--bg-color);
-    border: 1px inset black;
+.preset-modal-form div:first-child>button{
+    background-color: var(--default-theme-color);
+    border-radius: 0px 5px 5px 0px;
     color: white;
-    outline: none;
+    white-space: nowrap;
+    padding: 0 1rem;
+    font-weight: bold;
 }
 
-.preset-modal-form>button[type=submit] {
-    border-radius: 0 5px 5px 0;
+.preset-modal-form>div:nth-child(2){
+    border-bottom: 1px inset black;
+    margin-bottom: 0.5rem;
+}
+
+.preset-modal-form div:nth-child(2) div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    margin: 0.5rem 0;
+    min-height: 1rem;
+}
+
+.preset-modal-form div:nth-child(2) div button{
+    border: none;
+    background: none;
+    outline: none;
+    color: white;
+    cursor: pointer;
+}
+
+.preset-modal-form div:nth-child(2)>div>div>button:first-child {
+    margin-right: 0.5rem;
+}
+
+.preset-modal-form input{
+    /*background-color: var(--bg-color);*/
+    border: 1px inset black;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    width: 100%;
+}
+
+.preset-modal-form>button {
     color: white;
     font-weight: bold;
+    float: right;
+    background-color: var(--default-theme-color);
 }
 
 /***** Track Styles *****/

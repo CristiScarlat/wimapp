@@ -58,7 +58,9 @@ export const getEqPresetsFromDB = async (userId: string) => {
         try{
             const docsRef = doc(db, 'wimapp', userId);
             const docSnap = await getDoc(docsRef);
-            return docSnap.get("equalizer")
+            const res = docSnap.get("equalizer");
+            if(res) return Object.values(res);
+            return [];
         }
         catch(error){
             throw new Error("Could not read data from db")
@@ -66,20 +68,18 @@ export const getEqPresetsFromDB = async (userId: string) => {
     }
 }
 
-export const addEqPresetsToDB = async (userId: string, eqPresetData: EqPreset) => {
+const arrayToMap = (arr: any[]) => {
+    const obj = {}
+    // @ts-ignore
+    arr.forEach((item: any, index: number) => obj[index] = item)
+    return obj
+}
+
+export const saveEqPresetsToDB = async (userId: string, eqPresetsData: EqPreset[]) => {
     if(userId){
         try{
-            const id = new Date().getTime();
             const docsRef = doc(db, 'wimapp', userId);
-            const docsSnap = await getDoc(docsRef);
-            if (docsSnap.exists()) {
-                await updateDoc(docsRef, {equalizer: arrayUnion(eqPresetData)});
-            } else {
-                // docSnap.data() will be undefined in this case
-                console.log("No such document!");
-                await setDoc(docsRef, {equalizer: arrayUnion(eqPresetData)});
-            }
-
+            await setDoc(docsRef, {equalizer: arrayToMap(eqPresetsData)}, {merge: true});
         }
         catch(error){
             console.log(error)

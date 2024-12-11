@@ -82,6 +82,7 @@
 .header-sidebar-logout-btn {
     color: white;
     font-weight: bold;
+    background-color: var(--default-theme-color)!important;
 }
 
 .form-header {

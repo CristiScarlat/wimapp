@@ -4,10 +4,8 @@ import { eqFrequencyList, EqPreset } from "../../data/playerPreset";
 
 interface PropsTypes {
     audioSource: RefObject<HTMLMediaElement>
-    presets: EqPreset[]
-    handleAddEqPreset: (x: {[freq: number]: number}) => void
 }
-const EqualizerWithAnalyser = ({audioSource, presets, handleAddEqPreset}: PropsTypes) => {
+const EqualizerWithAnalyser = ({audioSource}: PropsTypes) => {
 
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const isCtxResumed = useRef<boolean>(false);
@@ -29,7 +27,7 @@ const EqualizerWithAnalyser = ({audioSource, presets, handleAddEqPreset}: PropsT
                 canvasCtx.fillStyle = "#252424";
                 canvasCtx.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
                 for (let i = 0; i < bufferLength; i++) {
-                    barHeight = dataArray[i] / 2;
+                    barHeight = dataArray[i] - (dataArray[i]/2);
                     canvasCtx.fillStyle = `rgb(${barHeight + 100} 0 255)`;
                     canvasCtx.fillRect(x, canvasRef.current.height - barHeight, barWidth, barHeight);
                     x += barWidth + 1;
@@ -56,7 +54,7 @@ const EqualizerWithAnalyser = ({audioSource, presets, handleAddEqPreset}: PropsT
             eqAudioFilters.current[i-1].connect(eqAudioFilters.current[i])
         }
         eqAudioFilters.current[eqAudioFilters.current.length-1].connect(analyser);
-        analyser.connect(audioCtx.destination);
+        eqAudioFilters.current[eqAudioFilters.current.length-1].connect(audioCtx.destination);
         if(canvasRef.current){
             draw(analyser);
         }
@@ -106,8 +104,6 @@ const EqualizerWithAnalyser = ({audioSource, presets, handleAddEqPreset}: PropsT
                 freqList={eqFrequencyList}
                 onPotChange={handleEqValueChange}
                 onSelectPreset={handleSelectPreset}
-                presets={presets}
-                handleAddEqPreset={handleAddEqPreset}
             />
         </div>
     )

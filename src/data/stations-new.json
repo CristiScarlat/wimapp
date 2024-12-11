@@ -2,235 +2,235 @@
   {
     "id": 1,
     "name": "Thornbury Radio",
-    "url": " https://s42.myradiostream.com/29400/listen.mp3",
+    "url": "https://s42.myradiostream.com/29400/listen.mp3",
     "genre": "Misc"
   },
   {
     "id": 2,
     "name": "NPO Radio 1",
-    "url": " http://icecast.omroep.nl/radio1-bb-mp3",
+    "url": "http://icecast.omroep.nl/radio1-bb-mp3",
     "genre": "Talk"
   },
   {
     "id": 3,
     "name": "NPO Radio 2",
-    "url": " http://icecast.omroep.nl/radio2-bb-mp3",
+    "url": "http://icecast.omroep.nl/radio2-bb-mp3",
     "genre": "Mixed"
   },
   {
     "id": 4,
     "name": "NPO Radio 3fm",
-    "url": " http://icecast.omroep.nl/3fm-bb-mp3",
+    "url": "http://icecast.omroep.nl/3fm-bb-mp3",
     "genre": "Pop"
   },
   {
     "id": 5,
     "name": "NPO Klassiek",
-    "url": " http://icecast.omroep.nl/radio4-bb-mp3",
+    "url": "http://icecast.omroep.nl/radio4-bb-mp3",
     "genre": "Classical"
   },
   {
     "id": 6,
     "name": "Radio 10 NL",
-    "url": " http://stream.radio10.nl/radio10",
+    "url": "http://stream.radio10.nl/radio10",
     "genre": "Top 40"
   },
   {
     "id": 17,
     "name": "Arabella Wien",
-    "url": " https://frontend.streams.arabella.at/arabella-wien?aggregator=arabella-playlistfile",
+    "url": "https://frontend.streams.arabella.at/arabella-wien?aggregator=arabella-playlistfile",
     "genre": "Adult Contemporary"
   },
   {
     "id": 18,
     "name": "Arabella Lovesong",
-    "url": " https://frontend.streams.arabella.at/arabella-lovesongs/stream/mp3?aggregator=arabella-playlistfile",
+    "url": "https://frontend.streams.arabella.at/arabella-lovesongs/stream/mp3?aggregator=arabella-playlistfile",
     "genre": "Softpop"
   },
   {
     "id": 19,
     "name": "Arabella Austropop",
-    "url": " https://frontend.streams.arabella.at/arabella-austropop/stream/mp3?aggregator=arabella-playlistfile",
+    "url": "https://frontend.streams.arabella.at/arabella-austropop/stream/mp3?aggregator=arabella-playlistfile",
     "genre": "Austrian Music"
   },
   {
     "id": 20,
     "name": "Arabella Holiday",
-    "url": " https://frontend.streams.arabella.at/arabella-holiday/stream/mp3?aggregator=arabella-playlistfile",
+    "url": "https://frontend.streams.arabella.at/arabella-holiday/stream/mp3?aggregator=arabella-playlistfile",
     "genre": "Adult Contemporary"
   },
   {
     "id": 21,
     "name": "Arabella 70er",
-    "url": " https://frontend.streams.arabella.at/arabella-70er?aggregator=arabella-playlistfile",
+    "url": "https://frontend.streams.arabella.at/arabella-70er?aggregator=arabella-playlistfile",
     "genre": "70s"
   },
   {
     "id": 22,
     "name": "Arabella 80er",
-    "url": " https://frontend.streams.arabella.at/arabella-80er?aggregator=arabella-playlistfile",
+    "url": "https://frontend.streams.arabella.at/arabella-80er?aggregator=arabella-playlistfile",
     "genre": "80s"
   },
   {
     "id": 23,
     "name": "Radio 88.6 On Air",
-    "url": " http://edge09.streamonkey.net/radio886-onair/stream/mp3",
+    "url": "http://edge09.streamonkey.net/radio886-onair/stream/mp3",
     "genre": "Rock"
   },
   {
     "id": 24,
     "name": "Radio 88.6 Hard Rock",
-    "url": " http://edge09.streamonkey.net/radio886-hardrock/stream/mp3",
+    "url": "http://edge09.streamonkey.net/radio886-hardrock/stream/mp3",
     "genre": "Hard Rock"
   },
   {
     "id": 25,
     "name": "Radio 88.6 Classik Rock",
-    "url": " http://edge09.streamonkey.net/radio886-classicrock/stream/mp3",
+    "url": "http://edge09.streamonkey.net/radio886-classicrock/stream/mp3",
     "genre": "Classic Rock"
   },
   {
     "id": 26,
     "name": "Radio 88.6New Rock",
-    "url": " http://edge61.streamonkey.net/radio886-newrock/stream/mp3",
+    "url": "http://edge61.streamonkey.net/radio886-newrock/stream/mp3",
     "genre": "Rock"
   },
   {
     "id": 29,
     "name": "Radio SRF 1",
-    "url": " http://stream.srg-ssr.ch/m/drs1/aacp_96",
+    "url": "http://stream.srg-ssr.ch/m/drs1/aacp_96",
     "genre": "Entertainment"
   },
   {
     "id": 30,
     "name": "Radio SRF 2 Kultur",
-    "url": " http://stream.srg-ssr.ch/m/drs2/aacp_96",
+    "url": "http://stream.srg-ssr.ch/m/drs2/aacp_96",
     "genre": "Entertainment"
   },
   {
     "id": 31,
     "name": "Radio SRF 3",
-    "url": " http://stream.srg-ssr.ch/m/drs3/aacp_96",
+    "url": "http://stream.srg-ssr.ch/m/drs3/aacp_96",
     "genre": "Entertainment"
   },
   {
     "id": 32,
     "name": "Radio SRF 4 News",
-    "url": " http://stream.srg-ssr.ch/m/drs4news/aacp_96",
+    "url": "http://stream.srg-ssr.ch/m/drs4news/aacp_96",
     "genre": "Entertainment"
   },
   {
     "id": 33,
     "name": "Radio SRF Musikwelle",
-    "url": " http://stream.srg-ssr.ch/m/drsmw/aacp_96",
+    "url": "http://stream.srg-ssr.ch/m/drsmw/aacp_96",
     "genre": "Entertainment"
   },
   {
     "id": 34,
     "name": "Radio SRF Virus",
-    "url": " http://stream.srg-ssr.ch/m/drsvirus/aacp_96",
+    "url": "http://stream.srg-ssr.ch/m/drsvirus/aacp_96",
     "genre": "Entertainment"
   },
   {
     "id": 35,
     "name": "Rete Uno",
-    "url": " http://stream.srg-ssr.ch/m/reteuno/aacp_96",
+    "url": "http://stream.srg-ssr.ch/m/reteuno/aacp_96",
     "genre": "Entertainment"
   },
   {
     "id": 36,
     "name": "Rete Due",
-    "url": " http://stream.srg-ssr.ch/m/retedue/aacp_96",
+    "url": "http://stream.srg-ssr.ch/m/retedue/aacp_96",
     "genre": "Entertainment"
   },
   {
     "id": 37,
     "name": "Rete Tre",
-    "url": " http://stream.srg-ssr.ch/m/retetre/aacp_96",
+    "url": "http://stream.srg-ssr.ch/m/retetre/aacp_96",
     "genre": "Entertainment"
   },
   {
     "id": 38,
     "name": "Radio RTR",
-    "url": " http://stream.srg-ssr.ch/m/rr/aacp_96",
+    "url": "http://stream.srg-ssr.ch/m/rr/aacp_96",
     "genre": "Entertainment"
   },
   {
     "id": 39,
     "name": "Radio Swiss Classic (fr)",
-    "url": " http://stream.srg-ssr.ch/m/rsc_fr/aacp_96",
+    "url": "http://stream.srg-ssr.ch/m/rsc_fr/aacp_96",
     "genre": "Entertainment"
   },
   {
     "id": 40,
     "name": "Radio Swiss Classic (de)",
-    "url": " http://stream.srg-ssr.ch/m/rsc_de/aacp_96",
+    "url": "http://stream.srg-ssr.ch/m/rsc_de/aacp_96",
     "genre": "Entertainment"
   },
   {
     "id": 41,
     "name": "Radio Swiss Classic (it)",
-    "url": " http://stream.srg-ssr.ch/m/rsc_it/aacp_96",
+    "url": "http://stream.srg-ssr.ch/m/rsc_it/aacp_96",
     "genre": "Entertainment"
   },
   {
     "id": 42,
     "name": "Radio Swiss Jazz",
-    "url": " http://stream.srg-ssr.ch/m/rsj/aacp_96",
+    "url": "http://stream.srg-ssr.ch/m/rsj/aacp_96",
     "genre": "Entertainment"
   },
   {
     "id": 43,
     "name": "Radio Swiss Pop",
-    "url": " http://stream.srg-ssr.ch/m/rsp/aacp_96",
+    "url": "http://stream.srg-ssr.ch/m/rsp/aacp_96",
     "genre": "Entertainment"
   },
   {
     "id": 49,
     "name": "Antenne Bayern 80er -Kulthits",
-    "url": " http://mp3channels.webradio.antenne.de/80er-kulthits",
+    "url": "http://mp3channels.webradio.antenne.de/80er-kulthits",
     "genre": "Pop"
   },
   {
     "id": 50,
     "name": "Antenne Bayern 90er -Hits",
-    "url": " http://mp3channels.webradio.antenne.de/90er-hits",
+    "url": "http://mp3channels.webradio.antenne.de/90er-hits",
     "genre": "Pop"
   },
   {
     "id": 58,
     "name": "Jazz Lounge",
-    "url": " http://51.255.235.165:5068/stream",
+    "url": "http://51.255.235.165:5068/stream",
     "genre": "AutoDJ"
   },
   {
     "id": 63,
     "name": "Crooner Radio",
-    "url": " https://croonerradio.ice.infomaniak.ch/croonerradio-midfi.mp3",
+    "url": "https://croonerradio.ice.infomaniak.ch/croonerradio-midfi.mp3",
     "genre": "Jazz"
   },
   {
     "id": 67,
     "name": "wumb919st",
-    "url": " http://wumb.streamguys1.com/wumb919st",
+    "url": "http://wumb.streamguys1.com/wumb919st",
     "genre": "Other"
   },
   {
     "id": 77,
     "name": "Radio Swiss Classic",
-    "url": " http://stream.srg-ssr.ch/m/rsc_de/mp3_128",
+    "url": "http://stream.srg-ssr.ch/m/rsc_de/mp3_128",
     "genre": "Entertainment"
   },
   {
     "id": 78,
     "name": "P2 Musik",
-    "url": " http://http-live.sr.se/p2musik-mp3-192",
+    "url": "http://http-live.sr.se/p2musik-mp3-192",
     "genre": "Sveriges Radio"
   },
   {
     "id": 101,
     "name": "Радио Рекорд",
-    "url": " http://radiorecord.hostingradio.ru/mdl96.aacp",
+    "url": "http://radiorecord.hostingradio.ru/mdl96.aacp",
     "genre": "various"
   },
   {

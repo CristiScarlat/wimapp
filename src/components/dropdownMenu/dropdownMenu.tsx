@@ -1,5 +1,4 @@
 import { SyntheticEvent } from "react";
-import {IoMdAddCircleOutline} from "react-icons/io";
 
 interface Props {
     items: string[]

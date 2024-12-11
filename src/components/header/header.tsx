@@ -98,7 +98,7 @@ const Header = () => {
                 <div className="header-sidebar-body">
                     {user ? <div>
                         <span>{user.displayName || user.email}</span>
-                            <button className="player-control-btn header-sidebar-logout-btn" onClick={handleSignout}>Logout</button>
+                            <button className="btn header-sidebar-logout-btn" onClick={handleSignout}>Logout</button>
                         </div>
                         :
                     <form onSubmit={handleSubmitAuth}>

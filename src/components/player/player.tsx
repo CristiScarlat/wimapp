@@ -41,7 +41,6 @@ const Player = () => {
     const [loading, setLoading] = useState(false);
     const [favoriteStations, setFavoriteStations] = useState<number[]>([]);
     const [filterStationsBy, setFilterStationsBy] = useState<'all' | 'favorites'>('all');
-    const [eqPresets, setEqPresets] = useState<EqPreset[]>([]);
     //@ts-ignore
     const {state: {user, globalSpinner}, dispatch} = useContext(Ctx);
 
@@ -60,7 +59,6 @@ const Player = () => {
     }, [])
 
     useEffect(() => {
-        console.log(filterStationsBy)
         switch(filterStationsBy){
             case 'all':
                 setRadiosStationsList(radioStations)
@@ -81,12 +79,6 @@ const Player = () => {
                 })
                 .catch(err => console.log(err))
         }
-
-        getEqPreset(user?.uid)
-            .then((data: EqPreset[]) => {
-                setEqPresets(data)
-            })
-            .catch(err => console.log(err))
     }, [user])
 
     useEffect(() => {
@@ -146,7 +138,6 @@ const Player = () => {
     }, [selectedTrack])
 
     const handleSelectTrack = useCallback((index: number) => {
-        console.log(index);
         if (audioFiles) {
             setCurrentIndex(index)
             // @ts-ignore
@@ -251,10 +242,7 @@ const Player = () => {
         setFilterStationsBy(filter => filter === "favorites" ? "all" : "favorites")
     }
 
-    const handleAddEqPreset = useCallback((eqData:  { [freq: number]: number }) => {
-        //saveEqPreset(user.uid, {name: "test", eq: eqData})
-        console.log(eqData)
-    }, [])
+
 
     return (
         <div className="player-container">
@@ -267,11 +255,7 @@ const Player = () => {
                         </div>
                     </div>
                 </div>
-                <EqualizerWithAnalyser
-                    audioSource={playerRef}
-                    presets={eqPresets}
-                    handleAddEqPreset={handleAddEqPreset}
-                />
+                <EqualizerWithAnalyser audioSource={playerRef}/>
                 <div className="player-header">
                     {!radioActive && <div className="player-menu progress-bar" style={{position: "relative"}}>
                         <input type="range" min={0} max={playerRef.current.duration || 0} value={playProgress}
@@ -326,8 +310,8 @@ const Player = () => {
             </div>
             <div className="player-playlist-wrapper">
                 <div className="player-playlist-header">
-                    {user && <button className="player-control-btn" onClick={toggleFilterByFavorites}>
-                        <FaHeart color={filterStationsBy === "favorites" ? "red" : "white"} size="1.2rem"/>
+                    {(radioActive && user) && <button className="icon-btn btn" onClick={toggleFilterByFavorites}>
+                        {filterStationsBy === "favorites" ? <FaHeart color="white" size="1.2rem"/> : <FaRegHeart color="white" size="1.2rem"/>}
                         <span>Favorites</span>
                     </button>}
                 </div>
