@@ -1,5 +1,5 @@
 import {useEffect, useState, useRef, useCallback, useContext, FormEvent} from "react";
-import {FaRegFolderOpen} from "react-icons/fa";
+import {FaRegFolderOpen, FaAngleDoubleRight, FaAngleDoubleLeft} from "react-icons/fa";
 import {IoPlaySkipBack, IoPlay, IoPause, IoStop, IoPlaySkipForward} from "react-icons/io5";
 import radioStations from "../../data/stations-new.json"
 import Range from "../range/range";
@@ -16,6 +16,7 @@ import {
 } from "../../services/db";
 
 import {EqPreset, getEqPreset, saveEqPreset} from "../../data/playerPreset";
+import {getAllStations} from "../../services/RBApi";
 
 interface AudioFile {
     urlObject: string
@@ -27,12 +28,16 @@ interface RadioStation {
     name: string
     url: string
     genre: string
+    country: string
+    homepage: string
+    bitrate: number
+    favicon: string
 }
 
 
 const Player = () => {
     const [audioFiles, setAudioFiles] = useState<AudioFile[]>([]);
-    const [radiosStationsList, setRadiosStationsList] = useState<RadioStation[]>(radioStations);
+    const [radiosStationsList, setRadiosStationsList] = useState<RadioStation[]>([]);
     const [selectedTrack, setSelectedTrack] = useState<AudioFile | { urlObject: string } | undefined>();
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const [radioActive, setRadioActive] = useState<boolean>(true);
@@ -41,10 +46,12 @@ const Player = () => {
     const [loading, setLoading] = useState(false);
     const [favoriteStations, setFavoriteStations] = useState<number[]>([]);
     const [filterStationsBy, setFilterStationsBy] = useState<'all' | 'favorites'>('all');
+    const [stationsPage, setStationsPage] = useState<number>(0);
     //@ts-ignore
     const {state: {user, globalSpinner}, dispatch} = useContext(Ctx);
 
     const playerRef = useRef(new Audio());
+    const stationInfoRef= useRef<RadioStation & {page: number, index: number} | undefined>();
 
     const handleFileInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -59,14 +66,43 @@ const Player = () => {
     }, [])
 
     useEffect(() => {
-        switch(filterStationsBy){
-            case 'all':
-                setRadiosStationsList(radioStations)
-                break;
-            case "favorites":
-                setRadiosStationsList(radioStations.filter(radioData => isFavorite(radioData.id)))
-                break;
-        }
+        getAllStations(100, stationsPage*100)
+            .then((data: any) => {
+                console.log(data);
+                const formatData: RadioStation[] = data.map((obj: any): RadioStation => ({
+                    id: obj.stationuuid,
+                    name: obj.name.trim() === "" ? "no name" : obj.name.trim(),
+                    url: obj.url_resolved,
+                    genre: obj.tags,
+                    country: obj.country,
+                    homepage: obj.homepage,
+                    bitrate: obj.bitrate,
+                    favicon: obj.favicon
+                }))
+                setRadiosStationsList(formatData);
+            })
+            .catch((error: any) => {
+                console.log(error)
+            })
+    }, [stationsPage]);
+
+    const handleNextStationsPage = () => {
+        setStationsPage(page => page + 1)
+    }
+
+    const handlePrevStationsPage = () => {
+        if(stationsPage > 0)setStationsPage(page => page - 1)
+    }
+
+    useEffect(() => {
+        // switch(filterStationsBy){
+        //     case 'all':
+        //         setRadiosStationsList(radioStations)
+        //         break;
+        //     case "favorites":
+        //         setRadiosStationsList(radioStations.filter(radioData => isFavorite(radioData.id)))
+        //         break;
+        // }
 
     }, [filterStationsBy])
 
@@ -108,16 +144,7 @@ const Player = () => {
             }
 
             playerRef.current.onloadstart = () => setLoading(true);
-            playerRef.current.onplaying = () => {
-                setLoading(false);
-                if(selectedTrack?.urlObject){
-                    fetch(selectedTrack.urlObject, {method: 'HEAD'})
-                        .then(res => {
-                            console.log(res.headers.forEach((val: string, key: string) => console.log({[key]: val})))
-                        })
-                        .catch(err => console.log(err))
-                }
-            }
+            playerRef.current.onplaying = () => setLoading(false);
             playerRef.current.onerror = () => {
                 if (radioActive) alert("Station offline, please pick another radios station.")
             }
@@ -133,6 +160,7 @@ const Player = () => {
 
     useEffect(() => {
         if (selectedTrack?.urlObject) playerRef.current.src = selectedTrack.urlObject;
+        stationInfoRef.current = {...radiosStationsList[currentIndex], page: stationsPage, index: currentIndex}
     }, [selectedTrack])
 
     const handleSelectTrack = useCallback((index: number) => {
@@ -146,8 +174,7 @@ const Player = () => {
 
     const handleSelectStation = useCallback((index: number) => {
         setCurrentIndex(index)
-        const formatUrl = radiosStationsList[index].url;
-        setSelectedTrack({urlObject: formatUrl})
+        setSelectedTrack({urlObject: radiosStationsList[index].url})
     }, [filterStationsBy, radiosStationsList])
 
     const handlePrevTrack = useCallback(() => {
@@ -240,8 +267,6 @@ const Player = () => {
         setFilterStationsBy(filter => filter === "favorites" ? "all" : "favorites")
     }
 
-
-
     return (
         <div className="player-container">
             <div className="player">
@@ -252,10 +277,21 @@ const Player = () => {
                             so please forward any suggestions or bug findings to cristiscarlat1978@gmail.com, enjoy !
                         </div>
                     </div>
+                    <a href={stationInfoRef.current?.homepage} target="_blank" className="text-overflow">
+                        {stationInfoRef.current?.homepage}
+                    </a>
+                    <p>Bitrate:<span style={{marginLeft: "0.5rem"}}>{stationInfoRef.current?.bitrate}</span>
+                    </p>
+                    <p>Country:<span style={{marginLeft: "0.5rem"}}>{stationInfoRef.current?.country}</span>
+                    </p>
+                    <p title={stationInfoRef.current?.genre}>Genre:<span className="text-overflow" style={{marginLeft: "0.5rem", maxWidth: "15rem"}}>{stationInfoRef.current?.genre}</span>
+                    </p>
+                    {stationInfoRef.current?.favicon &&
+                        <p><img src={stationInfoRef.current?.favicon}/></p>}
                 </div>
                 <EqualizerWithAnalyser audioSource={playerRef}/>
                 <div className="player-header">
-                    {!radioActive && <div className="player-menu progress-bar" style={{position: "relative"}}>
+                {!radioActive && <div className="player-menu progress-bar" style={{position: "relative"}}>
                         <input type="range" min={0} max={playerRef.current.duration || 0} value={playProgress}
                                onChange={handleSeek}/>
                         <div>
@@ -309,31 +345,37 @@ const Player = () => {
             <div className="player-playlist-wrapper">
                 <div className="player-playlist-header">
                     {(radioActive && user) && <button className="icon-btn btn" onClick={toggleFilterByFavorites}>
-                        {filterStationsBy === "favorites" ? <FaHeart color="white" size="1.2rem"/> : <FaRegHeart color="white" size="1.2rem"/>}
+                        {filterStationsBy === "favorites" ? <FaHeart color="white" size="1.2rem"/> :
+                            <FaRegHeart color="white" size="1.2rem"/>}
                         <span>Favorites</span>
                     </button>}
                 </div>
-                <ol className="player-playlist">
+                {radioActive && <div className="player-playlist-pagination">
+                    <button className="btn icon-btn" onClick={handlePrevStationsPage}><FaAngleDoubleLeft />prev 100 stations</button>
+                    <button className="btn icon-btn" onClick={handleNextStationsPage}>next 100 stations<FaAngleDoubleRight/></button>
+                </div>}
+                <ul className="player-playlist">
                     {!radioActive ? (audioFiles && audioFiles.length > 0) ? audioFiles.map((fileObj: AudioFile, index: number) => (
                             <li
                                 key={fileObj.fileName + index}
-                                className={`${selectedTrack?.urlObject === fileObj.urlObject && "selected scroll-anim"}`}
+                                className={`${selectedTrack?.urlObject === fileObj.urlObject && "selected"}`}
                                 onClick={() => handleSelectTrack(index)}>
                                 <p>{fileObj.fileName}</p>
                             </li>
                         )) : "select audio files from your device"
-                        : radiosStationsList.sort((a, b) => a.name.localeCompare(b.name)).map((radioData: any, index: number) => (
+                        : radiosStationsList.map((radioData: any, index: number) => (
                             !radioData?.disabled && <li key={radioData.id}
-                                                        className={`${selectedTrack?.urlObject === radioData.url ? "selected scroll-anim" : ""}`}>
+                                                        className={`${selectedTrack?.urlObject === radioData.url && "selected"}`}>
                                 <div className="player-playlist-radio">
-                                    <div style={{display: "flex", gap: "0.5rem"}}>
+                                    <div>
                                         {(loading && selectedTrack?.urlObject === radioData.url) &&
                                             <span><Spinner radius={10} stroke={3}/></span>}
-                                        <button className="link-btn"
+                                        <button className="link-btn" style={{width: "85%"}}
                                                 onClick={() => handleSelectStation(index)}>{radioData.name}</button>
                                     </div>
                                     <span>{user &&
-                                        <button className="icon-btn" onClick={() => handleFavorites(radioData.id)} style={{background: "transparent"}}>
+                                        <button className="icon-btn" onClick={() => handleFavorites(radioData.id)}
+                                                style={{background: "transparent"}}>
                                             {isFavorite(radioData.id) ? <FaHeart color="red" size="1.2rem"/> :
                                                 <FaRegHeart color="red" size="1.2rem"/>}
                                         </button>}
@@ -341,9 +383,9 @@ const Player = () => {
                                 </div>
                             </li>))
                     }
-                </ol>
+                </ul>
             </div>
-            {globalSpinner && <Spinner  radius={30} stroke={5} fixed={true}/>}
+            {globalSpinner && <Spinner radius={30} stroke={5} fixed={true}/>}
         </div>
     );
 }

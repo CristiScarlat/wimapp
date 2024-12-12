@@ -64,6 +64,10 @@ canvas {
   color: var(--default-text-color);
   font-weight: bold;
   letter-spacing: 0.5px;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-align: left;
 }
 
 .btn {
@@ -137,4 +141,9 @@ canvas {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.text-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
