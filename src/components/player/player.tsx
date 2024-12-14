@@ -102,7 +102,7 @@ const Player = () => {
                     break;
             }
         }
-        else if (filterStationsBy === 'favorites') {
+        else if (user && filterStationsBy === 'favorites') {
             if (favoriteStations.length === 0) {
                 getFavoriteStationsToDB(user.uid)
                     .then(data => {
@@ -131,7 +131,12 @@ const Player = () => {
         else {
             setPlaylistLoading(false);
         }
-    }, [stationsPage, filterStationsBy]);
+    }, [stationsPage, filterStationsBy, user]);
+
+    useEffect(() => {
+        console.log({user})
+        if(!user && filterStationsBy === 'favorites')setFilterStationsBy("all")
+    }, [user]);
 
     const handleNextStationsPage = () => {
         setStationsPage(page => page + 1)
