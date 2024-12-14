@@ -1,4 +1,4 @@
-import {useEffect, useState, useRef, useCallback, useContext, FormEvent} from "react";
+import {useEffect, useState, useRef, useCallback, useContext, FormEvent, SyntheticEvent} from "react";
 import {FaRegFolderOpen, FaAngleDoubleRight, FaAngleDoubleLeft} from "react-icons/fa";
 import {IoPlaySkipBack, IoPlay, IoPause, IoStop, IoPlaySkipForward} from "react-icons/io5";
 import radioStations from "../../data/stations-new.json"
@@ -15,8 +15,15 @@ import {
     getFavoriteStationsToDB
 } from "../../services/db";
 
-import {EqPreset, getEqPreset, saveEqPreset} from "../../data/playerPreset";
-import {getAllStations} from "../../services/RBApi";
+import {
+    getAllStations,
+    getStationsById,
+    formatStationData,
+    getAllTags,
+    getStationsByTagName, getStationsByStationName
+} from "../../services/RBApi";
+import InputWithText from "../inputWithButton/inputWithButton";
+import DropdownMenu from "../dropdownMenu/dropdownMenu";
 
 interface AudioFile {
     urlObject: string
@@ -43,7 +50,8 @@ const Player = () => {
     const [radioActive, setRadioActive] = useState<boolean>(true);
     const [playStatus, setPlayStatus] = useState<boolean>(false);
     const [playProgress, setPlayProgress] = useState<number>(0);
-    const [loading, setLoading] = useState(false);
+    const [stationLoading, setStationLoading] = useState(false);
+    const [playlistLoading, setPlaylistLoading] = useState<boolean>(false);
     const [favoriteStations, setFavoriteStations] = useState<number[]>([]);
     const [filterStationsBy, setFilterStationsBy] = useState<'all' | 'favorites'>('all');
     const [stationsPage, setStationsPage] = useState<number>(0);
@@ -51,7 +59,9 @@ const Player = () => {
     const {state: {user, globalSpinner}, dispatch} = useContext(Ctx);
 
     const playerRef = useRef(new Audio());
-    const stationInfoRef= useRef<RadioStation & {page: number, index: number} | undefined>();
+    const stationInfoRef = useRef<RadioStation & { page: number, index: number } | undefined>();
+    const searchByTerm = useRef("name")
+    const searchInputRef = useRef<HTMLInputElement>(null);
 
     const handleFileInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -66,45 +76,70 @@ const Player = () => {
     }, [])
 
     useEffect(() => {
-        getAllStations(100, stationsPage*100)
-            .then((data: any) => {
-                console.log(data);
-                const formatData: RadioStation[] = data.map((obj: any): RadioStation => ({
-                    id: obj.stationuuid,
-                    name: obj.name.trim() === "" ? "no name" : obj.name.trim(),
-                    url: obj.url_resolved,
-                    genre: obj.tags,
-                    country: obj.country,
-                    homepage: obj.homepage,
-                    bitrate: obj.bitrate,
-                    favicon: obj.favicon
-                }))
-                setRadiosStationsList(formatData);
-            })
-            .catch((error: any) => {
-                console.log(error)
-            })
-    }, [stationsPage]);
+        setPlaylistLoading(true);
+        if (filterStationsBy === 'all' && (searchInputRef.current?.value === "" || searchInputRef.current?.value === null)) {
+            getAllStations(100, stationsPage * 100)
+                .then((data: any) => {
+                    setPlaylistLoading(false);
+                    const formatData: RadioStation[] = data.map((obj: any): RadioStation => formatStationData(obj))
+                    setRadiosStationsList(formatData);
+                })
+                .catch((error: any) => {
+                    setPlaylistLoading(false);
+                    console.log(error)
+                })
+        }
+        else if(filterStationsBy === 'all' && searchInputRef.current?.value && searchInputRef.current?.value !== "" && radiosStationsList.length <= 100) {
+            console.log({stationsPage, searchTerm: searchInputRef.current.value, searchBy: searchByTerm.current})
+            switch(searchByTerm.current){
+                // @ts-ignore
+                case "name":
+                    searchByName();
+                    break;
+                // @ts-ignore
+                case "tag":
+                    searchByTag();
+                    break;
+            }
+        }
+        else if (filterStationsBy === 'favorites') {
+            if (favoriteStations.length === 0) {
+                getFavoriteStationsToDB(user.uid)
+                    .then(data => {
+                        console.log(data);
+                        setPlaylistLoading(false);
+                    })
+                    .catch((error: any) => {
+                        setPlaylistLoading(false);
+                        console.log(error)
+                    })
+            }
+            else {
+                // @ts-ignore
+                Promise.all(favoriteStations.map((stationId: string) => getStationsById(stationId)))
+                    .then(fetchedFavorites => {
+                        const list = fetchedFavorites.map(arr => formatStationData(arr[0]))
+                        setRadiosStationsList(list);
+                        setPlaylistLoading(false);
+                    })
+                    .catch((error: any) => {
+                        setPlaylistLoading(false);
+                        console.log(error)
+                    })
+            }
+        }
+        else {
+            setPlaylistLoading(false);
+        }
+    }, [stationsPage, filterStationsBy]);
 
     const handleNextStationsPage = () => {
         setStationsPage(page => page + 1)
     }
 
     const handlePrevStationsPage = () => {
-        if(stationsPage > 0)setStationsPage(page => page - 1)
+        if (stationsPage > 0) setStationsPage(page => page - 1)
     }
-
-    useEffect(() => {
-        // switch(filterStationsBy){
-        //     case 'all':
-        //         setRadiosStationsList(radioStations)
-        //         break;
-        //     case "favorites":
-        //         setRadiosStationsList(radioStations.filter(radioData => isFavorite(radioData.id)))
-        //         break;
-        // }
-
-    }, [filterStationsBy])
 
     useEffect(() => {
         if (user) {
@@ -143,8 +178,8 @@ const Player = () => {
                 setPlayProgress(playerRef.current.currentTime || 0);
             }
 
-            playerRef.current.onloadstart = () => setLoading(true);
-            playerRef.current.onplaying = () => setLoading(false);
+            playerRef.current.onloadstart = () => setStationLoading(true);
+            playerRef.current.onplaying = () => setStationLoading(false);
             playerRef.current.onerror = () => {
                 if (radioActive) alert("Station offline, please pick another radios station.")
             }
@@ -229,6 +264,9 @@ const Player = () => {
     }, [playProgress])
 
     const handleFavorites = useCallback((stationId: any) => {
+        if (favoriteStations.length >= 10) {
+            alert("You reached maximum of 10 favorite stations.")
+        }
         dispatch({type: 'LOADING_TRUE'})
         //@ts-ignore
         if (!favoriteStations?.includes(String(stationId))) {
@@ -236,7 +274,7 @@ const Player = () => {
                 .then(() => {
                     dispatch({type: 'LOADING_FALSE'})
                     setFavoriteStations((state: number[]) => {
-                        if(state === undefined)return [stationId.toString()]
+                        if (state === undefined) return [stationId.toString()]
                         return [...state, stationId.toString()]
                     })
                 })
@@ -267,6 +305,55 @@ const Player = () => {
         setFilterStationsBy(filter => filter === "favorites" ? "all" : "favorites")
     }
 
+    const searchByName = () =>{
+        const inputSearchValue = searchInputRef.current?.value;
+        if(inputSearchValue && inputSearchValue !== ""){
+            getStationsByStationName(inputSearchValue, 100, stationsPage*100)
+                .then((data: any) => {
+                    setPlaylistLoading(false);
+                    const formatData: RadioStation[] = data.map((obj: any): RadioStation => formatStationData(obj))
+                    setRadiosStationsList(formatData);
+                })
+                .catch((error: any) => {
+                    setPlaylistLoading(false);
+                    console.log(error)
+                })
+        }
+    }
+
+    const searchByTag = () =>{
+        const inputSearchValue = searchInputRef.current?.value;
+        if(inputSearchValue && inputSearchValue !== "") {
+            getStationsByTagName(inputSearchValue, 100, stationsPage*100)
+                .then((data: any) => {
+                    setPlaylistLoading(false);
+                    const formatData: RadioStation[] = data.map((obj: any): RadioStation => formatStationData(obj))
+                    setRadiosStationsList(formatData);
+                })
+                .catch((error: any) => {
+                    setPlaylistLoading(false);
+                    console.log(error)
+                })
+        }
+    }
+
+    const handleSearch = () => {
+        setPlaylistLoading(true);
+        setStationsPage(0);
+        switch(searchByTerm.current){
+            // @ts-ignore
+            case "name":
+                searchByName();
+                break;
+            // @ts-ignore
+            case "tag":
+                searchByTag();
+                break;
+        }
+
+    }
+
+    // @ts-ignore
     return (
         <div className="player-container">
             <div className="player">
@@ -284,14 +371,17 @@ const Player = () => {
                     </p>
                     <p>Country:<span style={{marginLeft: "0.5rem"}}>{stationInfoRef.current?.country}</span>
                     </p>
-                    <p title={stationInfoRef.current?.genre}>Genre:<span className="text-overflow" style={{marginLeft: "0.5rem", maxWidth: "15rem"}}>{stationInfoRef.current?.genre}</span>
+                    <p title={stationInfoRef.current?.genre}>Genre:<span
+                        className="text-overflow player-info-tags-container">{stationInfoRef.current?.genre?.split(",").map(tag => (
+                        <div className="tag">{tag}</div>
+                    ))}</span>
                     </p>
                     {stationInfoRef.current?.favicon &&
                         <p><img src={stationInfoRef.current?.favicon}/></p>}
                 </div>
                 <EqualizerWithAnalyser audioSource={playerRef}/>
                 <div className="player-header">
-                {!radioActive && <div className="player-menu progress-bar" style={{position: "relative"}}>
+                    {!radioActive && <div className="player-menu progress-bar" style={{position: "relative"}}>
                         <input type="range" min={0} max={playerRef.current.duration || 0} value={playProgress}
                                onChange={handleSeek}/>
                         <div>
@@ -344,15 +434,32 @@ const Player = () => {
             </div>
             <div className="player-playlist-wrapper">
                 <div className="player-playlist-header">
-                    {(radioActive && user) && <button className="icon-btn btn" onClick={toggleFilterByFavorites}>
-                        {filterStationsBy === "favorites" ? <FaHeart color="white" size="1.2rem"/> :
-                            <FaRegHeart color="white" size="1.2rem"/>}
-                        <span>Favorites</span>
+                    <div className="playlist-filterBy-dropdown">
+                        <label>Filter by:</label>
+                        <DropdownMenu
+                            items={["name", "tag"]}
+                            className="eq-preset-dropdown"
+                            onSelectItem={(e: SyntheticEvent<HTMLSelectElement, Event>) => searchByTerm.current = e.currentTarget.value}
+                        />
+                    </div>
+
+                    <InputWithText buttonOnClick={handleSearch} inputRef={searchInputRef}/>
+                    {(radioActive && user) && <button className="icon-btn" onClick={toggleFilterByFavorites}
+                                                      style={{background: "transparent", marginRight: "1rem"}}>
+                        {filterStationsBy === "favorites" ? <FaHeart color="#8907e4" size="2rem"/> :
+                            <FaRegHeart color="#8907e4" size="2rem"/>}
                     </button>}
                 </div>
                 {radioActive && <div className="player-playlist-pagination">
-                    <button className="btn icon-btn" onClick={handlePrevStationsPage}><FaAngleDoubleLeft />prev 100 stations</button>
-                    <button className="btn icon-btn" onClick={handleNextStationsPage}>next 100 stations<FaAngleDoubleRight/></button>
+                    <button className="btn icon-btn" onClick={handlePrevStationsPage}>
+                        <FaAngleDoubleLeft/>
+                        prev 100 stations
+                    </button>
+                    <div style={{width: 16}}>{playlistLoading && <Spinner radius={10} stroke={3}/>}</div>
+                    <button className="btn icon-btn" onClick={handleNextStationsPage}>
+                        next 100 stations
+                        <FaAngleDoubleRight/>
+                    </button>
                 </div>}
                 <ul className="player-playlist">
                     {!radioActive ? (audioFiles && audioFiles.length > 0) ? audioFiles.map((fileObj: AudioFile, index: number) => (
@@ -368,7 +475,7 @@ const Player = () => {
                                                         className={`${selectedTrack?.urlObject === radioData.url && "selected"}`}>
                                 <div className="player-playlist-radio">
                                     <div>
-                                        {(loading && selectedTrack?.urlObject === radioData.url) &&
+                                        {(stationLoading && selectedTrack?.urlObject === radioData.url) &&
                                             <span><Spinner radius={10} stroke={3}/></span>}
                                         <button className="link-btn" style={{width: "85%"}}
                                                 onClick={() => handleSelectStation(index)}>{radioData.name}</button>

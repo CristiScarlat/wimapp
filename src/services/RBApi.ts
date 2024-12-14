@@ -17,3 +17,47 @@ export const getStationsByTagName = async (tagName: string, limit: number, offse
         console.error(error)
     }
 }
+
+export const getStationsByStationName = async (stationName: string, limit: number, offset: number) => {
+    try{
+        const res = await fetch(`http://de1.api.radio-browser.info/json/stations/byname/${stationName}?limit=${limit}&offset=${offset}`);
+        return await res.json();
+    }
+    catch(error: any){
+        console.error(error)
+    }
+}
+
+export const getStationsById = async (id: string) => {
+    try{
+        const res = await fetch(`http://de1.api.radio-browser.info/json/stations/byuuid/${id}`);
+        return await res.json();
+    }
+    catch(error: any){
+        console.error(error)
+    }
+}
+
+export const getAllTags = async () => {
+    try{
+        const res = await fetch(`http://de1.api.radio-browser.info/json/tags`);
+        return await res.json();
+    }
+    catch(error: any){
+        console.error(error)
+    }
+}
+
+
+export const formatStationData = (obj: any) => {
+    return {
+        id: obj.stationuuid,
+        name: obj.name.trim() === "" ? "no name" : obj.name.trim(),
+        url: obj.url_resolved,
+        genre: obj.tags,
+        country: obj.country,
+        homepage: obj.homepage,
+        bitrate: obj.bitrate,
+        favicon: obj.favicon
+    }
+}

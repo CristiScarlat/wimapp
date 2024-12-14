@@ -54,6 +54,7 @@ canvas {
   align-items: center;
   gap: 0.5rem;
   cursor: pointer;
+  width: fit-content;
 }
 
 .link-btn {
@@ -82,6 +83,12 @@ canvas {
 
 .btn:hover {
   border: 1px inset black;
+}
+
+.tag {
+  background-color: var(--default-theme-color);
+  padding: 3px;
+  border-radius: 30%;
 }
 
 /* width */

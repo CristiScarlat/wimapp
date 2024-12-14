@@ -78,7 +78,10 @@ const Header = () => {
 
     return (
         <header className="header-wrapper">
-            <div className="header-logo"><img src="/logo192_white.png" alt="logo" width={25}/>WIMAPP</div>
+            <div className="header-logo"><img src="/logo192_white.png" alt="logo" width={25}/>
+                WIMAPP
+                <span style={{fontSize: 10, color: "#808080b3"}}>V2</span>
+            </div>
             <div style={{display: "flex", alignItems: "center", gap: "1rem"}}>
                 {user && <button className="btn" onClick={handleSignout}>
                     Logout

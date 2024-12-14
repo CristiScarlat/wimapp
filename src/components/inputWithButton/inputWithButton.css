@@ -1,0 +1,29 @@
+
+.input-with-button-container {
+    display: flex;
+}
+
+.input-with-button-container > button {
+    background-color: var(--default-theme-color);
+    border: 1px solid var(--default-theme-color);
+    color: white;
+    font-weight: bold;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+}
+
+.input-with-button-container > button:active {
+    border: 1px inset black;
+}
+
+.input-with-button-container > input {
+    border-radius: 5px 0 0 5px;
+    padding: 0.3rem;
+    background-color: var(--bg-color);
+    border: 1px inset black;
+    color: white;
+}
+
+.input-with-button-container > input:focus-visible {
+    outline: #252424;
+}
