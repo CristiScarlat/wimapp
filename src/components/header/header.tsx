@@ -6,6 +6,7 @@ import {login, logout, onAuthChange, registerUser} from "../../services/auth";
 import Spinner from "../spinner/spinner";
 import ToggleButton from "../toggleButton/toggleButton";
 import { UserCredential } from "firebase/auth";
+import MobileFooter from "../mobileFooter/mobileFooter";
 
 const Header = () => {
 
@@ -82,6 +83,7 @@ const Header = () => {
                 WIMAPP
                 <span style={{fontSize: 10, color: "#808080b3"}}>V2</span>
             </div>
+            <MobileFooter/>
             <div style={{display: "flex", alignItems: "center", gap: "1rem"}}>
                 {user && <button className="btn" onClick={handleSignout}>
                     Logout

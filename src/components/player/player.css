@@ -413,3 +413,26 @@ input[type="file"] {
         align-items: center;
     }
 }
+
+@media only screen and (max-width: 1000px) {
+    .player{
+        display: none;
+    }
+    .player.mobile-show{
+        display: flex;
+    }
+    .player-playlist-wrapper {
+        display: none;
+    }
+    .player-playlist-wrapper.mobile-show{
+        display: block;
+    }
+
+    .playlist-filterBy-dropdown {
+        width: 247px;
+        justify-content: space-between;
+    }
+    .player-playlist-wrapper>.player-playlist-pagination {
+        gap: 22px;
+    }
+}

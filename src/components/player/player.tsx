@@ -1,13 +1,11 @@
 import {useEffect, useState, useRef, useCallback, useContext, FormEvent, SyntheticEvent} from "react";
-import {FaRegFolderOpen, FaAngleDoubleRight, FaAngleDoubleLeft} from "react-icons/fa";
+import {FaRegFolderOpen, FaChevronRight, FaChevronLeft, FaRegHeart, FaHeart} from "react-icons/fa";
 import {IoPlaySkipBack, IoPlay, IoPause, IoStop, IoPlaySkipForward} from "react-icons/io5";
-import radioStations from "../../data/stations-new.json"
 import Range from "../range/range";
 import "./player.css";
 import Spinner from "../spinner/spinner";
 import EqualizerWithAnalyser from "../equalizerWithAnalyser/equalizerWithAnalyser";
 import {formatTime} from "../../utils/utils";
-import {FaRegHeart, FaHeart} from "react-icons/fa";
 import {Ctx} from "../../context/context";
 import {
     addFavoriteStationToDB,
@@ -56,7 +54,7 @@ const Player = () => {
     const [filterStationsBy, setFilterStationsBy] = useState<'all' | 'favorites'>('all');
     const [stationsPage, setStationsPage] = useState<number>(0);
     //@ts-ignore
-    const {state: {user, globalSpinner}, dispatch} = useContext(Ctx);
+    const {state: {user, globalSpinner, mobileShow}, dispatch} = useContext(Ctx);
 
     const playerRef = useRef(new Audio());
     const stationInfoRef = useRef<RadioStation & { page: number, index: number } | undefined>();
@@ -134,7 +132,6 @@ const Player = () => {
     }, [stationsPage, filterStationsBy, user]);
 
     useEffect(() => {
-        console.log({user})
         if(!user && filterStationsBy === 'favorites')setFilterStationsBy("all")
     }, [user]);
 
@@ -361,7 +358,7 @@ const Player = () => {
     // @ts-ignore
     return (
         <div className="player-container">
-            <div className="player">
+            <div className={`${mobileShow === "player" ? "mobile-show " : ""}player`}>
                 <div className="player-info">
                     <div className="scroll-container">
                         <div className="scroll-text">
@@ -437,10 +434,10 @@ const Player = () => {
                     </div>
                 </div>
             </div>
-            <div className="player-playlist-wrapper">
+            <div className={`${mobileShow === "playlist" ? "mobile-show " : ""}player-playlist-wrapper`}>
                 <div className="player-playlist-header">
                     <div className="playlist-filterBy-dropdown">
-                        <label>Filter by:</label>
+                        <label>Search by:</label>
                         <DropdownMenu
                             items={["name", "tag"]}
                             className="eq-preset-dropdown"
@@ -457,13 +454,13 @@ const Player = () => {
                 </div>
                 {radioActive && <div className="player-playlist-pagination">
                     <button className="btn icon-btn" onClick={handlePrevStationsPage}>
-                        <FaAngleDoubleLeft/>
-                        prev 100 stations
+                        <FaChevronLeft/>
+                        <span>prev 100</span>
                     </button>
                     <div style={{width: 16}}>{playlistLoading && <Spinner radius={10} stroke={3}/>}</div>
                     <button className="btn icon-btn" onClick={handleNextStationsPage}>
-                        next 100 stations
-                        <FaAngleDoubleRight/>
+                        <span>next 100</span>
+                        <FaChevronRight/>
                     </button>
                 </div>}
                 <ul className="player-playlist">
