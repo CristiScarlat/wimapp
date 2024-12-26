@@ -55,6 +55,7 @@ canvas {
   gap: 0.5rem;
   cursor: pointer;
   width: fit-content;
+  background: transparent;
 }
 
 .link-btn {

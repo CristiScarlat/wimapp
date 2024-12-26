@@ -38,6 +38,7 @@ input[type="file"] {
     min-width: 36px;
     min-height: 28px;
     font-size: 14px;
+    flex: 1;
 }
 
 .player-control-btn span {
@@ -252,6 +253,7 @@ input[type="file"] {
     display: flex;
     gap: 0.5rem;
     justify-content: flex-start;
+    align-items: center;
     width: 85%;
 }
 
@@ -434,5 +436,21 @@ input[type="file"] {
     }
     .player-playlist-wrapper>.player-playlist-pagination {
         gap: 22px;
+    }
+
+    .player-playlist-header {
+        position: relative;
+    }
+
+    .playlist-header-fav-container {
+        display: flex;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+    }
+
+    .playlist-header-fav-container>button {
+        margin: 0;
     }
 }

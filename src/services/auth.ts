@@ -40,7 +40,6 @@ const getTokenId = (user: any) => {
     getIdToken(user).then(function(idToken) {
         // Send token to your backend via HTTPS
         // ...
-        console.log(idToken);
     }).catch(function(error) {
         // Handle error
     });

@@ -60,6 +60,7 @@
     font-weight: bold;
     padding: 0.3rem;
     border-radius: 5px;
+    max-width: 247px;
 }
 
 .preset-modal-form {

@@ -7,6 +7,7 @@ import Spinner from "../spinner/spinner";
 import ToggleButton from "../toggleButton/toggleButton";
 import { UserCredential } from "firebase/auth";
 import MobileFooter from "../mobileFooter/mobileFooter";
+import { toast } from 'react-toastify';
 
 const Header = () => {
 
@@ -53,6 +54,7 @@ const Header = () => {
                 })
                 .catch((err) => {
                     console.error(err);
+                    toast("Wow so easy!")
                     setLoading(false)
                 });
         } else {
@@ -85,7 +87,7 @@ const Header = () => {
             </div>
             <MobileFooter/>
             <div style={{display: "flex", alignItems: "center", gap: "1rem"}}>
-                {user && <button className="btn" onClick={handleSignout}>
+                {user && <button className="btn logout-btn" onClick={handleSignout}>
                     Logout
                 </button>}
                 <button className="header-sidebar-btn" onClick={() => setShow(true)}>
