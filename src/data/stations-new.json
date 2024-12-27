@@ -274,5 +274,11 @@
     "name": "Romania Actualitati",
     "url": "https://stream4.srr.ro:8443/romania-actualitati",
     "genre": "Eclectic,Rock,Blues"
+  },
+  {
+    "id": 118,
+    "name": "The Groove",
+    "url": "https://uk7.internet-radio.com/proxy/simonyates44?mp=/stream",
+    "genre": "soul,jazz,funk,disco,rnb,80s"
   }
 ]

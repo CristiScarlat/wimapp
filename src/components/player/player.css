@@ -38,6 +38,7 @@ input[type="file"] {
     min-width: 36px;
     min-height: 28px;
     font-size: 14px;
+    flex: 1;
 }
 
 .player-control-btn span {
@@ -88,23 +89,13 @@ input[type="file"] {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 1rem;
     padding: 0.3rem;
     border: 1px inset #4b4b4bc2;
     border-radius: 4px;
     width: 100%;
 }
 
-.player-menu button {
-    border: none;
-    background: none;
-    color: #6f6e6e;
-    box-shadow: 1px 1px 5px black;
-    padding: 0.2rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-}
 
 .player-menu button:active {
     box-shadow: inset 1px 1px 5px black;
@@ -141,6 +132,8 @@ input[type="file"] {
     flex: 1;
     max-width: 40rem;
     min-width: 290px;
+    list-style: none;
+    padding-inline-start: 1rem;
 }
 
 .player-playlist li{
@@ -167,10 +160,42 @@ input[type="file"] {
     flex: 1;
 }
 
+.player-info .player-info-tags-container {
+    margin-left: 0.5rem;
+    max-width: 15rem;
+    display: flex;
+    justify-content: flex-start;
+    gap: 0.2rem;
+    align-items: center;
+    flex-wrap: wrap;
+    max-height: 10rem;
+    overflow-y: auto;
+}
+
+.player-info a {
+    color: var(--default-theme-color);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.63);
+    white-space: nowrap;
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
 .player-info p {
+    display: flex;
     white-space: nowrap;
     overflow-x: hidden;
     margin: 0.2rem 0;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.63);
+    width: 100%;
+}
+
+.player-info img {
+    width: 100%;
+    height: 100px;
+    object-fit: contain;
+    border: 1px inset black;
+    padding: 0.1rem;
 }
 
 .player-playlist-wrapper {
@@ -178,11 +203,29 @@ input[type="file"] {
     background-color: #252424;
     flex: 1 1;
     max-width: 40rem;
+    width: 100%;
+}
+
+.player-playlist-wrapper>.player-playlist-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0.5rem 0.2rem;
+    border-bottom: 1px inset black;
+}
+
+.player-playlist-wrapper>.player-playlist-pagination>button{
+    padding: 0.2rem 0.5rem;
 }
 
 .player-playlist-header {
-    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding: 0.5rem 0.2rem;
     border-bottom: 1px inset black;
+    align-items: center;
 }
 
 .player-playlist-radio {
@@ -194,7 +237,18 @@ input[type="file"] {
     width: 97%;
     padding: 0.5rem 0;
     background-color: var(--bg-color-translucid);
-    /*border-bottom: 1px solid #8080803b;*/
+}
+
+.player-playlist-radio div:first-child {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-start;
+    align-items: center;
+    width: 85%;
+}
+
+.player-playlist-radio div:first-child button {
+    width: 85%;
 }
 
 .player-playlist-radio:hover {
@@ -204,6 +258,8 @@ input[type="file"] {
 .scroll-container {
     overflow: hidden;
     width: 100%;
+    border-bottom: 1px inset black;
+    padding-bottom: 0.5rem;
 }
 
 .scroll-text {
@@ -216,6 +272,13 @@ input[type="file"] {
     -moz-animation: my-animation 15s linear infinite;
     -webkit-animation: my-animation 15s linear infinite;
     animation: my-animation 15s linear infinite;
+}
+
+.playlist-filterBy-dropdown {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
 }
 
 /* for Firefox */
@@ -336,5 +399,48 @@ input[type="file"] {
     .player-header{
         flex-direction: column;
         align-items: flex-start;
+    }
+    .player-playlist-header {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .player{
+        display: none;
+    }
+    .player.mobile-show{
+        display: flex;
+    }
+    .player-playlist-wrapper {
+        display: none;
+    }
+    .player-playlist-wrapper.mobile-show{
+        display: block;
+    }
+
+    .playlist-filterBy-dropdown {
+        width: 247px;
+        justify-content: space-between;
+    }
+    .player-playlist-wrapper>.player-playlist-pagination {
+        gap: 22px;
+    }
+
+    .player-playlist-header {
+        position: relative;
+    }
+
+    .playlist-header-fav-container {
+        display: flex;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+    }
+
+    .playlist-header-fav-container>button {
+        margin: 0;
     }
 }

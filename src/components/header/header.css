@@ -92,3 +92,9 @@
     border-bottom: 1px solid gray;
     font-weight: bold;
 }
+
+@media only screen and (max-width: 800px) {
+    .logout-btn{
+        display: none;
+    }
+}

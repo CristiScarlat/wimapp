@@ -27,7 +27,7 @@ interface PropsTypes {
 
 const EqualizerUI = ({freqList, className, onPotChange, onSelectPreset}: PropsTypes) => {
 
-    const [showEq, setShowEq] = useState<boolean>(true);
+    const [showEq, setShowEq] = useState<boolean>(false);
     const [eqValues, setEqValues] = useState<{[x: number]: number}>({});
     const [showModal, setShowModal] = useState<boolean>(false);
     const [presetsList, setPresetsList] = useState<EqPreset[]>([]);
