@@ -1,6 +1,6 @@
 import {useEffect, useState, useRef, useCallback, useContext} from "react";
 import {FaChevronRight, FaChevronLeft, FaRegHeart, FaHeart} from "react-icons/fa";
-import {IoPlaySkipBack, IoPlay, IoStop, IoPlaySkipForward} from "react-icons/io5";
+import {IoPlaySkipBack, IoPlay, IoStop, IoPlaySkipForward, IoVolumeMute} from "react-icons/io5";
 import Range from "../range/range";
 import "./player.css";
 import Spinner from "../spinner/spinner";
@@ -49,6 +49,7 @@ const Player = () => {
     const [filterStationsByFavorites, setFilterStationsByFavorites] = useState<'all' | 'favorites'>('all');
     const [stationsPage, setStationsPage] = useState<number>(0);
     const [searchByTerm, setSearchByTerm] = useState<string>('name');
+    const [playerMute, setPlayerMute] = useState<boolean>(false);
     //@ts-ignore
     const {state: {user, globalSpinner, mobileShow}, dispatch} = useContext(Ctx);
 
@@ -56,6 +57,7 @@ const Player = () => {
     const stationInfoRef = useRef<RadioStation & { page: number, index: number } | undefined>();
     const searchInputRef = useRef<HTMLInputElement>(null);
     const selectedCountryRef = useRef<string>(null);
+    const savedPlayerVolume = useRef<number>(0);
 
     useEffect(() => {
         if (filterStationsByFavorites === 'all') {
@@ -331,7 +333,11 @@ const Player = () => {
             })
     }
 
-    console.log({radiosStationsList})
+    const handleMute = () => {
+        if(playerRef.current.volume > 0)savedPlayerVolume.current = playerRef.current.volume;
+        playerRef.current.volume = !playerMute ? 0 : savedPlayerVolume.current;
+        setPlayerMute(!playerMute);
+    }
 
     // @ts-ignore
     return (
@@ -363,7 +369,10 @@ const Player = () => {
                 <div className="player-header">
 
                     <div className="player-menu">
-                        <Range min={0} max={1} step={0.01} width="5rem" onChange={handleVolume}/>
+                        <button className="player-control-btn" onClick={handleMute}>
+                            <IoVolumeMute size="1.2rem" color={playerMute ? "darkred" : "white"}/>
+                        </button>
+                        <Range min={0} max={1} step={0.01} width="15rem" onChange={handleVolume}/>
                     </div>
                     <div className="player-control-container">
                         <button className="player-control-btn" onClick={handlePrevTrack}>

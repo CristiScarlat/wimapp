@@ -89,23 +89,13 @@ input[type="file"] {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 1rem;
     padding: 0.3rem;
     border: 1px inset #4b4b4bc2;
     border-radius: 4px;
     width: 100%;
 }
 
-.player-menu button {
-    border: none;
-    background: none;
-    color: #6f6e6e;
-    box-shadow: 1px 1px 5px black;
-    padding: 0.2rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-}
 
 .player-menu button:active {
     box-shadow: inset 1px 1px 5px black;
