@@ -1,6 +1,6 @@
 export const getAllStations = async (limit: number, offset: number) => {
     try{
-        const res = await fetch(`http://de1.api.radio-browser.info/json/stations?limit=${limit}&offset=${offset}&hidebroken=true`);
+        const res = await fetch(`https://de1.api.radio-browser.info/json/stations?limit=${limit}&offset=${offset}&hidebroken=true`);
         return await res.json();
     }
     catch(error: any){
@@ -10,7 +10,7 @@ export const getAllStations = async (limit: number, offset: number) => {
 
 export const getStationsByTagName = async (tagName: string, limit: number, offset: number) => {
     try{
-        const res = await fetch(`http://de1.api.radio-browser.info/json/stations/bytag/${tagName}?limit=${limit}&offset=${offset}`);
+        const res = await fetch(`https://de1.api.radio-browser.info/json/stations/bytag/${tagName}?limit=${limit}&offset=${offset}`);
         return await res.json();
     }
     catch(error: any){
@@ -20,7 +20,7 @@ export const getStationsByTagName = async (tagName: string, limit: number, offse
 
 export const getStationsByStationName = async (stationName: string, limit: number, offset: number) => {
     try{
-        const res = await fetch(`http://de1.api.radio-browser.info/json/stations/byname/${stationName}?limit=${limit}&offset=${offset}`);
+        const res = await fetch(`https://de1.api.radio-browser.info/json/stations/byname/${stationName}?limit=${limit}&offset=${offset}`);
         return await res.json();
     }
     catch(error: any){
@@ -30,7 +30,7 @@ export const getStationsByStationName = async (stationName: string, limit: numbe
 
 export const getStationsById = async (id: string) => {
     try{
-        const res = await fetch(`http://de1.api.radio-browser.info/json/stations/byuuid/${id}`);
+        const res = await fetch(`https://de1.api.radio-browser.info/json/stations/byuuid/${id}`);
         return await res.json();
     }
     catch(error: any){
@@ -40,7 +40,7 @@ export const getStationsById = async (id: string) => {
 
 export const getAllTags = async () => {
     try{
-        const res = await fetch(`http://de1.api.radio-browser.info/json/tags`);
+        const res = await fetch(`https://de1.api.radio-browser.info/json/tags`);
         return await res.json();
     }
     catch(error: any){
@@ -60,7 +60,7 @@ export const getListOfCountries = async () => {
 
 export const getStationsByCountry = async(country: string, limit: number, offset: number) => {
     try{
-        const res = await fetch(`http://at1.api.radio-browser.info/json/stations/bycountrycodeexact/${country}?limit=${limit}&offset=${offset}`);
+        const res = await fetch(`https://at1.api.radio-browser.info/json/stations/bycountrycodeexact/${country}?limit=${limit}&offset=${offset}`);
         return await res.json();
     }
     catch(error: any){
