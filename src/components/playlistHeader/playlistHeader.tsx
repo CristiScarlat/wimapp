@@ -29,8 +29,6 @@ const PlaylistHeader = ({user, handleSearch, searchInputRef, toggleFilterByFavor
         handleSearch(selectedCountry.iso_3166_1)
     }
 
-    console.log({countries})
-
     return (
         <div className="player-playlist-header">
             {filterStationsByFavorites === "all" && <div className="playlist-filterBy-dropdown">

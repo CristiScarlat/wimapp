@@ -1,11 +1,12 @@
-import { auth } from "./firebase";
+import {auth} from "./firebase";
 import {
     browserLocalPersistence,
     createUserWithEmailAndPassword, onAuthStateChanged,
     setPersistence,
     signInWithEmailAndPassword,
     signOut,
-    getIdToken
+    getIdToken,
+    sendPasswordResetEmail
 } from "firebase/auth";
 
 const registerUser = async (email: string, password: string) => {
@@ -18,8 +19,8 @@ const registerUser = async (email: string, password: string) => {
 }
 
 const login = async (email: string, password: string, rememberMe: boolean) => {
-    try{
-        if(rememberMe)await setPersistence(auth, browserLocalPersistence);
+    try {
+        if (rememberMe) await setPersistence(auth, browserLocalPersistence);
         return await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
         console.log(error);
@@ -28,7 +29,7 @@ const login = async (email: string, password: string, rememberMe: boolean) => {
 }
 
 const logout = async () => {
-    try{
+    try {
         await signOut(auth);
     } catch (error) {
         console.log(error);
@@ -37,12 +38,23 @@ const logout = async () => {
 }
 
 const getTokenId = (user: any) => {
-    getIdToken(user).then(function(idToken) {
+    getIdToken(user).then(function (idToken) {
         // Send token to your backend via HTTPS
         // ...
-    }).catch(function(error) {
+    }).catch(function (error) {
         // Handle error
     });
+}
+
+const resetPassword = async (email: string) => {
+    try {
+        await sendPasswordResetEmail(auth, email);
+    } catch (error) {
+        //const errorCode = error.code;
+        // @ts-ignore
+        const errorMessage = error?.message;
+        throw new Error(errorMessage || "Something went wrong");
+    }
 }
 
 const onAuthChange = (cb: any) => {
@@ -61,4 +73,4 @@ const onAuthChange = (cb: any) => {
     })
 }
 
-export { registerUser, login, logout, onAuthChange }
+export {registerUser, login, logout, onAuthChange, resetPassword}

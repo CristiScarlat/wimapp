@@ -63,7 +63,7 @@ const Player = () => {
         if (filterStationsByFavorites === 'all') {
             setPlaylistLoading(true);
             if ((searchInputRef.current?.value && searchInputRef.current?.value !== "") || selectedCountryRef.current) {
-                console.log(">>>>all", searchInputRef.current?.value, selectedCountryRef?.current)
+
                 switch (searchByTerm) {
                     // @ts-ignore
                     case "name":
@@ -79,7 +79,7 @@ const Player = () => {
                 }
             }
             else {
-                console.log(">>>>all - else", searchInputRef.current?.value, selectedCountryRef?.current)
+
                 getAllStations(100, stationsPage * 100)
                     .then((data: any) => {
                         setPlaylistLoading(false);
@@ -95,7 +95,6 @@ const Player = () => {
     }, [stationsPage, filterStationsByFavorites])
 
     useEffect(() => {
-        console.log("favorites", filterStationsByFavorites)
         if (user && filterStationsByFavorites === 'favorites') {
             setPlaylistLoading(true);
             // @ts-ignore

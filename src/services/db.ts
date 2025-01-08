@@ -14,7 +14,6 @@ export const addFavoriteStationToDB = async (userId: string, stationId: string) 
                 await updateDoc(docsRef, {favorites: arrayUnion(stationId)});
             } else {
                 // docSnap.data() will be undefined in this case
-                console.log("No such document!");
                 await setDoc(docsRef, {favorites: arrayUnion(stationId)});
             }
 

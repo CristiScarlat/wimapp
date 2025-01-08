@@ -2,7 +2,7 @@ import {SyntheticEvent, useEffect, useState, useContext, useRef} from 'react';
 import { Ctx } from '../../context/context';
 import { RiArrowLeftCircleLine, RiArrowRightCircleLine } from 'react-icons/ri';
 import "./header.css";
-import {login, logout, onAuthChange, registerUser} from "../../services/auth";
+import {login, logout, onAuthChange, registerUser, resetPassword} from "../../services/auth";
 import Spinner from "../spinner/spinner";
 import ToggleButton from "../toggleButton/toggleButton";
 import { UserCredential } from "firebase/auth";
@@ -16,6 +16,7 @@ const Header = () => {
     const [formType, setFormType] = useState(true);
 
     const headerSidebarRef = useRef(null);
+    const emailInputRef = useRef<HTMLInputElement>(null);
 
     //@ts-ignore
     const { state: { user }, dispatch } = useContext(Ctx);
@@ -79,6 +80,21 @@ const Header = () => {
         setFormType(!formType);
     }
 
+    const handleForgotPassword = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        if(emailInputRef.current?.value && emailInputRef.current?.value !== ""){
+            console.log("handle forgot password", emailInputRef.current?.value);
+            resetPassword(emailInputRef.current?.value)
+                .then(() => toast("Reset Password Email sent.", {type: "success"}))
+                .catch(error => toast("Email could not be sent.", {type: "error"}));
+        }
+        else {
+            console.log("toast error")
+            toast("Please enter a valid email address", {type: "warning"});
+        }
+
+    }
+
     return (
         <header className="header-wrapper">
             <div className="header-logo"><img src="/logo192_white.png" alt="logo" width={25}/>
@@ -112,13 +128,16 @@ const Header = () => {
                             <ToggleButton onChange={handleFormType}/>
                             <span style={{color: !formType ? "white" : "gray"}}>Sign up</span>
                         </div>
-                        <input name="email" type="email" placeholder="Email" />
+                        <input name="email" type="email" placeholder="Email" ref={emailInputRef}/>
                         {!formType && <input name="fullName" type="text" placeholder="Full name" />}
                         <input name="password" type="password" placeholder="Password" />
-                        <button className="player-control-btn icon-btn bg-default" type="submit">
-                            {loading && <Spinner radius={10} stroke={3}/>}
-                            <span>{formType ? "Login" : "Sign up"}</span>
-                        </button>
+                        <div className="d-flex">
+                            <button className="player-control-btn icon-btn bg-default" type="submit">
+                                {loading && <Spinner radius={10} stroke={3}/>}
+                                <span>{formType ? "Login" : "Sign up"}</span>
+                            </button>
+                            {formType && <button className="link-btn" onClick={handleForgotPassword}>Forgot your password?</button>}
+                        </div>
                     </form>}
                 </div>
             </div>
