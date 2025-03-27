@@ -1,6 +1,11 @@
+const apiPath = 'https://fi1.api.radio-browser.info/json';
+
 export const getAllStations = async (limit: number, offset: number) => {
+    console.log(process.env)
     try{
-        const res = await fetch(`https://de1.api.radio-browser.info/json/stations?limit=${limit}&offset=${offset}&hidebroken=true`);
+        const res = await fetch(`${apiPath}/stations?limit=${limit}&offset=${offset}`, {
+            headers: new Headers({ 'Content-Type': 'application/json' })
+        });
         return await res.json();
     }
     catch(error: any){
@@ -10,7 +15,9 @@ export const getAllStations = async (limit: number, offset: number) => {
 
 export const getStationsByTagName = async (tagName: string, limit: number, offset: number) => {
     try{
-        const res = await fetch(`https://de1.api.radio-browser.info/json/stations/bytag/${tagName}?limit=${limit}&offset=${offset}`);
+        const res = await fetch(`${apiPath}/stations/bytag/${tagName}?limit=${limit}&offset=${offset}`,{
+            headers: new Headers({ 'Content-Type': 'application/json' })
+        });
         return await res.json();
     }
     catch(error: any){
@@ -20,7 +27,9 @@ export const getStationsByTagName = async (tagName: string, limit: number, offse
 
 export const getStationsByStationName = async (stationName: string, limit: number, offset: number) => {
     try{
-        const res = await fetch(`https://de1.api.radio-browser.info/json/stations/byname/${stationName}?limit=${limit}&offset=${offset}`);
+        const res = await fetch(`${apiPath}/stations/byname/${stationName}?limit=${limit}&offset=${offset}`, {
+            headers: new Headers({ 'Content-Type': 'application/json' })
+        });
         return await res.json();
     }
     catch(error: any){
@@ -30,7 +39,9 @@ export const getStationsByStationName = async (stationName: string, limit: numbe
 
 export const getStationsById = async (id: string) => {
     try{
-        const res = await fetch(`https://de1.api.radio-browser.info/json/stations/byuuid/${id}`);
+        const res = await fetch(`${apiPath}/stations/byuuid/${id}`,{
+            headers: new Headers({ 'Content-Type': 'application/json' })
+        });
         return await res.json();
     }
     catch(error: any){
@@ -40,7 +51,9 @@ export const getStationsById = async (id: string) => {
 
 export const getAllTags = async () => {
     try{
-        const res = await fetch(`https://de1.api.radio-browser.info/json/tags`);
+        const res = await fetch(`https://fi1.api.radio-browser.info/json/tags`,{
+            headers: new Headers({ 'Content-Type': 'application/json' })
+        });
         return await res.json();
     }
     catch(error: any){
@@ -50,7 +63,9 @@ export const getAllTags = async () => {
 
 export const getListOfCountries = async () => {
     try{
-        const res = await fetch(`https://at1.api.radio-browser.info/json/countries`);
+        const res = await fetch(`https://fi1.api.radio-browser.info/json/countries`,{
+            headers: new Headers({ 'Content-Type': 'application/json' })
+        });
         return await res.json();
     }
     catch(error: any){
@@ -58,9 +73,23 @@ export const getListOfCountries = async () => {
     }
 }
 
-export const getStationsByCountry = async(country: string, limit: number, offset: number) => {
+export const getStationsByCountry = async(countryCode: string, limit: number, offset: number) => {
     try{
-        const res = await fetch(`https://at1.api.radio-browser.info/json/stations/bycountrycodeexact/${country}?limit=${limit}&offset=${offset}`);
+        const res = await fetch(`${apiPath}/stations/bycountrycodeexact/${countryCode}?limit=${limit}&offset=${offset}`,{
+            headers: new Headers({ 'Content-Type': 'application/json' })
+        });
+        return await res.json();
+    }
+    catch(error: any){
+        console.error(error)
+    }
+}
+
+export const getStationData = async(streamUrl: string) => {
+    try{
+        const res = await fetch(`${apiPath}/iradiodata?streamUrl=${streamUrl}`,{
+            headers: new Headers({ 'Content-Type': 'application/json' })
+        });
         return await res.json();
     }
     catch(error: any){

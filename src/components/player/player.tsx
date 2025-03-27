@@ -18,7 +18,8 @@ import {
     formatStationData,
     getStationsByTagName,
     getStationsByStationName,
-    getStationsByCountry
+    getStationsByCountry,
+    getStationData
 } from "../../services/RBApi";
 import PlaylistHeader from "../playlistHeader/playlistHeader";
 import Image from "../image/image";
@@ -36,6 +37,10 @@ interface RadioStation {
     favicon: string
 }
 
+interface RadioStationMetaData {
+    StreamTitle: string
+}
+
 
 const Player = () => {
 
@@ -50,6 +55,9 @@ const Player = () => {
     const [stationsPage, setStationsPage] = useState<number>(0);
     const [searchByTerm, setSearchByTerm] = useState<string>('name');
     const [playerMute, setPlayerMute] = useState<boolean>(false);
+    const [streamData, setStreamData] = useState<RadioStationMetaData>({
+        StreamTitle: '',
+    });
     //@ts-ignore
     const {state: {user, globalSpinner, mobileShow}, dispatch} = useContext(Ctx);
 
@@ -82,6 +90,7 @@ const Player = () => {
 
                 getAllStations(100, stationsPage * 100)
                     .then((data: any) => {
+                        console.log(data);
                         setPlaylistLoading(false);
                         const formatData: RadioStation[] = data.map((obj: any): RadioStation => formatStationData(obj))
                         setRadiosStationsList(formatData);
@@ -150,6 +159,19 @@ const Player = () => {
                 alert("Station offline, please pick another radios station.")
             }
         }
+        if(selectedRadioStation?.urlObject) {
+            getStationData(selectedRadioStation?.urlObject)
+                .then(data => setStreamData(data.data))
+                .catch(err => console.log(err))
+        }
+        const tickId = setInterval(() => {
+            if(selectedRadioStation?.urlObject){
+                getStationData(selectedRadioStation?.urlObject)
+                    .then(data => setStreamData(data.data))
+                    .catch(err => console.log(err))
+            }
+        }, 10000)
+        return () => clearInterval(tickId);
     }, [selectedRadioStation])
 
     useEffect(() => {
@@ -281,6 +303,7 @@ const Player = () => {
 
     const searchByCountry = () => {
         if(selectedCountryRef?.current){
+            console.log(selectedCountryRef.current)
             getStationsByCountry(selectedCountryRef.current, 100, stationsPage * 100)
                 .then((data: any) => {
                     setPlaylistLoading(false);
@@ -338,6 +361,7 @@ const Player = () => {
         setPlayerMute(!playerMute);
     }
 
+    console.log(streamData)
     // @ts-ignore
     return (
         <div className="player-container">
@@ -363,6 +387,7 @@ const Player = () => {
                     </p>
                     {stationInfoRef.current?.favicon &&
                         <p><img src={stationInfoRef.current?.favicon} alt="no radio icon"/></p>}
+                    <p className="tag" style={{borderRadius: 0, whiteSpace: "break-spaces"}}>{streamData?.StreamTitle}</p>
                 </div>
                 <EqualizerWithAnalyser audioSource={playerRef}/>
                 <div className="player-header">
