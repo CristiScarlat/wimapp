@@ -18,7 +18,7 @@ const PlaylistHeader = ({user, handleSearch, searchInputRef, toggleFilterByFavor
     useEffect(() => {
         getListOfCountries()
             .then(listOfCountries => {
-                setCountries(listOfCountries)
+                if(listOfCountries)setCountries(listOfCountries)
             })
             .catch(err => console.log(err));
     }, [])

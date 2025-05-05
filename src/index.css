@@ -155,3 +155,8 @@ canvas {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.under-construction-msg {
+  color: gray;
+  text-align: center;
+}

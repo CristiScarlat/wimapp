@@ -1,17 +1,6 @@
-const apiPath = 'https://fi1.api.radio-browser.info/json';
+import countries from "../data/countries.json";
 
-export const getAllStations = async (limit: number, offset: number) => {
-    console.log(process.env)
-    try{
-        const res = await fetch(`${apiPath}/stations?limit=${limit}&offset=${offset}`, {
-            headers: new Headers({ 'Content-Type': 'application/json' })
-        });
-        return await res.json();
-    }
-    catch(error: any){
-        console.error(error)
-    }
-}
+const apiPath = 'https://fi1.api.radio-browser.info/json';
 
 export const getStationsByTagName = async (tagName: string, limit: number, offset: number) => {
     try{
@@ -63,10 +52,7 @@ export const getAllTags = async () => {
 
 export const getListOfCountries = async () => {
     try{
-        const res = await fetch(`https://fi1.api.radio-browser.info/json/countries`,{
-            headers: new Headers({ 'Content-Type': 'application/json' })
-        });
-        return await res.json();
+        return await Promise.resolve(countries);
     }
     catch(error: any){
         console.error(error)

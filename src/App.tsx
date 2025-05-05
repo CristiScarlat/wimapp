@@ -9,7 +9,8 @@ function App() {
         <>
             <Header/>
             <main>
-                <Player />
+                {/*<Player />*/}
+                <h3 className="under-construction-msg">Update in progress, please come back later!</h3>
             </main>
             <Footer/>
             <ToastContainer />

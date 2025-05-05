@@ -7,13 +7,13 @@ import Spinner from "../spinner/spinner";
 import EqualizerWithAnalyser from "../equalizerWithAnalyser/equalizerWithAnalyser";
 import {Ctx} from "../../context/context";
 import {
+    getAllStations,
     addFavoriteStationToDB,
     removeFavoriteStationFromDB,
     getFavoriteStationsToDB
 } from "../../services/db";
 
 import {
-    getAllStations,
     getStationsById,
     formatStationData,
     getStationsByTagName,
