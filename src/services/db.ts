@@ -1,10 +1,11 @@
 import {db} from "./firebase";
-import {doc, setDoc, getDoc, getDocs, updateDoc, deleteField, arrayUnion, arrayRemove, query, collection, orderBy, limit, startAfter} from "firebase/firestore";
+import {doc, setDoc, getDoc, getDocs, updateDoc, deleteField, arrayUnion, arrayRemove, query, collection, orderBy, limit, startAfter, where} from "firebase/firestore";
 import {EqPreset} from "../data/playerPreset";
 
 let lastVisible: any = null; // Store last document for pagination
 
 export const getAllStations = async (pageLimit: number, offset: number) => {
+    if(offset === 0)lastVisible = null;
     try {
         const data: any[] = [];
         let q = null;
@@ -35,6 +36,108 @@ export const getAllStations = async (pageLimit: number, offset: number) => {
         throw new Error("Could not read data from db")
     }
 }
+
+export const getStationsByName = async (name: string, pageLimit: number, offset: number) => {
+    if(offset === 0)lastVisible = null;
+    try {
+        const data: any[] = [];
+        let q = null;
+        if(lastVisible){
+            q = query(collection(db, "radioStations"),
+                orderBy("name"),
+                where("name", ">", name),
+                startAfter(lastVisible),
+                limit(pageLimit));
+        }
+        else {
+            //@ts-ignore
+            q = query(collection(db, "radioStations"), orderBy("name"), where("name", ">", name), limit(pageLimit));
+
+        }
+        // @ts-ignore
+        const docSnap = await getDocs(q);
+
+        // Get the last visible document
+        lastVisible = docSnap.docs[docSnap.docs.length-1];
+
+        //@ts-ignore
+        docSnap.forEach(snapshot => {
+            data.push(snapshot.data())
+        });
+        return data
+    } catch (error) {
+        console.log(error)
+        throw new Error("Could not read data from db")
+    }
+}
+
+export const getStationsByTag = async (tag: string, pageLimit: number, offset: number) => {
+    if(offset === 0)lastVisible = null;
+    try {
+        const data: any[] = [];
+        let q = null;
+        if(lastVisible){
+            q = query(collection(db, "radioStations"),
+                where("tags", "array-contains-any", [tag]),
+                startAfter(lastVisible),
+                limit(pageLimit));
+        }
+        else {
+            //@ts-ignore
+            q = query(collection(db, "radioStations"), where("tags", "array-contains-any", [tag]), limit(pageLimit));
+
+        }
+        // @ts-ignore
+        const docSnap = await getDocs(q);
+
+        // Get the last visible document
+        lastVisible = docSnap.docs[docSnap.docs.length-1];
+
+        //@ts-ignore
+        docSnap.forEach(snapshot => {
+            data.push(snapshot.data())
+        });
+        return data
+    } catch (error) {
+        console.log(error)
+        throw new Error("Could not read data from db")
+    }
+}
+
+export const getStationsByCountry = async (countrycode: string, pageLimit: number, offset: number) => {
+    if(offset === 0)lastVisible = null;
+    try {
+        const data: any[] = [];
+        let q = null;
+        if(lastVisible){
+            q = query(collection(db, "radioStations"),
+                orderBy("name"),
+                where("countrycode", "==", countrycode),
+                startAfter(lastVisible),
+                limit(pageLimit));
+        }
+        else {
+            //@ts-ignore
+            q = query(collection(db, "radioStations"), orderBy("name"), where("countrycode", "==", countrycode), limit(pageLimit));
+
+        }
+        // @ts-ignore
+        const docSnap = await getDocs(q);
+
+        // Get the last visible document
+        lastVisible = docSnap.docs[docSnap.docs.length-1];
+
+        //@ts-ignore
+        docSnap.forEach(snapshot => {
+            data.push(snapshot.data())
+        });
+        return data
+    } catch (error) {
+        console.log(error)
+        throw new Error("Could not read data from db")
+    }
+}
+
 
 export const addFavoriteStationToDB = async (userId: string, stationId: string) => {
     if (userId) {

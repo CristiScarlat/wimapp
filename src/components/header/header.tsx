@@ -107,13 +107,13 @@ const Header = () => {
                     Logout
                 </button>}
                 <button className="header-sidebar-btn" onClick={() => setShow(true)}>
-                    <RiArrowLeftCircleLine color="white" size="1.5rem"/>
+                    <RiArrowLeftCircleLine color="#EBDBCD" size="1.5rem"/>
                 </button>
             </div>
             <div id="header-sidebar" style={{width: show ? "20rem" : 0}} ref={headerSidebarRef}>
                 <div className="header-sidebar-head">
                     <button className="header-sidebar-btn" onClick={() => setShow(false)}>
-                        <RiArrowRightCircleLine color="white" size="1.5rem"/>
+                        <RiArrowRightCircleLine color="#EBDBCD" size="1.5rem"/>
                     </button>
                 </div>
                 <div className="header-sidebar-body">
@@ -124,9 +124,9 @@ const Header = () => {
                         :
                     <form onSubmit={handleSubmitAuth}>
                         <div className="form-header">
-                            <span style={{color: formType ? "white" : "gray"}}>Login</span>
+                            <span style={{color: formType ? "#381E06" : "gray"}}>Login</span>
                             <ToggleButton onChange={handleFormType}/>
-                            <span style={{color: !formType ? "white" : "gray"}}>Sign up</span>
+                            <span style={{color: !formType ? "#381E06" : "gray"}}>Sign up</span>
                         </div>
                         <input name="email" type="email" placeholder="Email" ref={emailInputRef}/>
                         {!formType && <input name="fullName" type="text" placeholder="Full name" />}

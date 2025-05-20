@@ -10,15 +10,15 @@ import {
     getAllStations,
     addFavoriteStationToDB,
     removeFavoriteStationFromDB,
-    getFavoriteStationsToDB
+    getFavoriteStationsToDB,
+    getStationsByName,
+    getStationsByTag,
+    getStationsByCountry
 } from "../../services/db";
 
 import {
     getStationsById,
     formatStationData,
-    getStationsByTagName,
-    getStationsByStationName,
-    getStationsByCountry,
     getStationData
 } from "../../services/RBApi";
 import PlaylistHeader from "../playlistHeader/playlistHeader";
@@ -29,7 +29,7 @@ interface RadioStation {
     id: number
     name: string
     url: string
-    genre: string
+    genre: string[]
     country: string
     countryCode: string
     homepage: string
@@ -164,14 +164,14 @@ const Player = () => {
                 .then(data => setStreamData(data.data))
                 .catch(err => console.log(err))
         }
-        const tickId = setInterval(() => {
-            if(selectedRadioStation?.urlObject){
-                getStationData(selectedRadioStation?.urlObject)
-                    .then(data => setStreamData(data.data))
-                    .catch(err => console.log(err))
-            }
-        }, 10000)
-        return () => clearInterval(tickId);
+        // const tickId = setInterval(() => {
+        //     if(selectedRadioStation?.urlObject){
+        //         getStationData(selectedRadioStation?.urlObject)
+        //             .then(data => setStreamData(data.data))
+        //             .catch(err => console.log(err))
+        //     }
+        // }, 10000)
+        //return () => clearInterval(tickId);
     }, [selectedRadioStation])
 
     useEffect(() => {
@@ -272,8 +272,9 @@ const Player = () => {
     const searchByName = () => {
         const inputSearchValue = searchInputRef.current?.value;
         if (inputSearchValue && inputSearchValue !== "") {
-            getStationsByStationName(inputSearchValue, 100, stationsPage * 100)
+            getStationsByName(inputSearchValue, 100, stationsPage * 100)
                 .then((data: any) => {
+                    console.log(data.map((station: any) => station.name))
                     setPlaylistLoading(false);
                     const formatData: RadioStation[] = data.map((obj: any): RadioStation => formatStationData(obj))
                     setRadiosStationsList(formatData);
@@ -288,7 +289,7 @@ const Player = () => {
     const searchByTag = () => {
         const inputSearchValue = searchInputRef.current?.value;
         if (inputSearchValue && inputSearchValue !== "") {
-            getStationsByTagName(inputSearchValue, 100, stationsPage * 100)
+            getStationsByTag(inputSearchValue, 100, stationsPage * 100)
                 .then((data: any) => {
                     setPlaylistLoading(false);
                     const formatData: RadioStation[] = data.map((obj: any): RadioStation => formatStationData(obj))
@@ -361,7 +362,7 @@ const Player = () => {
         setPlayerMute(!playerMute);
     }
 
-    console.log(streamData)
+    console.log(stationInfoRef)
     // @ts-ignore
     return (
         <div className="player-container">
@@ -380,8 +381,8 @@ const Player = () => {
                     </p>
                     <p>Country:<span style={{marginLeft: "0.5rem"}}>{stationInfoRef.current?.country}</span>
                     </p>
-                    <p title={stationInfoRef.current?.genre}>Genre:<span
-                        className="text-overflow player-info-tags-container">{stationInfoRef.current?.genre?.split(",").map(tag => (
+                    <p title={stationInfoRef.current?.genre?.join("")}>Genre:<span
+                        className="text-overflow player-info-tags-container">{stationInfoRef.current?.genre?.map((tag: string) => (
                         <div className="tag">{tag}</div>
                     ))}</span>
                     </p>

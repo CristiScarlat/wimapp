@@ -1,9 +1,9 @@
 
 :root {
-  --bg-color: #252424;
-  --bg-color-translucid: #25242447;
+  --bg-color-pink: #FF6B6B;
   --default-text-color: #a5a5a5;
   --default-theme-color: #8907e4;
+  --main-bg-color: #EBDBCD;
   min-height: 100vh;
 }
 
@@ -15,9 +15,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(90deg, #0e0c27 0%, rgb(4 41 80) 50%, #0e0c27 100%);
+  background: var( --main-bg-color);
   /*background-color: #070707;*/
   min-height:100vh;
+  color: white;
 }
 
 input:focus, input:active, input:focus-visible {
@@ -25,7 +26,7 @@ input:focus, input:active, input:focus-visible {
 }
 
 .bg-default {
-  background-color: var(--bg-color)!important;
+  background-color: var( --main-bg-color)!important;
 }
 
 #root {
@@ -42,11 +43,10 @@ canvas {
   width: 100%;
   height: 80px;
   border-radius: 5px;
-  background-color: var(--bg-color);
+  background-color: var( --main-bg-color);
 }
 
 .icon-btn {
-  border: none;
   outline: none;
   display: flex;
   flex-wrap: nowrap;
@@ -55,7 +55,12 @@ canvas {
   gap: 0.5rem;
   cursor: pointer;
   width: fit-content;
-  background: transparent;
+  /* background: transparent; */
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #3b2f24;
+  color: #3b2f24;
+  font-weight: 600;
 }
 
 .link-btn {
@@ -63,7 +68,7 @@ canvas {
   border: none;
   outline: none;
   cursor: pointer;
-  color: var(--default-text-color);
+  color: #3b2f24;;
   font-weight: bold;
   letter-spacing: 0.5px;
   text-overflow: ellipsis;
@@ -148,6 +153,7 @@ canvas {
 .d-flex {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 0.5rem;
 }
 
@@ -159,4 +165,36 @@ canvas {
 .under-construction-msg {
   color: gray;
   text-align: center;
+}
+
+.cards-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 320px);
+  grid-gap: 1rem;
+  justify-content: center;
+  margin: 1rem;
+}
+
+.stationCard {
+  border: 1px solid gray;
+  width: 250px;
+  min-height: 300px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.stationCard img{
+  object-fit: none;
+  border-radius: 10px;
+}
+
+.stationCard .img-replace {
+  width: 200px;
+  height: 200px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  margin: 0.5rem auto;
 }
