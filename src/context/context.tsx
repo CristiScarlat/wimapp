@@ -6,12 +6,14 @@ interface GlobalStateTypes {
     user: UserInfo | {}
     globalSpinner: boolean
     mobileShow: "player" | "playlist"
+    selectedUrlToPlay: string | null
 }
 
 const initState: GlobalStateTypes = {
     user: undefined,
     globalSpinner: false,
-    mobileShow: "player"
+    mobileShow: "player",
+    selectedUrlToPlay: null
 }
 
 export const Ctx = createContext<GlobalStateTypes>(initState);
@@ -29,6 +31,8 @@ const stateReducer = (state: GlobalStateTypes, action: { type: string; payload: 
             return {...state, globalSpinner: false};
         case 'MOBILE_BUTTONS':
             return {...state, mobileShow: action.payload};
+        case 'SELECTED_URL_TO_PLAY':
+            return {...state, selectedUrlToPlay: action.payload};
         default:
             return state
     }

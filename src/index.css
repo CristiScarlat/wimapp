@@ -173,8 +173,6 @@ canvas {
   grid-gap: 1rem;
   justify-content: center;
   margin: 1rem;
-  height: 60vh;
-  overflow: auto;
   padding: 0.5rem 0;
 }
 

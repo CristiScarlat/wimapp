@@ -15,7 +15,7 @@ const PlayerControls = () => {
                         <rect x="0.5" y="0.5" width="47" height="47" rx="23.5" stroke="#0E5D4E"/>
                         <path d="M16 10.28V38.28L38 24.28L16 10.28Z" fill="#0E5D4E"/>
                     </svg>
-                    <input type="range" min="0" max="1" step="0.01"/>
+                    {/*<input type="range" min="0" max="1" step="0.01"/>*/}
                 </div>
             </div>
             <div>

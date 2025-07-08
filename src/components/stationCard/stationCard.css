@@ -9,6 +9,7 @@
     text-align: center;
     box-shadow: 1px 2px 4px 0px #02302736;
     cursor: pointer;
+    background-color: var(--main-bg-color);
 }
 
 .stationCard .stationCard-title{

@@ -9,6 +9,10 @@
     justify-content: space-between;
     align-items: center;
     box-shadow: -1px 1px 4px 0px #02302736;
+    position: sticky;
+    top: 0;
+    background-color: var(--main-bg-color);
+    z-index: 10;
 }
 
 .playerControls input[type="range"] {
