@@ -1,0 +1,59 @@
+.stationCard {
+    position: relative;
+    color: #0E5D4E;
+    width: 250px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    box-shadow: 1px 2px 4px 0px #02302736;
+    cursor: pointer;
+}
+
+.stationCard .stationCard-title{
+    white-space: nowrap;
+    padding: 0 0.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.stationCard > img{
+    object-fit: scale-down;
+    border-radius: 10px;
+    width: 100px;
+    height: 100px;
+    margin: 0.5rem auto;
+    flex: 1;
+}
+
+.stationCard .img-replace {
+    width: 100px;
+    height: 100px;
+    margin: 0.5rem auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+
+.stationCard-country {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 1rem;
+    white-space: nowrap;
+}
+
+.stationCard-country p{
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.stationCard-favorite-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}

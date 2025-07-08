@@ -5,7 +5,7 @@ interface RadioStation {
     url: string
     genre: string[]
     country: string
-    countryCode: string
+    countrycode: string
     homepage: string
     bitrate: number
     favicon: string

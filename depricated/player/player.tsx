@@ -1,11 +1,11 @@
 import {useEffect, useState, useRef, useCallback, useContext} from "react";
 import {FaChevronRight, FaChevronLeft, FaRegHeart, FaHeart} from "react-icons/fa";
 import {IoPlaySkipBack, IoPlay, IoStop, IoPlaySkipForward, IoVolumeMute} from "react-icons/io5";
-import Range from "../range/range";
+import Range from "../../src/components/range/range";
 import "./player.css";
-import Spinner from "../spinner/spinner";
-import EqualizerWithAnalyser from "../equalizerWithAnalyser/equalizerWithAnalyser";
-import {Ctx} from "../../context/context";
+import Spinner from "../../src/components/spinner/spinner";
+import EqualizerWithAnalyser from "../../src/components/equalizerWithAnalyser/equalizerWithAnalyser";
+import {Ctx} from "../../src/context/context";
 import {
     getAllStations,
     addFavoriteStationToDB,
@@ -13,16 +13,16 @@ import {
     getFavoriteStationsToDB,
     getStationsByName,
     getStationsByTag,
-    getStationsByCountry
-} from "../../services/db";
+    getStationsByCountry, getAllStationsPaginated
+} from "../../src/services/db";
 
 import {
     getStationsById,
     formatStationData,
     getStationData
-} from "../../services/RBApi";
-import PlaylistHeader from "../playlistHeader/playlistHeader";
-import Image from "../image/image";
+} from "../../src/services/RBApi";
+import PlaylistHeader from "../../src/components/playlistHeader/playlistHeader";
+import Image from "../../src/components/image/image";
 
 
 interface RadioStation {
@@ -88,7 +88,7 @@ const Player = () => {
             }
             else {
 
-                getAllStations(100, stationsPage * 100)
+                getAllStationsPaginated(100, stationsPage * 100)
                     .then((data: any) => {
                         console.log(data);
                         setPlaylistLoading(false);
@@ -344,7 +344,7 @@ const Player = () => {
         selectedCountryRef.current = null;
         //@ts-ignore
         searchInputRef.current.value = "";
-        getAllStations(100, stationsPage * 100)
+        getAllStationsPaginated(100, stationsPage * 100)
             .then((data: any) => {
                 setPlaylistLoading(false);
                 const formatData: RadioStation[] = data.map((obj: any): RadioStation => formatStationData(obj))

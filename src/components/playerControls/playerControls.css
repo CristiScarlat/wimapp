@@ -1,0 +1,16 @@
+
+.playerControls {
+    max-width: 43rem;
+    height: 8rem;
+    border-radius: 20px;
+    border-width: 1px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: -1px 1px 4px 0px #02302736;
+}
+
+.playerControls input[type="range"] {
+    background: #0E5D4E;
+}

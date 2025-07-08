@@ -2,10 +2,13 @@
 .header-wrapper {
     display: flex;
     justify-content: space-between;
-    color: white;
-    padding: 1rem 0;
-    background-color: var(--bg-color-pink);
-    width: 100%;
+    margin: 1.5rem auto;
+    min-width: 90%;
+    height: 4rem;
+    flex-shrink: 0;
+    border-radius: 6.25rem;
+    border: 1px solid #0E5D4E;
+    background: #FDE776;
 }
 
 .header-wrapper .header-logo {
@@ -15,6 +18,7 @@
     gap: 0.5rem;
     font-weight: bold;
     margin-left: 1rem;
+    color: #0E5D4E;
 }
 
 .header-wrapper .header-sidebar-btn {

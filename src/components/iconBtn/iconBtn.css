@@ -1,0 +1,11 @@
+
+.icon-btn-pagination {
+    border: 1px solid #0E5D4E;
+    padding: 0.5rem;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+
+}

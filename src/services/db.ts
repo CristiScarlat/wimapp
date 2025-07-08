@@ -1,41 +1,78 @@
 import {db} from "./firebase";
-import {doc, setDoc, getDoc, getDocs, updateDoc, deleteField, arrayUnion, arrayRemove, query, collection, orderBy, limit, startAfter, where} from "firebase/firestore";
+import {doc, setDoc, getDoc, getDocs, updateDoc, arrayUnion, arrayRemove, query, collection, orderBy, limit, startAfter, endBefore, where} from "firebase/firestore";
 import {EqPreset} from "../data/playerPreset";
 
 let lastVisible: any = null; // Store last document for pagination
 
-export const getAllStations = async (pageLimit: number, offset: number) => {
-    if(offset === 0)lastVisible = null;
-    try {
+export const getAllStations = async () => {
+    try{
         const data: any[] = [];
-        let q = null;
-        if(lastVisible){
-            q = query(collection(db, "radioStations"),
-            orderBy("name"),
-            startAfter(lastVisible),
-            limit(pageLimit));
-        }
-        else {
-            //@ts-ignore
-            q = query(collection(db, "radioStations"), orderBy("name"), limit(pageLimit));
-
-        }
+        const q = query(collection(db, "radioStations"), orderBy("name"));
         // @ts-ignore
         const docSnap = await getDocs(q);
-
-        // Get the last visible document
-        lastVisible = docSnap.docs[docSnap.docs.length-1];
 
         //@ts-ignore
         docSnap.forEach(snapshot => {
             data.push(snapshot.data())
         });
         return data
-    } catch (error) {
-        console.log(error)
-        throw new Error("Could not read data from db")
+    }
+    catch(e){
+        throw e;
     }
 }
+
+export const getAllStationsPaginated = async ({
+                                                  pageLimit,
+                                                  direction,
+                                                  cursorDoc,
+                                              }: {
+    pageLimit: number;
+    direction: "next" | "prev" | "initial";
+    cursorDoc: any | null; // Firestore document snapshot for pagination
+}) => {
+    try {
+        const data: any[] = [];
+        const baseRef = collection(db, "radioStations");
+        let q;
+
+        if (direction === "initial") {
+            // First page
+            q = query(baseRef, orderBy("name"), limit(pageLimit));
+        } else if (direction === "next" && cursorDoc) {
+            // Next page
+            q = query(baseRef, orderBy("name"), startAfter(cursorDoc), limit(pageLimit));
+        } else if (direction === "prev" && cursorDoc) {
+            // Previous page (read backwards, then reverse)
+            q = query(baseRef, orderBy("name"), endBefore(cursorDoc), limit(pageLimit));
+        } else {
+            throw new Error("Invalid pagination parameters");
+        }
+
+        const docSnap = await getDocs(q);
+
+        if (direction === "prev") {
+            // Reverse the order for previous page
+            docSnap.docs.reverse();
+        }
+
+        docSnap.forEach((doc) => data.push({ id: doc.id, ...doc.data() }));
+
+        const firstVisible = docSnap.docs[0] || null;
+        const lastVisible = docSnap.docs[docSnap.docs.length - 1] || null;
+
+        return {
+            data,
+            firstVisible, // For "prev" calls
+            lastVisible,  // For "next" calls
+            hasData: docSnap.size > 0,
+        };
+    } catch (error) {
+        console.error(error);
+        throw new Error("Could not fetch paginated data");
+    }
+};
+
 
 export const getStationsByName = async (name: string, pageLimit: number, offset: number) => {
     if(offset === 0)lastVisible = null;
