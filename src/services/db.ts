@@ -2,71 +2,33 @@ import {db} from "./firebase";
 import {doc, setDoc, getDoc, getDocs, updateDoc, arrayUnion, arrayRemove, query, collection, orderBy, limit, startAfter, endBefore, where} from "firebase/firestore";
 import {EqPreset} from "../data/playerPreset";
 
+const baseURL = process.env.NODE_ENV === "production" ? process.env.REACT_APP_API_PATH : "http://localhost:3000/iRadio";
+
 let lastVisible: any = null; // Store last document for pagination
 
-export const getAllStations = async () => {
+export const getStationMetaData = async (streamUrl: string) => {
     try{
-        const data: any[] = [];
-        const q = query(collection(db, "radioStations"), orderBy("name"));
-        // @ts-ignore
-        const docSnap = await getDocs(q);
-
-        //@ts-ignore
-        docSnap.forEach(snapshot => {
-            data.push(snapshot.data())
+        const res = await fetch(`${baseURL}/station-data`, {
+            method: "POST",
+             headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({streamUrl})
         });
+        const data = await res.json()
         return data
     }
-    catch(e){
-        throw e;
+    catch(error) {
+        console.error(error);
+        throw new Error("Could not fetch station data");
     }
 }
 
-export const getAllStationsPaginated = async ({
-                                                  pageLimit,
-                                                  direction,
-                                                  cursorDoc,
-                                              }: {
-    pageLimit: number;
-    direction: "next" | "prev" | "initial";
-    cursorDoc: any | null; // Firestore document snapshot for pagination
-}) => {
+export const getAllStationsPaginated = async (pageSize: number, pageNo: number) => {
     try {
-        const data: any[] = [];
-        const baseRef = collection(db, "radioStations");
-        let q;
-
-        if (direction === "initial") {
-            // First page
-            q = query(baseRef, orderBy("name"), limit(pageLimit));
-        } else if (direction === "next" && cursorDoc) {
-            // Next page
-            q = query(baseRef, orderBy("name"), startAfter(cursorDoc), limit(pageLimit));
-        } else if (direction === "prev" && cursorDoc) {
-            // Previous page (read backwards, then reverse)
-            q = query(baseRef, orderBy("name"), endBefore(cursorDoc), limit(pageLimit));
-        } else {
-            throw new Error("Invalid pagination parameters");
-        }
-
-        const docSnap = await getDocs(q);
-
-        if (direction === "prev") {
-            // Reverse the order for previous page
-            docSnap.docs.reverse();
-        }
-
-        docSnap.forEach((doc) => data.push({ id: doc.id, ...doc.data() }));
-
-        const firstVisible = docSnap.docs[0] || null;
-        const lastVisible = docSnap.docs[docSnap.docs.length - 1] || null;
-
-        return {
-            data,
-            firstVisible, // For "prev" calls
-            lastVisible,  // For "next" calls
-            hasData: docSnap.size > 0,
-        };
+        const res = await fetch(`${baseURL}/stations?limit=${pageSize}&page=${pageNo}`);
+        const data = await res.json()
+        return data
     } catch (error) {
         console.error(error);
         throw new Error("Could not fetch paginated data");

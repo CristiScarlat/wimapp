@@ -16,9 +16,9 @@ function App() {
                 </Routes>
                 <Footer/>
                 <ToastContainer />
-                <Modal title="">
+                {/* <Modal title="">
                     <h1>V3 will be ready soon, please come back to enjoy over 50000 radio stations.</h1>
-                    </Modal>
+                    </Modal> */}
             </Router>
         </>
     )
