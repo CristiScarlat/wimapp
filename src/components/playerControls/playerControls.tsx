@@ -10,17 +10,17 @@ const PlayerControls = () => {
     const {state: {selectedUrlToPlay}} = useContext(Ctx);
 
     useEffect(() => {
-        console.log(selectedUrlToPlay)
         const tick = setInterval(() => {
-            getStationMetaData(selectedUrlToPlay)
-            .then(data => setStationData(data.metadata))
-            .catch(error => console.log(error))
+            if(selectedUrlToPlay){
+                console.log("tick", selectedUrlToPlay)
+                getStationMetaData(selectedUrlToPlay)
+                    .then(data => setStationData(data.metadata))
+                    .catch(error => console.log(error))
+            }
         }, 10000)
 
         return () => clearInterval(tick)
     }, [selectedUrlToPlay])
-
-    console.log(stationData)
 
     return (
         <div className="playerControls">
@@ -36,7 +36,7 @@ const PlayerControls = () => {
                         <rect x="0.5" y="0.5" width="47" height="47" rx="23.5" stroke="#0E5D4E"/>
                         <path d="M16 10.28V38.28L38 24.28L16 10.28Z" fill="#0E5D4E"/>
                     </svg> */}
-                    <p>{stationData && stationData.StreamTitle}</p>
+                    <p style={{textAlign: "justify"}}>{stationData && stationData.StreamTitle}</p>
                 </div>
             </div>
             <div>

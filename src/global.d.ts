@@ -3,6 +3,7 @@ interface RadioStation {
     id: number
     name: string
     url: string
+    url_resolved: string
     genre: string[]
     country: string
     countrycode: string

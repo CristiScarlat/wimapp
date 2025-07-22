@@ -2,8 +2,6 @@ import {useEffect, useState, useRef} from "react";
 import {getAllStationsPaginated} from "../services/db";
 import StationCard from "../components/stationCard/stationCard";
 import PlayerControls from "../components/playerControls/playerControls";
-import IconBtn from "../components/iconBtn/iconBtn";
-import { IoIosArrowBack, IoIosArrowForward  } from "react-icons/io";
 
 
 const Home = () => {

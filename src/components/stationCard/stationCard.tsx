@@ -11,14 +11,14 @@ interface PropsTypes {
 const StationCard = ({ stationData }: PropsTypes) => {
 
     //@ts-ignore
-    const { dispatch } = useContext(Ctx);
+    const { dispatch, state } = useContext(Ctx);
 
     const handleSelectStation = (stationUrl: string) => {
         dispatch({ type: "SELECTED_URL_TO_PLAY", payload: stationUrl });
     }
 
     return (
-        <div className="stationCard" onClick={() => handleSelectStation(stationData.url)}>
+        <div className="stationCard" onClick={() => handleSelectStation(stationData.url_resolved)} style={state.selectedUrlToPlay === stationData.url_resolved ? {backgroundColor: "#bdbcbc"} : {}}>
             <div>
                 <div>
                     <p className="stationCard-title">{stationData?.name}</p>
