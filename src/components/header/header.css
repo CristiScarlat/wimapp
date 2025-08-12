@@ -9,6 +9,8 @@
     border-radius: 6.25rem;
     border: 1px solid #0E5D4E;
     background: #FDE776;
+    position: sticky;
+    top: 1rem;
 }
 
 .header-wrapper .header-logo {

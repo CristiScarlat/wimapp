@@ -15,7 +15,6 @@ const Home = () => {
     useEffect(() => {
         getAllStationsPaginated(pageSize, pageNo)
             .then(data => {
-                console.log(data)
                 totalPages.current = data.totalPages;
                 setStations(data.data)
             })
@@ -34,8 +33,7 @@ const Home = () => {
 
     return (
         <div className="player-list-ctrls-wrapper">
-            <PlayerControls />
-            <div>
+            <PlayerControls>
                 <div className="player-list-pagination">
                     <button className="only-icon-button" onClick={handlePrevPage} style={{opacity: pageNo === 1 ? 0.2 : 1}}>
                         <svg width="46" height="29" viewBox="0 0 46 29" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -51,6 +49,8 @@ const Home = () => {
                         </svg>
                     </button>
                 </div>
+            </PlayerControls>
+            <div>
                 <div className="cards-list">
                     {stations.map((station) => (
                         <StationCard key={station.id} stationData={station}/>

@@ -13,12 +13,12 @@ const StationCard = ({ stationData }: PropsTypes) => {
     //@ts-ignore
     const { dispatch, state } = useContext(Ctx);
 
-    const handleSelectStation = (stationUrl: string) => {
-        dispatch({ type: "SELECTED_URL_TO_PLAY", payload: stationUrl });
+    const handleSelectStation = (stationData: RadioStation) => {
+        dispatch({ type: "SELECTED_URL_TO_PLAY", payload: stationData.url_resolved });
     }
 
     return (
-        <div className="stationCard" onClick={() => handleSelectStation(stationData.url_resolved)} style={state.selectedUrlToPlay === stationData.url_resolved ? {backgroundColor: "#bdbcbc"} : {}}>
+        <div className="stationCard" onClick={() => handleSelectStation(stationData)} style={state.selectedUrlToPlay === stationData.url_resolved ? {backgroundColor: "#bdbcbc"} : {}}>
             <div>
                 <div>
                     <p className="stationCard-title">{stationData?.name}</p>

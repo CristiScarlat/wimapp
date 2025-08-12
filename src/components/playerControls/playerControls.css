@@ -1,18 +1,22 @@
 
 .playerControls {
     max-width: 43rem;
-    height: 8rem;
+    /*height: 8rem;*/
     border-radius: 20px;
     border-width: 1px;
     margin: auto;
+    box-shadow: -1px 1px 4px 0px #02302736;
+    position: sticky;
+    top: 6rem;
+    background-color: var(--main-bg-color);
+    z-index: 10;
+    padding: 1rem;
+}
+
+.playerControls>div:first-child{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: -1px 1px 4px 0px #02302736;
-    position: sticky;
-    top: 0;
-    background-color: var(--main-bg-color);
-    z-index: 10;
 }
 
 .playerControls input[type="range"] {
