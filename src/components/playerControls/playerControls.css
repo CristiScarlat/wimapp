@@ -3,20 +3,21 @@
     max-width: 43rem;
     /*height: 8rem;*/
     border-radius: 20px;
-    border-width: 1px;
     margin: auto;
     box-shadow: -1px 1px 4px 0px #02302736;
     position: sticky;
     top: 6rem;
-    background-color: var(--main-bg-color);
-    z-index: 10;
+    z-index: 2;
     padding: 1rem;
+    background: #FDE776;
+    border: 1px solid #0E5D4E;
 }
 
 .playerControls>div:first-child{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    border-bottom: 1px solid #0e5d4e;
 }
 
 .playerControls input[type="range"] {

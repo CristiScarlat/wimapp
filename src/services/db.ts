@@ -2,7 +2,7 @@ import {db} from "./firebase";
 import {doc, setDoc, getDoc, getDocs, updateDoc, arrayUnion, arrayRemove, query, collection, orderBy, limit, startAfter, endBefore, where} from "firebase/firestore";
 import {EqPreset} from "../data/playerPreset";
 
-const baseURL = process.env.NODE_ENV === "production" ? process.env.REACT_APP_API_PATH : "http://localhost:3000/iRadio";
+const baseURL = process.env.NODE_ENV === "production" ? process.env.REACT_APP_API_PATH : "http://192.168.1.171:3000/iRadio";
 
 let lastVisible: any = null; // Store last document for pagination
 
@@ -15,8 +15,7 @@ export const getStationMetaData = async (streamUrl: string) => {
             },
             body: JSON.stringify({streamUrl})
         });
-        const data = await res.json()
-        return data
+        return await res.json()
     }
     catch(error) {
         console.error(error);
@@ -27,8 +26,7 @@ export const getStationMetaData = async (streamUrl: string) => {
 export const getAllStationsPaginated = async (pageSize: number, pageNo: number) => {
     try {
         const res = await fetch(`${baseURL}/stations?limit=${pageSize}&page=${pageNo}`);
-        const data = await res.json()
-        return data
+        return await res.json()
     } catch (error) {
         console.error(error);
         throw new Error("Could not fetch paginated data");

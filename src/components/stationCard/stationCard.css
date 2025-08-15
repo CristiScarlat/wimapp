@@ -6,34 +6,49 @@
     cursor: pointer;
     background-color: var(--main-bg-color);
     margin: 1rem;
-    padding-top: 1rem;
+    padding: 0 0.5rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .stationCard .stationCard-title{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     white-space: nowrap;
     padding: 0 0.5rem;
+}
+
+.stationCard .stationCard-title > p {
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.stationCard > img{
-    object-fit: scale-down;
-    border-radius: 10px;
-    width: 100px;
-    height: 100px;
-    margin: 0.5rem auto;
+.stationCard>div:first-child{
     flex: 1;
+    min-width: 0;
 }
 
-.stationCard .img-replace {
-    width: 100px;
-    height: 100px;
-    margin: 0.5rem auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex: 1;
+.stationCard > img{
+    object-fit: fill;
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+    border-radius: 100%;
 }
+
+/*.stationCard .img-replace {*/
+/*    width: 100px;*/
+/*    height: 100px;*/
+/*    margin: 0.5rem auto;*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    flex: 1;*/
+/*}*/
 
 .stationCard-country {
     display: flex;
@@ -56,8 +71,8 @@
 }
 
 .stationCard-footer {
-    padding: 1rem;
+    padding: 0.8rem 0.5rem;
     display: flex;
-    justify-content: end;
+    justify-content: flex-start;
     align-items: center;
 }

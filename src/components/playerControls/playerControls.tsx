@@ -1,57 +1,65 @@
 import {ReactNode, useContext, useEffect, useState, useRef} from "react";
 import {Ctx} from '../../context/context';
 import {getStationMetaData} from "../../services/db";
-import "./playerControls.css"
+import {toast} from 'react-toastify';
+import "./playerControls.css";
 
 const PlayerControls = ({children}: { children: ReactNode }) => {
 
     const [stationData, setStationData] = useState<{ StreamTitle: string }>();
     //@ts-expect-error fix later
-    const {state: {selectedUrlToPlay}} = useContext(Ctx);
+    const {state: {selectedStation, playerStatus}, dispatch} = useContext(Ctx);
 
     const audioRef = useRef<HTMLAudioElement>(new Audio());
 
     useEffect(() => {
         const tick = setInterval(() => {
-            if (selectedUrlToPlay) {
-                getStationMetaData(selectedUrlToPlay)
-                    .then(data => setStationData(data.metadata))
-                    .catch(error => console.log(error))
+            if (selectedStation?.url_resolved) {
+                getStationMetaData(selectedStation.url_resolved)
+                    .then(responseData => {
+                        if(responseData?.error)clearInterval((tick))
+                        setStationData(responseData.metadata)
+                    })
+                    .catch(error => {
+                        console.log(">>>", error)
+                        clearInterval(tick)
+                    })
             }
         }, 10000)
 
-        getStationMetaData(selectedUrlToPlay)
-            .then(data => setStationData(data.metadata))
-            .catch(error => console.log(error))
-        audioRef.current.src = selectedUrlToPlay;
-        audioRef.current.play()
+        if (selectedStation?.url_resolved) {
+            setStationData({ StreamTitle: ""})
+            audioRef.current.src = selectedStation.url_resolved;
+            getStationMetaData(selectedStation.url_resolved)
+                .then(data => setStationData(data?.metadata || ""))
+                .catch(error => console.log(error))
+        }
+        audioRef.current.play().catch(error => console.log(error))
+        audioRef.current.onplaying = () => dispatch({type: "PLAYER_STATUS", payload: true});
+        audioRef.current.onpause = () => dispatch({type: "PLAYER_STATUS", payload: false});
+
         return () => clearInterval(tick)
-    }, [selectedUrlToPlay])
+    }, [selectedStation?.url_resolved])
+
+    useEffect(() => {
+        if(playerStatus){
+            if(selectedStation?.url_resolved === undefined || selectedStation?.url_resolved === null){
+                toast("Please select station to play.", {
+                    type: "error",
+                })
+                return
+            }
+            audioRef.current.play().catch(error => console.log(error))
+        }
+        else {
+            audioRef.current.pause()
+        }
+    }, [playerStatus]);
 
     return (
         <div className="playerControls">
-            <div>
-                <div>
-                    <svg width="60" height="60" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M25.7664 55.3867V24.6167H22.4331V55.3834L25.7664 55.3867ZM57.5664 55.3867V24.6167L34.4831 40L57.5664 55.3867Z"
-                            fill="#0E5D4E"/>
-                    </svg>
-                </div>
-                <div>
-                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="0.5" y="0.5" width="47" height="47" rx="23.5" fill="#F9F2E9"/>
-                        <rect x="0.5" y="0.5" width="47" height="47" rx="23.5" stroke="#0E5D4E"/>
-                        <path d="M16 10.28V38.28L38 24.28L16 10.28Z" fill="#0E5D4E"/>
-                    </svg>
-                </div>
-                <div>
-                    <svg width="60" height="60" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M54.2336 55.3867V24.6167H57.5669V55.3834L54.2336 55.3867ZM22.4336 55.3867V24.6167L45.5169 40L22.4336 55.3867Z"
-                            fill="#0E5D4E"/>
-                    </svg>
-                </div>
+            <div style={{minHeight: 18}}>
+                <h3 className="overflow-paragraph">{selectedStation && selectedStation.name}</h3>
             </div>
             <div style={{minHeight: 18}}>
                 <p className="overflow-paragraph">{stationData && stationData.StreamTitle}</p>

@@ -4,7 +4,7 @@
   --default-text-color: #a5a5a5;
   --default-theme-color: #8907e4;
   --main-bg-color: #F9F2E9;
-  min-height: 100vh;
+  --main-green: #0e5d4e;
 }
 
 
@@ -19,6 +19,10 @@ body {
   /*background-color: #070707;*/
   min-height:100vh;
   color: #0E5D4E;;
+}
+
+button {
+  cursor: pointer;
 }
 
 input:focus, input:active, input:focus-visible {
@@ -179,7 +183,6 @@ canvas {
 
 .player-list-pagination {
   color:#0E5D4E;
-  padding: 1rem;
   display: flex;
   justify-content: center;
   gap: 2rem;

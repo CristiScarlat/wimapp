@@ -8,6 +8,7 @@ import ToggleButton from "../toggleButton/toggleButton";
 import { UserCredential } from "firebase/auth";
 import MobileFooter from "../mobileFooter/mobileFooter";
 import { toast } from 'react-toastify';
+import {ImPlay, ImStop} from "react-icons/im";
 
 const Header = () => {
 
@@ -19,7 +20,7 @@ const Header = () => {
     const emailInputRef = useRef<HTMLInputElement>(null);
 
     //@ts-ignore
-    const { state: { user }, dispatch } = useContext(Ctx);
+    const { state: { user, playerStatus, url_resolved }, dispatch } = useContext(Ctx);
 
     const handleAuthUser = (user: string) => {
         dispatch({type: "ADD_USER", payload: user});
@@ -95,6 +96,10 @@ const Header = () => {
 
     }
 
+    const handlePlayStop = () => {
+        dispatch({type: "PLAYER_STATUS", payload: !playerStatus});
+    }
+
     return (
         <header className="header-wrapper">
             <div className="header-logo">
@@ -106,6 +111,9 @@ const Header = () => {
             </div>
             {/*<MobileFooter/>*/}
             <div style={{display: "flex", alignItems: "center", gap: "1rem"}}>
+                <button className="only-icon-button" onClick={handlePlayStop}>
+                    {!playerStatus ? <ImPlay size="2rem" color="#0E5D4E"/> : <ImStop size="2rem" color="#0E5D4E"/>}
+                </button>
                 {user && <button className="btn logout-btn" onClick={handleSignout}>
                     Logout
                 </button>}
