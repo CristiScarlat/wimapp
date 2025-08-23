@@ -168,14 +168,14 @@ const Header = () => {
                             {formType && <button className="link-btn" onClick={handleForgotPassword}>Forgot your password?</button>}
                         </div>
                     </form>}
-                    <div className="header-sidebar-users-features">
+                    {user && <div className="header-sidebar-users-features">
                         <h4>My favorites</h4>
                         <div style={{overflowY:"auto", maxHeight:"300px"}}>
                             {favoritesStations?.length > 0 && favoritesStations.map(station => (
                                 <StationCard stationData={station} key={station.id} showFavoriteButton={false} showFooter={false}/>
                             ))}
                         </div>
-                    </div>
+                    </div>}
                 </div>
             </div>
         </header>

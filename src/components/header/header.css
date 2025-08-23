@@ -73,7 +73,8 @@
     border: 1px solid #3b2f24;
     margin: 1rem;
     border-radius: 5px;
-    background-color: #dcc9b8;
+    background-color: var(--main-green);
+    color: white!important;
 }
 
 .header-sidebar-body form>input {
