@@ -10,7 +10,7 @@ import {
     getAllStations,
     addFavoriteStationToDB,
     removeFavoriteStationFromDB,
-    getFavoriteStationsToDB,
+    getFavoriteStationsFromDB,
     getStationsByName,
     getStationsByTag,
     getStationsByCountry, getAllStationsPaginated
@@ -140,7 +140,7 @@ const Player = () => {
 
     useEffect(() => {
         if (user) {
-            getFavoriteStationsToDB(user.uid)
+            getFavoriteStationsFromDB(user.uid)
                 .then(data => {
                     setFavoriteStations(data)
                 })

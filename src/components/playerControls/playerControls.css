@@ -9,7 +9,7 @@
     top: 6rem;
     z-index: 2;
     padding: 1rem;
-    background: #FDE776;
+    background: var(--main-yellow);
     border: 1px solid #0E5D4E;
 }
 
@@ -22,4 +22,11 @@
 
 .playerControls input[type="range"] {
     background: #0E5D4E;
+}
+
+.playerControls .buttons-container {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
 }

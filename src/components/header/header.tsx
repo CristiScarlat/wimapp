@@ -1,42 +1,49 @@
 import {SyntheticEvent, useEffect, useState, useContext, useRef} from 'react';
 import { Ctx } from '../../context/context';
-import { RiArrowLeftCircleLine, RiArrowRightCircleLine } from 'react-icons/ri';
 import "./header.css";
 import {login, logout, onAuthChange, registerUser, resetPassword} from "../../services/auth";
 import Spinner from "../spinner/spinner";
+import StationCard from "../stationCard/stationCard";
 import ToggleButton from "../toggleButton/toggleButton";
 import { UserCredential } from "firebase/auth";
-import MobileFooter from "../mobileFooter/mobileFooter";
 import { toast } from 'react-toastify';
-import {ImPlay, ImStop} from "react-icons/im";
+import {ImPlay, ImStop, ImHeart, ImFilter} from "react-icons/im";
+import {getFavoriteStationsFromDB} from "../../services/db";
+import { User } from "firebase/auth";
 
 const Header = () => {
 
     const [show, setShow] = useState(false);
     const [loading, setLoading] = useState(false);
     const [formType, setFormType] = useState(true);
+    const [favoritesStations, setFavoritesStations] = useState<RadioStation[]>([]);
 
     const headerSidebarRef = useRef(null);
     const emailInputRef = useRef<HTMLInputElement>(null);
 
     //@ts-ignore
-    const { state: { user, playerStatus, url_resolved }, dispatch } = useContext(Ctx);
+    const { state: { user, playerStatus }, dispatch } = useContext(Ctx);
 
-    const handleAuthUser = (user: string) => {
+    const handleAuthUser = (user: User) => {
         dispatch({type: "ADD_USER", payload: user});
     }
 
     useEffect(() => {
         onAuthChange(handleAuthUser)
-        // window.addEventListener("click", (e: MouseEvent) => {
-        //     console.dir(e.target)
-        //     //@ts-ignore
-        //     const {x} = headerSidebarRef?.current?.getBoundingClientRect();
-        //     if(e.x <= x){
-        //         setShow(false)
-        //     }
-        // })
     }, []);
+
+    useEffect(() => {
+        if(user?.uid){
+            getFavoriteStationsFromDB(user.uid)
+                .then(res => {
+                    setFavoritesStations(res.data);
+                })
+                .catch(error => {
+                console.log(error)
+            })
+        }
+
+    }, [user])
 
     const handleSubmitAuth = (e: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
         e.preventDefault();
@@ -100,6 +107,8 @@ const Header = () => {
         dispatch({type: "PLAYER_STATUS", payload: !playerStatus});
     }
 
+    console.log({favoritesStations})
+
     return (
         <header className="header-wrapper">
             <div className="header-logo">
@@ -109,12 +118,15 @@ const Header = () => {
                 WIMAPP
                 <span style={{fontSize: 10, color: "#808080b3"}}>V3</span>
             </div>
-            {/*<MobileFooter/>*/}
+
             <div style={{display: "flex", alignItems: "center", gap: "1rem"}}>
+                <button className="only-icon-button">
+                    <ImFilter size="1.2rem" color="#0E5D4E"/>
+                </button>
                 <button className="only-icon-button" onClick={handlePlayStop}>
                     {!playerStatus ? <ImPlay size="2rem" color="#0E5D4E"/> : <ImStop size="2rem" color="#0E5D4E"/>}
                 </button>
-                {user && <button className="btn logout-btn" onClick={handleSignout}>
+                {user && <button className="btn simple-btn only-desktop" onClick={handleSignout}>
                     Logout
                 </button>}
                 <button className="header-sidebar-btn" onClick={() => setShow(true)}>
@@ -134,9 +146,9 @@ const Header = () => {
                     </button>
                 </div>
                 <div className="header-sidebar-body">
-                    {user ? <div>
+                    {user ? <div className="header-sidebar-user">
                         <span>{user.displayName || user.email}</span>
-                            <button className="btn header-sidebar-logout-btn" onClick={handleSignout}>Logout</button>
+                            <button className="btn simple-btn" onClick={handleSignout}>Logout</button>
                         </div>
                         :
                     <form onSubmit={handleSubmitAuth}>
@@ -156,6 +168,14 @@ const Header = () => {
                             {formType && <button className="link-btn" onClick={handleForgotPassword}>Forgot your password?</button>}
                         </div>
                     </form>}
+                    <div className="header-sidebar-users-features">
+                        <h4>My favorites</h4>
+                        <div style={{overflowY:"auto", maxHeight:"300px"}}>
+                            {favoritesStations?.length > 0 && favoritesStations.map(station => (
+                                <StationCard stationData={station} key={station.id} showFavoriteButton={false} showFooter={false}/>
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </div>
         </header>

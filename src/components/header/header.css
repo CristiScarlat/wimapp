@@ -8,7 +8,7 @@
     flex-shrink: 0;
     border-radius: 6.25rem;
     border: 1px solid #0E5D4E;
-    background: #FDE776;
+    background: var(--main-yellow);
     position: sticky;
     top: 1rem;
     z-index: 9999;
@@ -49,12 +49,13 @@
     align-items: center;
 }
 
-.header-sidebar-body>div {
+.header-sidebar-body>div:first-child {
     display: flex;
     gap: 1rem;
     align-items: center;
     justify-content: space-between;
     padding: 1rem;
+    border-bottom: 1px solid #0E5D4E;
 }
 
 .header-sidebar-body>div>span {
@@ -100,6 +101,16 @@
     padding: 1rem;
     border-bottom: 1px solid #3b2f24;
     font-weight: bold;
+}
+
+.header-sidebar-users-features {
+    background: var(--main-green);
+    color: white;
+}
+
+.header-sidebar-users-features h4{
+    padding: 0.5rem;
+    text-align: center;
 }
 
 @media only screen and (max-width: 800px) {

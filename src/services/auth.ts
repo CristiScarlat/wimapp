@@ -6,7 +6,8 @@ import {
     signInWithEmailAndPassword,
     signOut,
     getIdToken,
-    sendPasswordResetEmail
+    sendPasswordResetEmail,
+    User
 } from "firebase/auth";
 
 const registerUser = async (email: string, password: string) => {
@@ -58,7 +59,7 @@ const resetPassword = async (email: string) => {
 }
 
 const onAuthChange = (cb: any) => {
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, (user: User | null) => {
         if (user) {
             // User is signed in, see docs for a list of available properties
             // https://firebase.google.com/docs/reference/js/auth.user
