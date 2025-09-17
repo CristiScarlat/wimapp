@@ -107,16 +107,13 @@ const Header = () => {
         dispatch({type: "PLAYER_STATUS", payload: !playerStatus});
     }
 
-    console.log({favoritesStations})
-
     return (
         <header className="header-wrapper">
             <div className="header-logo">
-                <svg width="34" height="39" viewBox="0 0 43 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width="43" height="30" viewBox="20 0 30 50" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M1.63422 45.7343C-4.61566 37.7343 8.75933 31.2343 13.2592 33.9843C13.3843 27.7343 13.2608 14.6379 13.1343 12.1093C13.0093 9.60925 15.301 7.73425 16.6343 7.10925C23.3427 5.02593 37.2593 0.709278 39.2593 0.109278C41.2593 -0.490722 42.5093 1.52594 42.8843 2.60928V35.2343C41.7593 39.2343 32.8843 45.8593 26.5093 39.3593C22.0093 29.2343 34.2593 27.1926 39.2593 28.6093C39.301 23.6509 39.3593 13.6093 39.2593 13.1093C39.1593 12.6093 38.551 12.4009 38.2593 12.3593C32.301 14.1926 20.0343 17.9593 18.6343 18.3593C17.2343 18.7593 16.7177 19.9426 16.6343 20.4843C16.676 27.3593 16.7343 41.1343 16.6343 41.2343C14.0093 49.1093 4.38434 47.8593 1.63422 45.7343Z" fill="#0E5D4E"/>
                 </svg>
-                WIMAPP
-                <span style={{fontSize: 10, color: "#808080b3"}}>V3</span>
+                <p>WIMAPP<span style={{fontSize: 10, marginLeft: "0.2rem", float: "right"}}>V3</span></p>
             </div>
 
             <div style={{display: "flex", alignItems: "center", gap: "1rem"}}>
