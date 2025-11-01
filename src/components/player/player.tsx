@@ -9,7 +9,8 @@ import {Ctx} from "../../context/context";
 import {
     addFavoriteStationToDB,
     removeFavoriteStationFromDB,
-    getFavoriteStationsToDB
+    getFavoriteStationsToDB,
+
 } from "../../services/db";
 
 import {
@@ -18,7 +19,8 @@ import {
     formatStationData,
     getStationsByTagName,
     getStationsByStationName,
-    getStationsByCountry
+    getStationsByCountry,
+    getStationMetaData
 } from "../../services/RBApi";
 import PlaylistHeader from "../playlistHeader/playlistHeader";
 import Image from "../image/image";
@@ -50,6 +52,7 @@ const Player = () => {
     const [stationsPage, setStationsPage] = useState<number>(0);
     const [searchByTerm, setSearchByTerm] = useState<string>('name');
     const [playerMute, setPlayerMute] = useState<boolean>(false);
+    const [stationData, setStationData] = useState<string>("");
     //@ts-ignore
     const {state: {user, globalSpinner, mobileShow}, dispatch} = useContext(Ctx);
 
@@ -142,6 +145,7 @@ const Player = () => {
 
 
     useEffect(() => {
+        let tick: ReturnType<typeof setInterval> | null = null;
         if (playerRef) {
             playerRef.current.crossOrigin = "anonymous";
             playerRef.current.autoplay = true;
@@ -150,6 +154,17 @@ const Player = () => {
             playerRef.current.onerror = () => {
                 alert("Station offline, please pick another radios station.")
             }
+        }
+        if(selectedRadioStation){
+            console.log(selectedRadioStation)
+            tick = setInterval(() => {
+                getStationMetaData(selectedRadioStation.urlObject)
+                    .then(data => setStationData(data?.metadata?.StreamTitle || ""))
+                    .catch(err => console.log(err))
+            }, 10000)
+        }
+        return () => {
+            if(tick)clearInterval(tick)
         }
     }, [selectedRadioStation])
 
@@ -161,6 +176,7 @@ const Player = () => {
 
 
     const handleSelectStation = useCallback((index: number) => {
+        setStationData("");
         setCurrentIndex(index)
         setSelectedRadioStation({urlObject: radiosStationsList[index].url})
     }, [filterStationsByFavorites, radiosStationsList])
@@ -364,6 +380,7 @@ const Player = () => {
                     </p>
                     {stationInfoRef.current?.favicon &&
                         <p><img src={stationInfoRef.current?.favicon} alt="no radio icon"/></p>}
+                    <div>{stationData}</div>
                 </div>
                 <EqualizerWithAnalyser audioSource={playerRef}/>
                 <div className="player-header">

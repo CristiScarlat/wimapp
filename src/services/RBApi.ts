@@ -1,3 +1,22 @@
+export const getStationMetaData = async (streamUrl: string) => {
+    try{
+        //${process.env.REACT_APP_API_PATH}
+        const res = await fetch(`http://localhost:3000/iradio/station-data`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({streamUrl})
+        });
+        return await res.json()
+    }
+    catch(error) {
+        console.error(error);
+        throw new Error("Could not fetch station data");
+    }
+}
+
+
 export const getAllStations = async (limit: number, offset: number) => {
     try{
         const res = await fetch(`https://de1.api.radio-browser.info/json/stations?limit=${limit}&offset=${offset}&hidebroken=true`);
