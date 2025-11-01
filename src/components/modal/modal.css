@@ -14,7 +14,7 @@
 .modal-content {
     min-width: 20vw;
     min-height: 20vh;
-    background-color: var(--bg-color);
+    background-color: transparent;
     border-radius: 5px;
     padding: 1rem;
 }
@@ -25,7 +25,6 @@
     align-items: center;
     color: white;
     font-weight: bold;
-    /*border-bottom: 1px inset black;*/
 }
 
 .modal-header p{
@@ -33,7 +32,7 @@
 }
 
 .modal-header>button {
-    background: transparent;
+    background: var(--main-green) !important;
     border: none;
     font-size: 18px;
     color: white;

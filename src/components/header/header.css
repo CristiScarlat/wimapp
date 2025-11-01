@@ -119,6 +119,54 @@
     text-align: center;
 }
 
+.filers-modal-content {
+    background-color: var(--main-yellow);
+    border: 1px solid var(--main-green);
+    min-width: 20rem;
+    max-width: 22rem;
+    min-height: 20rem;
+    border-radius: 15px;
+    padding: 1rem;
+}
+
+.filers-modal-content .search-form{
+    display: flex;
+    justify-content: center;
+    margin: 1rem auto;
+}
+
+.filers-modal-content .search-form input{
+    padding: 0.5rem;
+    border-radius: 10px 0 0 10px;
+    border: 1px solid var(--main-green);
+    width: 100%;
+}
+
+.filers-modal-content .search-form input:focus{
+    border: none;
+}
+
+.filers-modal-content .search-form button{
+    border-radius: 0 10px 10px 0;
+    color: whitesmoke;
+    background-color: var(--main-green);
+    border: none;
+    font-weight: bold;
+}
+
+.filters-form {
+    border: 1px solid var(--main-green);
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.filers-modal-content .select-form {
+    padding: 0.5rem;
+    border-radius: 10px;
+    max-width: 20rem;
+    margin-bottom: 1rem;
+}
+
 @media only screen and (max-width: 800px) {
     .logout-btn{
         display: none;

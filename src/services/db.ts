@@ -43,6 +43,16 @@ export const getStationsByListOfIdsPaginated = async (listOfIds: string[], pageS
     }
 }
 
+export const searchStationByName = async (searchTerm: string, pageSize: number, pageNo: number) => {
+    try {
+        const res = await fetch(`${baseURL}/searchStationByName?name=${searchTerm}&limit=${pageSize}&page=${pageNo}`);
+        return await res.json()
+    } catch (error) {
+        console.error(error);
+        throw new Error("Could not fetch paginated data");
+    }
+}
+
 
 export const getStationsByName = async (name: string, pageLimit: number, offset: number) => {
 
@@ -55,6 +65,31 @@ export const getStationsByTag = async (tag: string, pageLimit: number, offset: n
 
 export const getStationsByCountry = async (countrycode: string, pageLimit: number, offset: number) => {
 
+}
+
+export const getListOfCountries = async () => {
+    try{
+        const res = await fetch(`${baseURL}/countries`);
+        const data = await res.json();
+        return data.data;
+    }
+    catch (error) {
+        console.log(error)
+        throw new Error("Could not fetch countries from db")
+    }
+}
+
+export const getListOfGenres: () => Promise<string[]> = async () => {
+    try{
+        const res = await fetch(`${baseURL}/genres`);
+        const data = await res.json();
+        const list = data.data.map((obj: {tags: string}) => obj.tags.split(",")).flat().filter((tag: string) => tag !== "");
+        return Array.from(new Set(list));
+    }
+    catch (error) {
+        console.log(error)
+        throw new Error("Could not fetch genres from db")
+    }
 }
 
 

@@ -6,17 +6,18 @@ interface Props {
     children: ReactNode
     onCloseBtnClick?: () => void
     title: string
+    showCloseBtn?: boolean
 }
 
-const Modal = ({children, onCloseBtnClick, title}: Props) => {
+const Modal = ({children, onCloseBtnClick, title, showCloseBtn=true}: Props) => {
     return (
         <div className="modal-wrapper">
             <div className="modal-content">
                 <div className="modal-header">
                     <p>{title}</p>
-                    <button onClick={onCloseBtnClick}>
+                    {showCloseBtn && <button onClick={onCloseBtnClick}>
                         <IoMdClose color="white"/>
-                    </button>
+                    </button>}
                 </div>
                 <div className="modal-body">{children}</div>
             </div>
