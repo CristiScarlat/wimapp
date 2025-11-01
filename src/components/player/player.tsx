@@ -320,7 +320,7 @@ const Player = () => {
         //@ts-ignore
         selectedCountryRef.current = null;
         //@ts-ignore
-        searchInputRef.current.value = "";
+        if(searchInputRef.current.value)searchInputRef.current.value = "";
         getAllStations(100, stationsPage * 100)
             .then((data: any) => {
                 setPlaylistLoading(false);
