@@ -1,7 +1,7 @@
 export const getStationMetaData = async (streamUrl: string) => {
     try{
         //${process.env.REACT_APP_API_PATH}
-        const res = await fetch(`http://localhost:3000/iradio/station-data`, {
+        const res = await fetch(`${process.env.REACT_APP_API_PATH}/station-data`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
