@@ -66,7 +66,6 @@ const Player = () => {
         if (filterStationsByFavorites === 'all') {
             setPlaylistLoading(true);
             if ((searchInputRef.current?.value && searchInputRef.current?.value !== "") || selectedCountryRef.current) {
-                console.log(">>>>all", searchInputRef.current?.value, selectedCountryRef?.current)
                 switch (searchByTerm) {
                     // @ts-ignore
                     case "name":
@@ -82,7 +81,6 @@ const Player = () => {
                 }
             }
             else {
-                console.log(">>>>all - else", searchInputRef.current?.value, selectedCountryRef?.current)
                 getAllStations(100, stationsPage * 100)
                     .then((data: any) => {
                         setPlaylistLoading(false);
@@ -98,7 +96,6 @@ const Player = () => {
     }, [stationsPage, filterStationsByFavorites])
 
     useEffect(() => {
-        console.log("favorites", filterStationsByFavorites)
         if (user && filterStationsByFavorites === 'favorites') {
             setPlaylistLoading(true);
             // @ts-ignore
@@ -156,7 +153,6 @@ const Player = () => {
             }
         }
         if(selectedRadioStation){
-            console.log(selectedRadioStation)
             tick = setInterval(() => {
                 getStationMetaData(selectedRadioStation.urlObject)
                     .then(data => setStationData(data?.metadata?.StreamTitle || ""))
@@ -170,6 +166,7 @@ const Player = () => {
 
     useEffect(() => {
         //TODO I think this can be moved to handleSelectStation
+        console.log(selectedRadioStation)
         if (selectedRadioStation?.urlObject) playerRef.current.src = selectedRadioStation.urlObject;
         stationInfoRef.current = {...radiosStationsList[currentIndex], page: stationsPage, index: currentIndex}
     }, [selectedRadioStation])
@@ -177,7 +174,7 @@ const Player = () => {
 
     const handleSelectStation = useCallback((index: number) => {
         setStationData("");
-        setCurrentIndex(index)
+        setCurrentIndex(index);
         setSelectedRadioStation({urlObject: radiosStationsList[index].url})
     }, [filterStationsByFavorites, radiosStationsList])
 
@@ -354,6 +351,8 @@ const Player = () => {
         playerRef.current.volume = !playerMute ? 0 : savedPlayerVolume.current;
         setPlayerMute(!playerMute);
     }
+
+    console.log(radiosStationsList)
 
     // @ts-ignore
     return (

@@ -92,7 +92,7 @@ export const formatStationData = (obj: any) => {
     return {
         id: obj.stationuuid,
         name: obj.name.trim() === "" ? "no name" : obj.name.trim(),
-        url: obj.url_resolved,
+        url: obj.url_resolved === "" ? obj.url : obj.url_resolved,
         genre: obj.tags,
         country: obj.country,
         countryCode: obj.countrycode,
